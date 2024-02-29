@@ -1,9 +1,12 @@
 // myComponent.js
+"use client";
+
+import React from "react";
 import BubbleUI from "../components/Bubble/BubbleElement";
 import "./myComponent.css";
 import "react-bubble-ui/dist/index.css";
 
-export function ChildComponent({ name }: { name: any }) {
+function ChildComponent({ name }: { name: any }) {
   return (
     <div className="bg-primary rounded-full w-60 h-60 flex items-center justify-center">
       <p>{name}</p>
