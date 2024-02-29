@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Wallet, hashMessage } from "ethers";
 import { FormProvider, useForm } from "react-hook-form";
-import NestedLayoutForWallet from "~~/components/NestedLayoutForWallet";
 import TextInput from "~~/components/scaffold-eth/Input/TextInput";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
