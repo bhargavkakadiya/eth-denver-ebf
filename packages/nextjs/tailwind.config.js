@@ -44,11 +44,16 @@ module.exports = {
           "primary-content": "#00B5AD",
           secondary: "#00B5AD",
           "secondary-content": "#005A9C",
-          // accent: "#fff",
+          accent: "#fff",
           "accent-content": "#005A9C",
           neutral: "#005A9C",
           "neutral-content": "#00B5AD",
-        
+
+          "base-100": "#000",
+          "base-200": "#000",
+          "base-300": "#000",
+          "base-content": "#fff",
+          info: "#385183",
           info: "#00B5AD",
           success: "#34EEB6",
           warning: "#FFCF72",
