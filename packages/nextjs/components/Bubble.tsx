@@ -1,6 +1,6 @@
 // myComponent.js
+import BubbleUI from "../components/Bubble/BubbleElement";
 import "./myComponent.css";
-import BubbleUI from "react-bubble-ui";
 import "react-bubble-ui/dist/index.css";
 
 export function ChildComponent({ name }: { name: any }) {
