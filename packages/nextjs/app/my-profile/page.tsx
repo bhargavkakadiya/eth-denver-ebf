@@ -12,10 +12,12 @@ const Home: NextPage = () => {
     args: [address],
   });
 
+  console.log(userData);
+
   return (
     <div className="flex items-center flex-col flex-grow pt-10">
       {isConnected && userData && (
-        <div className="bg-gray-200 p-4">
+        <div className="bg-white p-4">
           <h1 className="text-2xl font-bold">Player Info</h1>
           <div className="flex space-x-4">
             <div className="mb-1">
