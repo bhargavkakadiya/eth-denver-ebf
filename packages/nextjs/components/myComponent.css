@@ -15,6 +15,7 @@
     max-width: 200px; /* Optional: Prevents the child from becoming too large */
     max-height: 200px; /* Optional: Matches max-width for maintaining aspect ratio */
     margin: auto; /* Center the child if it's a flex item or has display:block */
+
   }
   
   

@@ -58,7 +58,7 @@ const ChildComponent = ({
   return (
     <>
       <div
-        className="relative bg-primary rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0"
+        className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0"
         onClick={openModal}
       >
         <p className="text-white text-sm z-10">{name}</p>
@@ -71,7 +71,7 @@ const ChildComponent = ({
           return (
             <div
               key={index}
-              className="absolute bg-secondary rounded-full transition-all duration-300 ease-in-out z-50"
+              className="absolute bg-accent-content rounded-full transition-all duration-300 ease-in-out z-50"
               style={{
                 ...position,
                 width: `${insideCircleSize}px`,
@@ -149,12 +149,15 @@ export default function Bubble() {
         ))}
       </BubbleUI>
 
+<div style={{backdropFilter: "blur(5px)"}}>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={modelDetails.name}
         data={Array.from({ length: 6 })}
+      
       />
+    </div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function BasicTooltip({ onClose }: { onClose: any }) {
   return (
     <Tooltip title="Delete">
       <IconButton>
-        <CloseIcon onClick={onClose} />
+        <CloseIcon onClick={onClose} color="primary" />
       </IconButton>
     </Tooltip>
   );
