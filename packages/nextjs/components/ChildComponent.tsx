@@ -63,7 +63,6 @@ const ChildComponent = ({
       <div
         className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0 border-2 border-accent-content"
         onClick={openModal}
-        style={{backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover"}}
       >
         <div
           className="rounded-full w-24 h-24 overflow-hidden flex items-center justify-center"
