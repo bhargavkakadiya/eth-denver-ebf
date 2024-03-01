@@ -2,17 +2,12 @@
 
 // Assuming you have this component
 import { useEffect, useState } from "react";
-import ErrorPage from "next/error";
-import { useRouter } from "next/router";
 import { verifyMessage } from "ethers";
-import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { useSignMessage } from "wagmi";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
-const Home: NextPage = () => {
-  const router = useRouter();
-
+const Home = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -94,9 +89,6 @@ const Home: NextPage = () => {
 
   function renderContent() {
     if (isMounted && address) {
-      if (!router.isFallback && !userData) {
-        return <ErrorPage statusCode={404} />;
-      }
       return (
         <div className="flex items-center flex-col flex-grow pt-10">
           {isConnected && userData && (
