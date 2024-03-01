@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 
+const baseUrl="https://ipfs.io/ipfs/"
 const ChildComponent = ({
   name,
   circleRef,
@@ -53,14 +54,17 @@ const ChildComponent = ({
     }
   };
 
+  console.log("child", `(${baseUrl}${child.ipfsURI})`);
   return (
     <>
       <div
-        className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0"
+        className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0 "
         onClick={openModal}
+        style={{backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover"}}
       >
         <p className="text-white text-sm z-10">{name}</p>
         {Array.from({ length: 6 }).map((_, index) => {
+          //    {child.tags.map((_: any, index: number) => { // TODO remove the above line and uncomment this line
           const angle = (Math.PI / 3) * index; // Distributing circles evenly 360/6 degrees apart
           const position = {
             left: `calc(50% + ${positioningRadius * Math.cos(angle)}px)`,
