@@ -44,6 +44,9 @@ import "react-bubble-ui/dist/index.css";
 /* eslint-disable prettier/prettier */
 // myComponent.js
 
+/* eslint-disable prettier/prettier */
+// myComponent.js
+
 const ChildComponent = ({
   name,
   circleRef,
@@ -86,7 +89,6 @@ const ChildComponent = ({
 
         // const rect = event.target.getBoundingClientRect();
 
-       
         // const xPosition = event.clientX - rect.left;
         // const yPosition = event.clientY - rect.top;
         // const position = { left: xPosition, top: yPosition };
@@ -188,20 +190,12 @@ export default function Bubble() {
         ))}
       </BubbleUI>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={modelDetails.name}>
-        <div className="space-y-4">
-          <div className="flex justify-between items-center  h-full w-full">
-            <h3 className="">Add New Feature</h3>
-            <button>+</button>
-          </div>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="flex justify-between items-center">
-              <span>Circle {index + 1}</span>
-              <button>+</button>
-            </div>
-          ))}
-        </div>
-      </Modal>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modelDetails.name}
+        data={Array.from({ length: 6 })}
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 import BasicTooltip from "./tooltip/CloseIcon";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -24,12 +25,14 @@ export default function BasicModal({
   isOpen,
   onClose,
   title,
-  children,
+
+  data,
 }: {
   isOpen: boolean;
   onClose: any;
   title: string;
-  children: any;
+
+  data: any;
 }) {
   return (
     <Modal
@@ -40,17 +43,37 @@ export default function BasicModal({
     >
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
-          </Typography>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+            <Image src="/public/favicon.png" alt="logo" width={16} height={16} />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {title}
+            </Typography>
+          </div>
           <BasicTooltip onClose={onClose} />
         </div>
         <Divider />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Description for the event goes here
+          </Typography>
+
+          <div
+            className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
+          >
+            Add new feature
+          </div>
+        </div>
+
+        <Divider />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Add a new feature
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {children}
+          <div className="space-y-4">
+            {data.map((_, index) => (
+              <div key={index} className="flex justify-between items-center">
+                <span>Circle {index + 1}</span>
+                <button>+</button>
+              </div>
+            ))}
+          </div>
         </Typography>
       </Box>
     </Modal>
