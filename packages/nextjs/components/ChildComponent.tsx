@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import iconsList from "./iconsList";
 
-const baseUrl="https://ipfs.io/ipfs/"
+const baseUrl = "https://ipfs.io/ipfs/";
 const ChildComponent = ({
   name,
   circleRef,
@@ -54,33 +55,80 @@ const ChildComponent = ({
     }
   };
 
-  console.log("child", `(${baseUrl}${child.ipfsURI})`);
+  const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
+
+  const lastLength = child?.tags?.length;
   return (
     <>
       <div
-        className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0 "
+        className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0 border-2 border-accent-content"
         onClick={openModal}
-        style={{backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover"}}
       >
-        <p className="text-white text-sm z-10">{name}</p>
-        {Array.from({ length: 6 }).map((_, index) => {
-          //    {child.tags.map((_: any, index: number) => { // TODO remove the above line and uncomment this line
+        <div
+          className="rounded-full w-24 h-24 overflow-hidden flex items-center justify-center"
+          style={{ backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover" }}
+        >
+          <p className="text-white text-xl font-bold z-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.0)" }}>
+            {name}
+          </p>
+        </div>
+
+        {child?.tags?.map((_: any, index: number) => {
           const angle = (Math.PI / 3) * index; // Distributing circles evenly 360/6 degrees apart
           const position = {
             left: `calc(50% + ${positioningRadius * Math.cos(angle)}px)`,
             top: `calc(50% + ${positioningRadius * Math.sin(angle)}px)`,
           };
+
+          const icon = iconsList.filter(icon => icon.name === child.tags[index]);
+          if (icon.length == 0) {
+            return;
+          }
           return (
             <div
               key={index}
-              className="absolute bg-accent-content rounded-full transition-all duration-300 ease-in-out z-50"
+              className="absolute  rounded-full transition-all duration-300 ease-in-out z-50 border-accent-content border-2"
               style={{
                 ...position,
                 width: `${insideCircleSize}px`,
                 height: `${insideCircleSize}px`,
                 transform: "translate(-50%, -50%)",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                backgroundColor: "rgba(255, 255, 255, 1)",
               }}
-            ></div>
+            >
+              {icon[0].icon}
+            </div>
+          );
+        })}
+
+        {remainingTags?.map((_: any, index: number) => {
+          index = index + lastLength;
+          const angle = (Math.PI / 3) * index; // Distributing circles evenly 360/6 degrees apart
+          const position = {
+            left: `calc(50% + ${positioningRadius * Math.cos(angle)}px)`,
+            top: `calc(50% + ${positioningRadius * Math.sin(angle)}px)`,
+          };
+
+          return (
+            <div
+              key={index}
+              className="absolute  rounded-full transition-all duration-300 ease-in-out z-50 border-accent-content border-2"
+              style={{
+                ...position,
+                width: `${insideCircleSize}px`,
+                height: `${insideCircleSize}px`,
+                transform: "translate(-50%, -50%)",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              {remainingTags[index - lastLength]?.icon}
+            </div>
           );
         })}
       </div>
