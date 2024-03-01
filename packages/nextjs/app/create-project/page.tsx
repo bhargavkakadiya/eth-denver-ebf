@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import TextInput from "../../components/scaffold-eth/Input/TextInput";
+
+import { OutlinedInput } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { NFTStorage } from "nft.storage";
 import { FormProvider, useForm } from "react-hook-form";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -83,14 +85,42 @@ export default function Home() {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="max-w-lg mx-auto bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+          className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+          style={{ backgroundColor: "#212638", color: "white" }}
         >
           <div className="mb-4">
-            <TextInput name="name" label="Name" type="text" />
-            <TextInput name="place" label="Type" type="text" />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Name
+              </Typography>
+            </div>
+            <OutlinedInput
+              id="outlined-basic"
+              label="Outlined"
+              onChange={() => {
+                console.log("changed");
+              }}
+              style={{ color: "white", width: "100%" }}
+            />
+
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Type
+              </Typography>
+            </div>
+            <OutlinedInput
+              id="outlined-basic"
+              label="Outlined"
+              onChange={() => {
+                console.log("changed");
+              }}
+              style={{ color: "white", width: "100%" }}
+            />
+
+           
             <br />
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">PlaceImage</label>
+              <label className="block white text-sm font-bold mb-2">PlaceImage</label>
               <input
                 type="file"
                 accept="image/*"
@@ -107,7 +137,7 @@ export default function Home() {
             {/* Image Preview */}
             {selectedImage && selectedImage.previewURL && (
               <div className="mb-4">
-                <p className="block text-gray-700 text-sm font-bold mb-2">Preview</p>
+                <p className="block white text-sm font-bold mb-2">Preview</p>
                 <Image
                   src={selectedImage.previewURL}
                   alt="Preview"
@@ -120,7 +150,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary  py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
               type="submit"
               disabled={isLoading}
             >
