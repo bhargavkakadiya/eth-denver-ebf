@@ -44,6 +44,7 @@ export default function Home() {
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
           className="max-w-lg mx-auto bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+          style={{ backgroundColor: "#212638", color: "white" }}
         >
           <div className="mb-4">
             <TextInput name="name" label="Name" type="text" />
@@ -52,7 +53,7 @@ export default function Home() {
 
           <div className="flex justify-center mt-5">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary  py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
               type="submit"
               disabled={isLoading}
             >
