@@ -11,7 +11,8 @@ library Structs {
 	struct Project {
 		address registeredBy;
 		string projectName;
-		string projectType;
+		string projectDescription;
+		string[] tags;
 		string ipfsURI;
 	}
 }

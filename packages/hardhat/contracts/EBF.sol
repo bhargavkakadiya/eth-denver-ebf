@@ -35,7 +35,8 @@ contract EBF is ERC1155, OdysseyStorage {
 
 	function createProject(
 		string memory _projectName,
-		string memory _projectType,
+		string memory _projectDescription,
+		string[] memory _tags,
 		string memory _uri
 	) public payable {
 		require(
@@ -49,13 +50,30 @@ contract EBF is ERC1155, OdysseyStorage {
 		projects[projectCounter] = Structs.Project({
 			registeredBy: msg.sender,
 			projectName: _projectName,
-			projectType: _projectType,
+			projectDescription: _projectDescription,
+			tags: _tags,
 			ipfsURI: _uri
 		});
 
 		_mint(msg.sender, projectCounter, 1000, "");
 		tokenURIs[projectCounter] = _uri;
 		++projectCounter;
+	}
+
+	function addTagstoProject(
+		uint256 _projectId,
+		string memory _tag,
+		bytes32 _msgHash,
+		bytes memory _signature
+	) public {
+		require(isRegistered[msg.sender], "Only registered users can add tags");
+		require(isVerified(_msgHash, _signature), "Invalid Txn Source");
+
+		require(
+			projects[_projectId].tags.length <= 6,
+			"Maximum of 6 tags are allowed per project."
+		);
+		projects[_projectId].tags.push(_tag);
 	}
 
 	function getAllProjects() public view returns (Structs.Project[] memory) {

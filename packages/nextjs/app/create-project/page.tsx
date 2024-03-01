@@ -30,7 +30,7 @@ export default function Home() {
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "EBF",
     functionName: "createProject",
-    args: ["", "", ""],
+    args: ["", "", [""], ""],
     value: BigInt(0),
     onBlockConfirmation: () => {
       router.push("/"); // forward to correct page
@@ -48,7 +48,7 @@ export default function Home() {
           return;
         } else {
           writeAsync({
-            args: [formData.name, formData.place, ipfsCID],
+            args: [formData.name, formData.place, [], ipfsCID],
           });
         }
       }

@@ -7,10 +7,10 @@ import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { VeraxSdk } from '@verax-attestation-registry/verax-sdk'
-import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
+import { getPublicClient } from '@wagmi/core'
 import { useAccount } from "wagmi";
-import { waitForTransactionReceipt, getClient } from '@wagmi/core'
-import { Address, createPublicClient, http, parseAbi } from "viem";
+import { waitForTransaction } from '@wagmi/core'
+import { Address, Hex, createPublicClient, decodeEventLog, http, parseAbi } from "viem";
 
 
 export default function Home() {
@@ -21,26 +21,6 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const { address, isConnected } = useAccount({
-  });
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const img = e.target.files[0];
-      setSelectedImage({
-        imageFile: img,
-        previewURL: URL.createObjectURL(img),
-      });
-    }
-  };
-
-  const { writeAsync, isLoading } = useScaffoldContractWrite({
-    contractName: "EBF",
-    functionName: "createSchema", // Ensure your contract has this function or adjust accordingly
-    args: ["", "", ""], // Update based on your contract's requirements
-    value: BigInt(0),
-    onBlockConfirmation: () => {
-      router.push("/"); // Forward to the correct page
-    },
   });
 
   const onSubmit = async (formData) => {

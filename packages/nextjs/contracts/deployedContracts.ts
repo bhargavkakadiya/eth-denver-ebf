@@ -135,6 +135,34 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "_projectId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "_tag",
+              type: "string",
+            },
+            {
+              internalType: "bytes32",
+              name: "_msgHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_signature",
+              type: "bytes",
+            },
+          ],
+          name: "addTagstoProject",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "account",
               type: "address",
@@ -189,8 +217,13 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "_projectType",
+              name: "_projectDescription",
               type: "string",
+            },
+            {
+              internalType: "string[]",
+              name: "_tags",
+              type: "string[]",
             },
             {
               internalType: "string",
@@ -221,8 +254,13 @@ const deployedContracts = {
                 },
                 {
                   internalType: "string",
-                  name: "projectType",
+                  name: "projectDescription",
                   type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
                 },
                 {
                   internalType: "string",
@@ -346,7 +384,7 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "projectType",
+              name: "projectDescription",
               type: "string",
             },
             {
