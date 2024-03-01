@@ -8,20 +8,14 @@ import { useSignMessage } from "wagmi";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const Home = () => {
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const { address, isConnected } = useAccount({});
 
-  const { address, isConnected } = useAccount({
-    onDisconnect() {
-      setNonce("");
-      setPassportScore(0);
-    },
-  });
+  console.log("iisisisisiiii---------------------------", address, isConnected);
 
-  const [isMounted, setIsMounted] = useState(false);
+  const [checkScore, setCheckScore] = useState(true);
   const [nonce, setNonce] = useState("");
   const [passportScore, setPassportScore] = useState(0);
+  console.log("address", checkScore);
 
   const { data: userData } = useScaffoldContractRead({
     contractName: "EBF",
@@ -59,72 +53,76 @@ const Home = () => {
 
       // Store the user's passport score for later use.
       setPassportScore(scoreResponse.score || 0);
+      setCheckScore(false);
     },
   });
 
-  // Refactor fetching logic for better error handling
-  useEffect(() => {
-    const fetchPassportScore = async () => {
-      try {
-        const scorerMessageResponseCall = await fetch(`/api/gtc-passport/sign-message`);
-        if (!scorerMessageResponseCall.ok) {
-          throw new Error("Failed to fetch scorer message");
-        }
-        const scorerMessageResponse = await scorerMessageResponseCall.json();
-        setNonce(scorerMessageResponse.nonce);
-        signMessage({ message: scorerMessageResponse.message });
-      } catch (error) {
-        console.error("Failed to fetch passport score:", error);
-        // Handle the error appropriately in your application context
+  const fetchPassportScore = async () => {
+    try {
+      console.log("fetching passport score");
+      const scorerMessageResponseCall = await fetch(`/api/gtc-passport/sign-message`);
+
+      if (!scorerMessageResponseCall.ok) {
+        throw new Error("Failed to fetch scorer message");
       }
-    };
-
-    if (address) {
-      fetchPassportScore();
+      const scorerMessageResponse = await scorerMessageResponseCall.json();
+      setNonce(scorerMessageResponse.nonce);
+      signMessage({ message: scorerMessageResponse.message });
+    } catch (error) {
+      console.error("Failed to fetch passport score:", error);
+      // Handle the error appropriately in your application context
     }
-  }, [address, signMessage]);
+  };
 
-  // This isMounted check is needed to prevent hydration errors with next.js server side rendering.
-  // See https://github.com/wagmi-dev/wagmi/issues/542 for more details.
-
-  function renderContent() {
-    if (isMounted && address) {
-      return (
-        <div className="flex items-center flex-col flex-grow pt-10">
-          {isConnected && userData && (
-            <div className="bg-gray-200 p-4">
-              <h1 className="text-2xl font-bold">Player Info</h1>
-              <div className="flex space-x-4">
-                <div className="mb-1">
-                  <div className="mb-1">
-                    <div className="mb-2">
-                      <h4 className="mb-1">
-                        <strong>Name:</strong> {String(userData[1])}
-                      </h4>
-                    </div>
-                    <div className="mb-2">
-                      <h4 className="mb-1">
-                        <strong>Hometown:</strong> {String(userData[2])}
-                      </h4>
-                    </div>
-                    <div className="mb-2">
-                      <h4 className="mb-1">
-                        <strong>Passport Score:</strong> {passportScore}
-                      </h4>
+  return (
+    <>
+      {address ? (
+        <>
+          {checkScore ? (
+            <button
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
+              onClick={() => {
+                fetchPassportScore();
+              }}
+            >
+              Check my Score
+            </button>
+          ) : (
+            <div className="flex items-center flex-col flex-grow pt-10">
+              {isConnected && userData && (
+                <div className="bg-red-500 p-4">
+                  <h1 className="text-2xl font-bold">Player Info </h1>
+                  <div className="flex space-x-4">
+                    <div className="mb-1">
+                      <div className="mb-1">
+                        <div className="mb-2">
+                          <h4 className="mb-1">
+                            <strong>Name:</strong> {String(userData[1])}
+                          </h4>
+                        </div>
+                        <div className="mb-2">
+                          <h4 className="mb-1">
+                            <strong>Hometown:</strong> {String(userData[2])}
+                          </h4>
+                        </div>
+                        <div className="mb-2">
+                          <h4 className="mb-1">
+                            <strong>Passport Score:</strong> {passportScore}
+                          </h4>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
-        </div>
-      );
-    } else {
-      return <div>Connect your wallet to see your profile</div>;
-    }
-  }
-
-  return <>{renderContent()}</>;
+        </>
+      ) : (
+        <div>Connect your wallet to see your profile</div>
+      )}
+    </>
+  );
 };
 
 export default Home;
