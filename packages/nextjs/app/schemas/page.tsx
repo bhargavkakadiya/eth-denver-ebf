@@ -9,8 +9,9 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { VeraxSdk } from '@verax-attestation-registry/verax-sdk'
 import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
 import { useAccount } from "wagmi";
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { Address, createPublicClient, http, parseAbi } from "viem";
+import { waitForTransactionReceipt } from "viem/actions";
+import { Address, createPublicClient, http } from "viem";
+import { decodeEventLog, parseAbi } from "viem";
 
 
 export default function Home() {
@@ -63,7 +64,7 @@ const [isPortalCreating, setIsPortalCreating] = useState(false);
         const schemaId = await veraxSdk.schema.getIdFromSchemaString(schemaString);
         try {
             const alreadyExists = await veraxSdk.schema.getSchema(schemaId);
-            setErrorMessage('Schema already exists');
+            setErrorMessage('Schema ' + schemaId +  ' already exists');
             return; // Stop the execution if schema already exists
         } catch (schemaError) {
             // If the schema does not exist, create a new schema
@@ -111,13 +112,14 @@ const handleCreatePortal = async () => {
           true, // Assuming revocable is true
           "Verax Tutorial" // Example owner name
       );
-      console.log("Portal creation initiated, transaction hash:", txHash);
+      const transactionHash = txHash.transactionHash;
+console.log("Extracted transaction hash:", transactionHash);
 
+// Now use transactionHash instead of txHash for the waitForTransactionReceipt call
+const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash });
       // Wait for the transaction to be confirmed
       // Assuming you have an ethers provider initialized
-      const receipt = await waitForTransactionReceipt(getPublicClient(), {
-        hash: txHash,
-     });
+
      const decodedLogs = decodeEventLog({
         abi: parseAbi(["event PortalRegistered(string name, string description, address portalAddress)"]),
         data: receipt.logs[0].data,
@@ -125,6 +127,7 @@ const handleCreatePortal = async () => {
      });
      const portalId = decodedLogs.args.portalAddress;
       console.log("Portal transaction confirmed, receipt:", receipt);
+      console.log('portalId ', portalId)
 
   } catch (error) {
       console.error("Error creating portal:", error);
