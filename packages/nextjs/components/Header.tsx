@@ -32,6 +32,10 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/create-project",
   },
   {
+    label: "Schemas",
+    href: "/schemas",
+  },
+  {
     label: "Debug Contracts",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
