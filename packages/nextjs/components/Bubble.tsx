@@ -45,7 +45,7 @@ export default function Bubble() {
   return (
     <div ref={circleRef}>
       <BubbleUI options={options} className="myBubbleUI">
-        {childElements.map((child: { projectName: string; tags: string[] }, index) => (
+        {childElements?.map((child: { projectName: string; tags: string[] }, index) => (
           <ChildComponent
             key={index}
             name={child.projectName}
