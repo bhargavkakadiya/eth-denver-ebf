@@ -52,7 +52,7 @@ export default function BasicModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", margin: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
             <Image src="/public/favicon.png" alt="logo" width={16} height={16} />
             <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -62,8 +62,8 @@ export default function BasicModal({
           <BasicTooltip onClose={onClose} />
         </div>
         <Divider color={"bg-primary"} />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
+          <Typography id="modal-modal-description" sx={{ m: 2 }}>
             Description for the event goes here
           </Typography>
 
@@ -78,14 +78,14 @@ export default function BasicModal({
         <Divider color={"bg-primary"} />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <div className="space-y-4">
-            {data.map((_, index) => (
+            {data.map((val: any, index: number) => (
               <div key={index} className="flex justify-between items-center">
                 <span>Circle {index + 1}</span>
                 <button
                   className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
                   onClick={() => {
                     setShowSlider(true);
-                    setSelectedIndex(index + 1);
+                    setSelectedIndex((index as any) + 1);
                   }}
                 >
                   +
