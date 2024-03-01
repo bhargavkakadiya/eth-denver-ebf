@@ -7,21 +7,47 @@ import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { VeraxSdk } from '@verax-attestation-registry/verax-sdk'
-import { getPublicClient } from '@wagmi/core'
+import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
 import { useAccount } from "wagmi";
-import { waitForTransaction } from '@wagmi/core'
-import { Address, Hex, createPublicClient, decodeEventLog, http, parseAbi } from "viem";
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { Address, createPublicClient, http, parseAbi } from "viem";
 
 
 export default function Home() {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [portalConfirmationMessage, setPortalConfirmationMessage] = useState('');
+const [isPortalCreating, setIsPortalCreating] = useState(false);
   const methods = useForm();
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
 
+
   const { address, isConnected } = useAccount({
   });
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const img = e.target.files[0];
+      setSelectedImage({
+        imageFile: img,
+        previewURL: URL.createObjectURL(img),
+      });
+    }
+  };
+
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "EBF",
+    functionName: "createSchema", // Ensure your contract has this function or adjust accordingly
+    args: ["", "", ""], // Update based on your contract's requirements
+    value: BigInt(0),
+    onBlockConfirmation: () => {
+      router.push("/"); // Forward to the correct page
+    },
+  });
+
+  const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
+  const veraxSdk = new VeraxSdk(sdkConf, address);
 
   const onSubmit = async (formData) => {
     if (!isConnected || !address) {
@@ -32,9 +58,6 @@ export default function Home() {
     console.log("Form data submitted", formData);
     const schemaString = formData.schemaString; // Assuming this is a string like "(string username, string teamname, uint16 points, bool active)"
 
-    // Assuming VeraxSdk is initialized and connected properly
-    const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
-    const veraxSdk = new VeraxSdk(sdkConf, address);
 
     try {
         const schemaId = await veraxSdk.schema.getIdFromSchemaString(schemaString);
@@ -71,6 +94,47 @@ export default function Home() {
     }
 };
 
+const handleCreatePortal = async () => {
+  if (!isConnected || !address) {
+      setErrorMessage('Please connect your wallet to create a portal.');
+      return;
+  }
+
+  setIsPortalCreating(true);
+  setErrorMessage(''); // Clear previous errors
+
+  try {
+      const txHash = await veraxSdk.portal.deployDefaultPortal(
+          [], // List of modules, empty in this case
+          "Tutorial Portal", // Example name, replace with form data if needed
+          "This Portal is used for the tutorial", // Example description
+          true, // Assuming revocable is true
+          "Verax Tutorial" // Example owner name
+      );
+      console.log("Portal creation initiated, transaction hash:", txHash);
+
+      // Wait for the transaction to be confirmed
+      // Assuming you have an ethers provider initialized
+      const receipt = await waitForTransactionReceipt(getPublicClient(), {
+        hash: txHash,
+     });
+     const decodedLogs = decodeEventLog({
+        abi: parseAbi(["event PortalRegistered(string name, string description, address portalAddress)"]),
+        data: receipt.logs[0].data,
+        topics: receipt.logs[0].topics,
+     });
+     const portalId = decodedLogs.args.portalAddress;
+      console.log("Portal transaction confirmed, receipt:", receipt);
+
+  } catch (error) {
+      console.error("Error creating portal:", error);
+      setErrorMessage(error.message || 'An unknown error occurred while creating the portal.');
+  } finally {
+      setIsPortalCreating(false);
+  }
+};
+
+
 return (
   <div className="container mx-auto px-4 py-8">
     <FormProvider {...methods}>
@@ -88,6 +152,13 @@ return (
         </div>
       </form>
     </FormProvider>
+    <div className="flex justify-center space-x-4"> {/* Adjust spacing as needed */}
+    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-full m-1" onClick={handleCreatePortal} disabled={isPortalCreating}>
+        {isPortalCreating ? 'Creating Portal...' : 'Add Portal'}
+    </button>
+</div>
+{portalConfirmationMessage && <div className="text-green-500 mb-4">{portalConfirmationMessage}</div>}
+{errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
   </div>
 );
 }
