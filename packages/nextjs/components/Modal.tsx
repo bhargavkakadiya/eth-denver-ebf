@@ -1,6 +1,8 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import BasicTooltip from "./tooltip/CloseIcon";
+import Slider from "./tooltip/Slider";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Modal from "@mui/material/Modal";
@@ -34,6 +36,13 @@ export default function BasicModal({
 
   data: any;
 }) {
+  const [showSlider, setShowSlider] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [value, setSelectedValue] = useState(0);
+
+  useEffect(() => {
+    setSelectedValue(30);
+  }, [selectedIndex, showSlider]);
   return (
     <Modal
       open={isOpen}
@@ -70,11 +79,23 @@ export default function BasicModal({
             {data.map((_, index) => (
               <div key={index} className="flex justify-between items-center">
                 <span>Circle {index + 1}</span>
-                <button>+</button>
+                <button
+                  className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
+                  onClick={() => {
+                    console.log("clicked");
+                    setShowSlider(true);
+                    setSelectedIndex(index + 1);
+                  }}
+                >
+                  +
+                </button>
               </div>
             ))}
           </div>
         </Typography>
+        <div className="bg-red-500 justify-center align-middle items-center self-center">
+          {showSlider && <Slider value={value} setSelectedValue={setSelectedValue} />}
+        </div>
       </Box>
     </Modal>
   );
