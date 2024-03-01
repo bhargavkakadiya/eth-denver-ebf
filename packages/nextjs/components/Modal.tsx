@@ -20,7 +20,17 @@ const style = {
   color: "black",
 };
 
-export default function BasicModal({ isOpen, onClose, title, children }) {
+export default function BasicModal({
+  isOpen,
+  onClose,
+  title,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: any;
+  title: string;
+  children: any;
+}) {
   return (
     <Modal
       open={isOpen}
@@ -36,6 +46,9 @@ export default function BasicModal({ isOpen, onClose, title, children }) {
           <BasicTooltip onClose={onClose} />
         </div>
         <Divider />
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          Add a new feature
+        </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {children}
         </Typography>
