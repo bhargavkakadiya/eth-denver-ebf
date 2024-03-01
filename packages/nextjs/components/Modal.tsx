@@ -48,6 +48,8 @@ export default function BasicModal({
   useEffect(() => {
     setSelectedValue(3);
   }, [selectedIndex, showSlider]);
+
+  console.log("value", child);
   return (
     <Modal
       open={isOpen}
@@ -56,8 +58,8 @@ export default function BasicModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <div style={{ display: "flex", justifyContent: "space-between", margin: "12px" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px" }}>
             {child?.ipfsURI && (
               <div
                 style={{
@@ -85,10 +87,10 @@ export default function BasicModal({
 
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider color={"bg-primary"} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
+        <Divider color={"bg-secondary"} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center", maxHeight:"400px" }}>
           <Typography id="modal-modal-description" sx={{ m: 2 }}>
-            Description for the event goes here
+            {child?.projectDescription}
           </Typography>
 
           <div
@@ -99,7 +101,7 @@ export default function BasicModal({
           </div>
         </div>
 
-        <Divider color={"bg-primary"} />
+        <Divider color={"bg-secondary"} />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <div className="space-y-4">
             {data.map((val: any, index: number) => (
