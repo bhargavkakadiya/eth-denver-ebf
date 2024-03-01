@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { OutlinedInput } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { NFTStorage } from "nft.storage";
@@ -89,35 +89,9 @@ export default function Home() {
           style={{ backgroundColor: "#212638", color: "white" }}
         >
           <div className="mb-4">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Name
-              </Typography>
-            </div>
-            <OutlinedInput
-              id="outlined-basic"
-              label="Outlined"
-              onChange={() => {
-                console.log("changed");
-              }}
-              style={{ color: "white", width: "100%" }}
-            />
+            <TextInput name="name" label="Name" type="text" />
+            <TextInput name="place" label="Place" type="text" />
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Type
-              </Typography>
-            </div>
-            <OutlinedInput
-              id="outlined-basic"
-              label="Outlined"
-              onChange={() => {
-                console.log("changed");
-              }}
-              style={{ color: "white", width: "100%" }}
-            />
-
-           
             <br />
             <div className="mb-4">
               <label className="block white text-sm font-bold mb-2">PlaceImage</label>
