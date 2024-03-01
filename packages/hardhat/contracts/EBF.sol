@@ -58,7 +58,21 @@ contract EBF is ERC1155, OdysseyStorage {
 		++projectCounter;
 	}
 
-	function getAllProjects() public view returns (Structs.Project[] memory) {}
+	function getAllProjects() public view returns (Structs.Project[] memory) {
+		if (projectCounter == 0) {
+			return new Structs.Project[](0);
+		}
+
+		Structs.Project[] memory allProjects = new Structs.Project[](
+			projectCounter
+		);
+
+		for (uint256 i = 0; i < projectCounter; i++) {
+			allProjects[i] = projects[i];
+		}
+
+		return allProjects;
+	}
 
 	function isVerified(
 		bytes32 _messageHash,
