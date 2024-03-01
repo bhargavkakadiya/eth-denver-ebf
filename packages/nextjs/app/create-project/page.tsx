@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
-import { OutlinedInput } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import { NFTStorage } from "nft.storage";
 import { FormProvider, useForm } from "react-hook-form";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
