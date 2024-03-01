@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
@@ -32,7 +32,7 @@ export default function Home() {
     functionName: "createProject",
     args: ["", "", ""],
     value: BigInt(0),
-    onBlockConfirmation: txnReceipt => {
+    onBlockConfirmation: () => {
       router.push("/"); // forward to correct page
     },
   });
