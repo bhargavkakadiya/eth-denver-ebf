@@ -3,11 +3,9 @@ import { useState } from "react";
 import TextInput from "./scaffold-eth/Input/TextInput";
 import BasicTooltip from "./tooltip/CloseIcon";
 import Slider from "./tooltip/Slider";
-import { OutlinedInput } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import { FormProvider, useForm } from "react-hook-form";
 
 const style = {
@@ -41,7 +39,6 @@ export default function NestedModal({ open, setOpen }: { open: boolean; setOpen:
         </div>
         <Divider />
         <FormProvider {...methods}>
-        
           <form
             className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
             style={{ backgroundColor: "#212638", color: "white" }}
