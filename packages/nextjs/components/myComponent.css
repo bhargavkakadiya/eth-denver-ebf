@@ -1,0 +1,21 @@
+/* myComponent.css */
+
+.myBubbleUI {
+    width: 90%;
+    min-width: 90vw;
+    height: 80vh; /* Use viewport height to make the height responsive */
+    border-radius: 50px;
+
+  }
+  
+  .child {
+    width: 50%; /* Example: Make child width relative to its parent */
+    height: 50%; /* Example: Make child height relative to its parent */
+    border-radius: 50%; /* Keeps the circular shape */
+    max-width: 200px; /* Optional: Prevents the child from becoming too large */
+    max-height: 200px; /* Optional: Matches max-width for maintaining aspect ratio */
+    margin: auto; /* Center the child if it's a flex item or has display:block */
+  }
+  
+  
+  
