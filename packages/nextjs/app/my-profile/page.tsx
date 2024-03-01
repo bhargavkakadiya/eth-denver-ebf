@@ -1,6 +1,9 @@
 "use client";
 
+// Assuming you have this component
 import { useEffect, useState } from "react";
+import ErrorPage from "next/error";
+import { useRouter } from "next/router";
 import { verifyMessage } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -8,6 +11,8 @@ import { useSignMessage } from "wagmi";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -123,6 +128,11 @@ const Home: NextPage = () => {
     } else {
       return <div>Connect your wallet to see your score</div>;
     }
+  }
+
+  // Assuming userData is the 'post' you're referring to
+  if (!router.isFallback && !userData) {
+    return <ErrorPage statusCode={404} />;
   }
 
   return <>{renderContent()}</>;
