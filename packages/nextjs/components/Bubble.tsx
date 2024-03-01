@@ -53,8 +53,7 @@ export default function Bubble() {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             setModelDetails={setModelDetails}
-         child={child}
-
+            child={child}
           />
         ))}
       </BubbleUI>
@@ -63,8 +62,9 @@ export default function Bubble() {
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title={modelDetails.name}
+          title={modelDetails.projectName}
           data={Array.from({ length: 6 })}
+          child={modelDetails}
         />
       </div>
     </div>

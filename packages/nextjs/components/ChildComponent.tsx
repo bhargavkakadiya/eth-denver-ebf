@@ -43,7 +43,7 @@ const ChildComponent = ({
         if (isModalOpen) {
           setIsModalOpen(false);
         }
-        setModelDetails({ name });
+        setModelDetails(child);
         setIsModalOpen(true);
 
         // const rect = event.target.getBoundingClientRect();
