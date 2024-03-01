@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import NestedModal from "./NestedModal";
+import iconsList from "./iconsList";
 import BasicTooltip from "./tooltip/CloseIcon";
 import Slider from "./tooltip/Slider";
 import Box from "@mui/material/Box";
@@ -17,7 +18,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  height: 600,
+  height: 700,
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -49,7 +50,9 @@ export default function BasicModal({
     setSelectedValue(3);
   }, [selectedIndex, showSlider]);
 
-  console.log("value", child);
+  const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
+
+  const lastLength = child?.tags?.length;
   return (
     <Modal
       open={isOpen}
@@ -88,7 +91,15 @@ export default function BasicModal({
           <BasicTooltip onClose={onClose} />
         </div>
         <Divider color={"bg-secondary"} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center", maxHeight:"400px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignContent: "center",
+            alignItems: "center",
+            maxHeight: "400px",
+          }}
+        >
           <Typography id="modal-modal-description" sx={{ m: 2 }}>
             {child?.projectDescription}
           </Typography>
@@ -104,20 +115,26 @@ export default function BasicModal({
         <Divider color={"bg-secondary"} />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <div className="space-y-4">
-            {data.map((val: any, index: number) => (
-              <div key={index} className="flex justify-between items-center">
-                <span>Circle {index + 1}</span>
-                <button
-                  className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
-                  onClick={() => {
-                    setShowSlider(true);
-                    setSelectedIndex((index as any) + 1);
-                  }}
-                >
-                  +
-                </button>
-              </div>
-            ))}
+            {child?.tags?.map((val: any, index: number) => {
+              const icon = iconsList.filter(icon => icon.name === child.tags[index]);
+              if (icon.length == 0) {
+                return;
+              }
+              return (
+                <div key={index} className="flex justify-between items-center">
+                  <span>{icon[0].icon}</span>
+                  <button
+                    className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
+                    onClick={() => {
+                      setShowSlider(true);
+                      setSelectedIndex((index as any) + 1);
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </Typography>
         <div className="justify-center align-middle items-center self-center ">
