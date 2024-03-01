@@ -80,7 +80,7 @@ const Home = () => {
         <>
           {checkScore ? (
             <button
-              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center m-1 align-middle self-center m-20"
               onClick={() => {
                 fetchPassportScore();
               }}
@@ -88,9 +88,9 @@ const Home = () => {
               Check my Score
             </button>
           ) : (
-            <div className="flex items-center flex-col flex-grow pt-10">
+            <div className="container mx-auto py-8 my-auto" style={{ backgroundColor: "#212638", color: "white" }}>
               {isConnected && userData && (
-                <div className="bg-red-500 p-4">
+                <div className=" max-w-lg mx-auto px-20 pt-6 pb-8 mb-4 relative flex-col items-center   p-10 justify-center align-middle">
                   <h1 className="text-2xl font-bold">Player Info </h1>
                   <div className="flex space-x-4">
                     <div className="mb-1">
