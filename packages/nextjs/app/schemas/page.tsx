@@ -1,41 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { VeraxSdk } from '@verax-attestation-registry/verax-sdk'
-import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
+import { VeraxSdk } from '@verax-attestation-registry/verax-sdk';
 import { useAccount } from "wagmi";
 import { waitForTransactionReceipt } from "viem/actions";
-import { Address, createPublicClient, http } from "viem";
-import { decodeEventLog, parseAbi } from "viem";
+import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
 
 
 export default function Home() {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [portalConfirmationMessage, setPortalConfirmationMessage] = useState('');
-const [isPortalCreating, setIsPortalCreating] = useState(false);
-  const methods = useForm();
+  const [issueConfirmationMessage, setIssueConfirmationMessage] = useState('');
+  const [isPortalCreating, setIsPortalCreating] = useState(false);
+  const [isIssuing, setIsIssuing] = useState(false);
+  
+  const schemaFormMethods = useForm();
+  const attestationFormMethods = useForm();
   const router = useRouter();
-  const [selectedImage, setSelectedImage] = useState(null);
 
-
-  const { address, isConnected } = useAccount({
-  });
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const img = e.target.files[0];
-      setSelectedImage({
-        imageFile: img,
-        previewURL: URL.createObjectURL(img),
-      });
-    }
-  };
+  const { address, isConnected } = useAccount();
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "EBF",
@@ -50,7 +38,7 @@ const [isPortalCreating, setIsPortalCreating] = useState(false);
   const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
   const veraxSdk = new VeraxSdk(sdkConf, address);
 
-  const onSubmit = async (formData) => {
+  const onSubmitSchema = async (formData) => {
     if (!isConnected || !address) {
         setErrorMessage('Please connect your wallet.');
         return;
@@ -75,13 +63,14 @@ const [isPortalCreating, setIsPortalCreating] = useState(false);
                 formData.context, // Schema context
                 schemaString, // The actual schema string
             );
-            console.log("Schema creation initiated, transaction hash:", txHash);
+            const transactionHash = txHash.transactionHash;
+            console.log("Schema creation initiated, transaction hash:", transactionHash);
 
             // Wait for the transaction to be confirmed
             try {
-                const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: txHash });
+              const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash });
                 console.log("Transaction confirmed, receipt:", receipt);
-                setConfirmationMessage('Schema has been successfully created.'); // Set confirmation message
+                setConfirmationMessage('Schema ' + schemaId + ' has been successfully created.'); // Set confirmation message
                 setErrorMessage(''); // Clear any previous error message
                 // Redirect or further actions after successful schema creation
             } catch (confirmationError) {
@@ -137,31 +126,90 @@ const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: trans
   }
 };
 
+const handleIssueAttestation = async (formData) => {
+  if (!isConnected || !address) {
+      setErrorMessage('Please connect your wallet to issue an attestation.');
+      return;
+  }
+
+  setIsIssuing(true);
+  setErrorMessage(''); // Clear previous errors
+
+  try {
+    console.log(formData.attestationAddress)
+    console.log(formData.score)
+
+
+      const txHash = await veraxSdk.portal.attest(
+          '0xF11ef82AC622114370B89e119f932D7ff6BFF78A', // This should be your portalId
+          {
+              schemaId: '0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3', // Correctly place schemaId here
+              expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
+              subject: formData.attestationAddress,
+              attestationData: [{tokenID: parseInt(formData.projectID), score: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
+          },
+          [], // Additional options if any
+      );
+      const transactionHash = txHash.transactionHash;
+      const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash });
+     const attestationID = receipt.logs[0].topics[1];
+     const attestation = await veraxSdk.attestation.getAttestation(attestationID);
+     console.log(attestation)
+      // Continue with your existing logic...
+  } catch (error) {
+      console.error("Error issuing attestation:", error);
+      setErrorMessage(error.message || 'An unknown error occurred while issuing the attestation.');
+  } finally {
+      setIsIssuing(false);
+  }
+};
+
+
 
 return (
   <div className="container mx-auto px-4 py-8">
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
+    {/* Schema Creation Form */}
+    <FormProvider {...schemaFormMethods}>
+      <h2 className="text-lg font-semibold mb-4">Create Schema</h2>
+      <form onSubmit={schemaFormMethods.handleSubmit(onSubmitSchema)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
         <TextInput name="name" label="Schema Name" type="text" />
         <TextInput name="description" label="Description" type="text" />
         <TextInput name="context" label="Context URL" type="text" />
         <TextInput name="schemaString" label="Schema String" type="text" placeholder="(string username, string teamname, uint16 points, bool active)" />
         {confirmationMessage && <div className="text-green-500 mb-4">{confirmationMessage}</div>}
-            {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
         <div className="flex justify-center">
           <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isLoading}>
-            {isLoading ? <span className="loading loading-spinner loading-sm"></span> : <>Create Schema</>}
+            {isLoading ? <span className="loading loading-spinner loading-sm"></span> : 'Create Schema'}
           </button>
         </div>
       </form>
     </FormProvider>
-    <div className="flex justify-center space-x-4"> {/* Adjust spacing as needed */}
-    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-full m-1" onClick={handleCreatePortal} disabled={isPortalCreating}>
-        {isPortalCreating ? 'Creating Portal...' : 'Add Portal'}
-    </button>
-</div>
-{portalConfirmationMessage && <div className="text-green-500 mb-4">{portalConfirmationMessage}</div>}
-{errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+    
+    {/* Portal Creation Button */}
+    <h2 className="text-lg font-semibold mb-4">Add Portal</h2>
+    <div className="flex justify-center space-x-4 mb-8">
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-full m-1" onClick={handleCreatePortal} disabled={isPortalCreating}>
+          {isPortalCreating ? 'Creating Portal...' : 'Add Portal'}
+      </button>
+    </div>
+    {portalConfirmationMessage && <div className="text-green-500 mb-4">{portalConfirmationMessage}</div>}
+
+    {/* Attestation Issuance Form */}
+    <FormProvider {...attestationFormMethods}>
+      <h2 className="text-lg font-semibold mb-4">Issue Attestation</h2>
+      <form onSubmit={attestationFormMethods.handleSubmit(handleIssueAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
+          <TextInput name="attestationAddress" label="User Address" type="text" {...attestationFormMethods.register("attestationAddress")} placeholder="User's Ethereum address" />
+          <TextInput name="projectID" label="Project ID" type="text" {...attestationFormMethods.register("projectID")} placeholder="Project ID" />
+          <TextInput name="score" label="Score" type="number" {...attestationFormMethods.register("score")} placeholder="Score value" />
+          <div className="flex justify-center">
+              <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isIssuing}>
+                  {isIssuing ? 'Issuing...' : 'Issue Attestation'}
+              </button>
+          </div>
+      </form>
+    </FormProvider>
+    {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
+    {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
   </div>
 );
 }
