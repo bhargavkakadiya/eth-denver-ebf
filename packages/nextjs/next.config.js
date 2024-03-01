@@ -15,7 +15,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["ipfs.io"],
+    domains: ["ipfs.io", "img.icons8.com"],
   },
 };
 
