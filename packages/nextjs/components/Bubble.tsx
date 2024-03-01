@@ -38,20 +38,24 @@ import "react-bubble-ui/dist/index.css";
 /* eslint-disable prettier/prettier */
 // myComponent.js
 
+/* eslint-disable prettier/prettier */
+// myComponent.js
+
+/* eslint-disable prettier/prettier */
+// myComponent.js
+
 const ChildComponent = ({
   name,
   circleRef,
   isModalOpen,
   setIsModalOpen,
   setModelDetails,
-
 }: {
   name: any;
   circleRef: any;
   isModalOpen: boolean;
   setIsModalOpen: any;
   setModelDetails: any;
-
 }) => {
   const smallerCircleSize = 80; // Size of the smaller circles
   const mainCircleDiameter = 320; // Diameter of the main circle
@@ -64,7 +68,7 @@ const ChildComponent = ({
 
   const insideCircleSize = smallerCircleSize;
 
-  const openModal = (event: any) => {
+  const openModal = () => {
     if (circleRef.current) {
       const circleBounds = circleRef.current.getBoundingClientRect();
 
@@ -73,25 +77,19 @@ const ChildComponent = ({
 
       if (meetsSizeCriteria) {
         // Calculate modal position (to the right by default, or to the left if not enough space)
-       
 
         if (isModalOpen) {
           setIsModalOpen(false);
         }
         setModelDetails({ name });
         setIsModalOpen(true);
+
+        // const rect = event.target.getBoundingClientRect();
+
        
-
-        const rect = event.target.getBoundingClientRect();
-
-        // Calculate the click position relative to the circle
-        // event.clientX and event.clientY give the click position in the viewport
-        // rect.left and rect.top give the top-left corner of the circle in the viewport
-        const xPosition = event.clientX - rect.left;
-        const yPosition = event.clientY - rect.top;
-        const position = { left: xPosition, top: yPosition };
-      
-        
+        // const xPosition = event.clientX - rect.left;
+        // const yPosition = event.clientY - rect.top;
+        // const position = { left: xPosition, top: yPosition };
       }
     }
   };
@@ -174,7 +172,7 @@ export default function Bubble() {
   const circleRef = useRef(null); // Reference to the circle element
   const [modelDetails, setModelDetails] = useState({} as any);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPosition, setModalPosition] = useState({ left: 0, top: 0 });
+
   return (
     <div ref={circleRef}>
       <BubbleUI options={options} className="myBubbleUI">
@@ -186,17 +184,11 @@ export default function Bubble() {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             setModelDetails={setModelDetails}
-
           />
         ))}
       </BubbleUI>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={modelDetails.name}
-        position={modalPosition}
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={modelDetails.name}>
         <div className="space-y-4">
           <div className="flex justify-between items-center  h-full w-full">
             <h3 className="">Add New Feature</h3>

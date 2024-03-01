@@ -1,33 +1,45 @@
-import React from "react";
+import * as React from "react";
+import BasicTooltip from "./tooltip/CloseIcon";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 
-
-
-const round = (number: number, decimalPlaces: number) => {
-  const factor = Math.pow(10, decimalPlaces);
-  return Math.round(number * factor) / factor;
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  height: 500,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 2,
+  color: "black",
 };
-const Modal = ({ isOpen, onClose, title, children, position }) => {
-  if (!isOpen) return null;
 
-  const modalStyle = {
-    top: `${round(position.top, 2)}px`,
-    left: `${round(position.left, 2)}px`,
-  };
-
+export default function BasicModal({ isOpen, onClose, title, children }) {
   return (
-    <div
-      className={` inset-0 bg-black flex justify-center items-center rounded-md  absolute z-50 w-65 h-65 `}
-      style={modalStyle}
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
     >
-      <div className=" text-white p-5 rounded-lg shadow-lg max-w-md ">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">{title}</h2>
-          <button onClick={onClose}>×</button>
+      <Box sx={style}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {title}
+          </Typography>
+          <BasicTooltip onClose={onClose} />
         </div>
-        {children}
-      </div>
-    </div>
+        <Divider />
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          {children}
+        </Typography>
+      </Box>
+    </Modal>
   );
-};
-
-export default Modal;
+}
