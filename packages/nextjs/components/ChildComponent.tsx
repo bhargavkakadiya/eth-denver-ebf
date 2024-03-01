@@ -8,12 +8,14 @@ const ChildComponent = ({
   isModalOpen,
   setIsModalOpen,
   setModelDetails,
+  child,
 }: {
   name: any;
   circleRef: any;
   isModalOpen: boolean;
   setIsModalOpen: any;
   setModelDetails: any;
+  child: any;
 }) => {
   const smallerCircleSize = 80; // Size of the smaller circles
   const mainCircleDiameter = 320; // Diameter of the main circle
