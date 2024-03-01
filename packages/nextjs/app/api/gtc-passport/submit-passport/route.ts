@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   return Response.json(data);
 }
 
-async function submitPassport(address, community, signature, nonce) {
+async function submitPassport(address: `0x${string}`, community: any, signature: any, nonce: any) {
   const axiosSubmitPassportConfig = {
     headers: {
       "X-API-KEY": process.env.NEXT_PUBLIC_SCORER_API_KEY,

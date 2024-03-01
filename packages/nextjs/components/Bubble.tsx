@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-// myComponent.js
 "use client";
 
 import React, { useRef, useState } from "react";
@@ -7,45 +5,6 @@ import BubbleUI from "../components/Bubble/BubbleElement";
 import Modal from "./Modal";
 import "./myComponent.css";
 import "react-bubble-ui/dist/index.css";
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
-
-/* eslint-disable prettier/prettier */
-// myComponent.js
 
 const ChildComponent = ({
   name,
