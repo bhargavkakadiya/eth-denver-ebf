@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import NestedModal from "./NestedModal";
 import BasicTooltip from "./tooltip/CloseIcon";
 import Slider from "./tooltip/Slider";
 import Box from "@mui/material/Box";
@@ -39,7 +40,7 @@ export default function BasicModal({
   const [showSlider, setShowSlider] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [value, setSelectedValue] = useState(0);
-
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     setSelectedValue(3);
   }, [selectedIndex, showSlider]);
@@ -68,8 +69,9 @@ export default function BasicModal({
 
           <div
             className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
+            onClick={() => setOpen(true)}
           >
-            Add new feature
+            Add new benefits
           </div>
         </div>
 
@@ -82,7 +84,6 @@ export default function BasicModal({
                 <button
                   className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
                   onClick={() => {
-                    console.log("clicked");
                     setShowSlider(true);
                     setSelectedIndex(index + 1);
                   }}
@@ -96,6 +97,8 @@ export default function BasicModal({
         <div className="justify-center align-middle items-center self-center ">
           {showSlider && <Slider value={value} setSelectedValue={setSelectedValue} />}
         </div>
+
+        <NestedModal open={open} setOpen={setOpen} />
       </Box>
     </Modal>
   );
