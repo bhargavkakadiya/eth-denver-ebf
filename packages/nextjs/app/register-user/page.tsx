@@ -27,9 +27,17 @@ export default function Home() {
   const onSubmit = async (data: any) => {
     const msg = `Register`;
     const msgHash = hashMessage(msg);
-    const privateKey = process.env.NEXT_PUBLIC_PRIVATE_KEY || "";
-    const wallet = new Wallet(privateKey);
-    const signature = await wallet.signMessage(arrayify(msgHash));
+
+    const callAPI = await fetch("/api/register-user/sign-msg", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        msgHash: msgHash,
+      }),
+    });
+    const { signature } = await callAPI.json();
 
     if (msgHash && signature) {
       writeAsync({
@@ -64,8 +72,4 @@ export default function Home() {
       </FormProvider>
     </div>
   );
-}
-
-function arrayify(msgHash: string): Uint8Array {
-  return new Uint8Array(Buffer.from(msgHash.slice(2), "hex"));
 }
