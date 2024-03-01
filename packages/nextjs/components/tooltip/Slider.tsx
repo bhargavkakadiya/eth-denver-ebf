@@ -1,7 +1,10 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
+// Ensure correct import from MUI
+import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 
 type SxPropProps = {
   value: number;
@@ -10,20 +13,26 @@ type SxPropProps = {
 
 const SxProp: React.FC<SxPropProps> = ({ value, setSelectedValue }) => {
   return (
-    <Slider
-    value={value}
-    defaultValue={30}
-    onChange={(event, newValue) => {
-      // Material-UI Slider uses a different pattern for the onChange event
-      setSelectedValue(newValue as number); // Casting newValue to number to ensure type safety
-    }}
-    sx={{
-      width: 500, // Assuming this is a custom style and 'sx' prop is supported by your Slider component
-      color: "success.main", // This also assumes 'color' supports such value
-    }}
-  />
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px", boxSizing: "border-box" }}
+    >
+      <Typography gutterBottom>Value: {value}</Typography>
+      <Slider
+        value={value}
+        onChange={(event, newValue) => {
+          setSelectedValue(newValue as number);
+        }}
+        defaultValue={3}
+        aria-labelledby="input-slider"
+        min={0}
+        max={10}
+        sx={{
+          width: 300,
+          color: "success.main",
+        }}
+      />
+    </Box>
   );
-}
+};
 
 export default SxProp;
-

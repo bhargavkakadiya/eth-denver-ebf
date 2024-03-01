@@ -14,7 +14,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  height: 500,
+  height: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -41,7 +41,7 @@ export default function BasicModal({
   const [value, setSelectedValue] = useState(0);
 
   useEffect(() => {
-    setSelectedValue(30);
+    setSelectedValue(3);
   }, [selectedIndex, showSlider]);
   return (
     <Modal
@@ -93,7 +93,7 @@ export default function BasicModal({
             ))}
           </div>
         </Typography>
-        <div className="bg-red-500 justify-center align-middle items-center self-center">
+        <div className="justify-center align-middle items-center self-center ">
           {showSlider && <Slider value={value} setSelectedValue={setSelectedValue} />}
         </div>
       </Box>
