@@ -47,10 +47,8 @@ const Home: NextPage = () => {
         }),
       });
       const submitResponseData = await submitResponse.json();
-      console.log(submitResponseData);
       const scoreResponseCall = await fetch(`/api/gtc-passport/fetch-score?address=${address}`);
       const scoreResponse = await scoreResponseCall.json();
-      console.log(scoreResponse);
       // Make sure to check the status
       if (scoreResponse.status === "ERROR" || scoreResponse.error !== null) {
         setPassportScore(0);

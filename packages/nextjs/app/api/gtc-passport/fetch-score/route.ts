@@ -14,7 +14,7 @@ export async function GET(req: Request) {
 async function fetchScore(address: `0x${string}`) {
   const axiosGetScoreConfig = {
     headers: {
-      "X-API-KEY": process.env.NEXT_PUBLIC_SCORER_API_KEY,
+      "X-API-KEY": process.env.SCORER_API_KEY,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
