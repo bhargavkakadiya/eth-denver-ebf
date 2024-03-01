@@ -16,12 +16,12 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 700,
   height: 600,
-  bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
-  color: "black",
+  color: "white",
+  backgroundColor: "#212638",
 };
 
 export default function BasicModal({
@@ -61,7 +61,7 @@ export default function BasicModal({
           </div>
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider />
+        <Divider color={"bg-primary"} />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Description for the event goes here
@@ -75,7 +75,7 @@ export default function BasicModal({
           </div>
         </div>
 
-        <Divider />
+        <Divider color={"bg-primary"} />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           <div className="space-y-4">
             {data.map((_, index) => (

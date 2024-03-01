@@ -20,7 +20,8 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
-  color: "black",
+  color: "white",
+  backgroundColor: "#212638",
 };
 
 export default function NestedModal({ open, setOpen }: { open: boolean; setOpen: any }) {
@@ -42,7 +43,14 @@ export default function NestedModal({ open, setOpen }: { open: boolean; setOpen:
             Name
           </Typography>
         </div>
-        <OutlinedInput id="outlined-basic" label="Outlined" />
+        <OutlinedInput
+          id="outlined-basic"
+          label="Outlined"
+          onChange={() => {
+            console.log("changed");
+          }}
+          style={{ color: "white", width: "100%" }}
+        />
 
         <Divider />
 

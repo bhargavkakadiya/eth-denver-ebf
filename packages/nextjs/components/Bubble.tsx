@@ -190,12 +190,15 @@ export default function Bubble() {
         ))}
       </BubbleUI>
 
+<div style={{backdropFilter: "blur(5px)"}}>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={modelDetails.name}
         data={Array.from({ length: 6 })}
+      
       />
+    </div>
     </div>
   );
 }
