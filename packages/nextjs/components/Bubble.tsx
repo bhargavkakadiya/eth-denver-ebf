@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import BubbleUI from "../components/Bubble/BubbleElement";
 import ChildComponent from "./ChildComponent";
 import Modal from "./Modal";
 import "./myComponent.css";
 import "react-bubble-ui/dist/index.css";
+import { useAccount } from "wagmi";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 export default function Bubble() {
   const options = {
@@ -23,35 +25,19 @@ export default function Bubble() {
     gravitation: 5,
   };
 
-  const childElements = [
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    { name: "Bubble 1" },
-    { name: "Bubble 2" },
-    // Add more child elements as needed
-  ];
+  const { address, isConnected } = useAccount({});
+
+  const [childElements, setChildElements] = useState([]);
+
+  const { data: userData } = useScaffoldContractRead({
+    contractName: "EBF",
+    functionName: "getAllProjects",
+  });
+
+  useEffect(() => {
+    setChildElements(userData as any);
+  }, [userData]);
+
   const circleRef = useRef(null); // Reference to the circle element
   const [modelDetails, setModelDetails] = useState({} as any);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,14 +45,16 @@ export default function Bubble() {
   return (
     <div ref={circleRef}>
       <BubbleUI options={options} className="myBubbleUI">
-        {childElements.map((child, index) => (
+        {childElements.map((child: { projectName: string; tags: string[] }, index) => (
           <ChildComponent
             key={index}
-            name={child.name}
+            name={child.projectName}
             circleRef={circleRef}
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             setModelDetails={setModelDetails}
+         child={child}
+
           />
         ))}
       </BubbleUI>
