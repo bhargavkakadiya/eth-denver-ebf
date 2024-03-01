@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-
 import BasicTooltip from "./tooltip/CloseIcon";
 import Slider from "./tooltip/Slider";
 import { OutlinedInput } from "@mui/material";
