@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
+import iconsList from "../../components/iconsList";
 import { NFTStorage } from "nft.storage";
 import { FormProvider, useForm } from "react-hook-form";
+import IconSelection from "~~/components/IconSelect";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function Home() {
@@ -37,11 +39,10 @@ export default function Home() {
     },
   });
 
+  const [selectedIcons, setSelectedIcons] = useState([]);
+
   const onSubmit = (formData: any) => {
     const handleSubmission = ({ ipfsCID, ipfsCIDmust }: { ipfsCID: string; ipfsCIDmust: boolean }) => {
-      console.log("handling write");
-      console.log("Form data submitted", formData);
-      console.log("IPFS CID", ipfsCID);
       if (ipfsCIDmust) {
         if (!ipfsCID) {
           console.error("IPFS CID not found");
@@ -88,8 +89,9 @@ export default function Home() {
         >
           <div className="mb-4">
             <TextInput name="name" label="Name" type="text" />
-            <TextInput name="place" label="Place" type="text" />
+            <TextInput name="description" label="Description" type="text/area" />
 
+            <IconSelection selectedIcons={selectedIcons} setSelectedIcons={setSelectedIcons} iconsList={iconsList} />
             <br />
             <div className="mb-4">
               <label className="block white text-sm font-bold mb-2">PlaceImage</label>
