@@ -9,6 +9,8 @@ import Divider from "@mui/material/Divider";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 
+const baseUrl = "https://ipfs.io/ipfs/";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -30,12 +32,14 @@ export default function BasicModal({
   title,
 
   data,
+  child,
 }: {
   isOpen: boolean;
   onClose: any;
   title: string;
 
   data: any;
+  child: any;
 }) {
   const [showSlider, setShowSlider] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -54,11 +58,31 @@ export default function BasicModal({
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between", margin: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-            <Image src="/public/favicon.png" alt="logo" width={16} height={16} />
+            {child?.ipfsURI && (
+              <div
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  marginRight: "10px",
+                  position: "relative",
+                }}
+              >
+                <Image
+                  src={`${baseUrl}${child?.ipfsURI}`}
+                  alt="logo"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              </div>
+            )}
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {title}
             </Typography>
           </div>
+
           <BasicTooltip onClose={onClose} />
         </div>
         <Divider color={"bg-primary"} />
