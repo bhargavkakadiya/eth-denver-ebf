@@ -80,7 +80,7 @@ const Home = () => {
         <>
           {checkScore ? (
             <button
-              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center m-1 align-middle self-center m-20"
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center align-middle self-center m-20"
               onClick={() => {
                 fetchPassportScore();
               }}
