@@ -7,67 +7,55 @@ import { getPublicClient } from "@wagmi/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { waitForTransactionReceipt } from "viem/actions";
 import { useAccount } from "wagmi";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function Home() {
-  useEffect(() => {
-    if (typeof window =='undefined') {
-      return;
-    }
-  }, []);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const [isIssuing, setIsIssuing] = useState(false);
-
-  const attesterAttestationFormMethods = useForm();
-
   const { address, isConnected } = useAccount();
-
-  const { writeAsync, isLoading } = useScaffoldContractWrite({
-    contractName: "EBF",
-    functionName: "createSchema", // Ensure your contract has this function or adjust accordingly
-    args: ["", "", ""], // Update based on your contract's requirements
-    value: BigInt(0),
-  });
-
-  const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
-  const veraxSdk = new VeraxSdk(sdkConf, address);
+  const [isIssuing, setIsIssuing] = useState(false);
+  const attesterAttestationFormMethods = useForm(); // Explicitly type the state to either be null or an instance of VeraxSdk
+  const [veraxSdk, setVeraxSdk] = useState<VeraxSdk | null>(null);
 
   const handleIssueAttesterAttestation = async (formData: any) => {
     if (!isConnected || !address) {
-      setErrorMessage("Please connect your wallet to issue an attestation.");
       return;
     }
-
     setIsIssuing(true);
-    setErrorMessage(""); // Clear previous errors
 
     try {
       console.log(formData.attestationAddress);
       console.log(formData.score);
 
-      const txHash = await veraxSdk.portal.attest(
-        "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
-        {
-          schemaId: "0x5214e29f9b3422dcb0e835acf629e90157b5ed54986de0ded15cbdce3a1cad3d", // Correctly place schemaId here
-          expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
-          subject: formData.attestationAddress,
-          attestationData: [{ EBFAttesterScore: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
-        },
-        [], // Additional options if any
-      );
-      const transactionHash = txHash.transactionHash;
-      const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash as `0x` });
-      const attestationID = receipt.logs[0].topics[1];
-      const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0x`);
-      console.log(attestation);
-      // Continue with your existing logic...
+      if (veraxSdk) {
+        const txHash = await veraxSdk.portal.attest(
+          "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
+          {
+            schemaId: "0x5214e29f9b3422dcb0e835acf629e90157b5ed54986de0ded15cbdce3a1cad3d", // Correctly place schemaId here
+            expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
+            subject: formData.attestationAddress,
+            attestationData: [{ EBFAttesterScore: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
+          },
+          [], // Additional options if any
+        );
+        const transactionHash = txHash.transactionHash;
+        const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash as `0x` });
+        const attestationID = receipt.logs[0].topics[1];
+        const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0x`);
+        console.log(attestation);
+        // Continue with your existing logic...
+      }
     } catch (error) {
       console.error("Error issuing attestation:", error);
     } finally {
       setIsIssuing(false);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && address) {
+      const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
+      const VeraxSdkInstance = new VeraxSdk(sdkConf, address);
+      setVeraxSdk(VeraxSdkInstance);
+    }
+  }, [address]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -100,11 +88,6 @@ export default function Home() {
           </div>
         </form>
       </FormProvider>
-
-      {/* {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
-    {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
-
- */}
     </div>
   );
 }
