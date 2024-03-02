@@ -78,7 +78,7 @@ export const HeaderMenuLinks = () => {
 
       <button>
         <Link href={"/certify"} passHref>
-          <span>Atleast</span>
+          <span>Certify</span>
         </Link>
       </button>
 
