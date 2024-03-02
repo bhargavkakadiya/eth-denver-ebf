@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { VeraxSdk } from "@verax-attestation-registry/verax-sdk";
 import { getAccount, getEnsName, getPublicClient } from "@wagmi/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { waitForTransactionReceipt } from "viem/actions";
-import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
-import {  useEffect } from "react";
-
+import { useAccount } from "wagmi";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function Home() {
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -21,7 +21,7 @@ export default function Home() {
 
   //to query attestations
   const [attestations, setAttestations] = useState([]);
-  
+
   const schemaFormMethods = useForm();
   const attestationFormMethods = useForm();
   const router = useRouter();
@@ -139,6 +139,7 @@ export default function Home() {
     try {
       console.log(formData.attestationAddress);
       console.log(formData.score);
+      console.log(formData.impactType);
 
       const txHash = await veraxSdk.portal.attest(
         "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
@@ -146,7 +147,9 @@ export default function Home() {
           schemaId: "0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3", // Correctly place schemaId here
           expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
           subject: formData.attestationAddress,
-          attestationData: [{ tokenID: parseInt(formData.projectID), score: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
+          attestationData: [
+            { tokenID: parseInt(formData.projectID), impactType: formData.impactType, score: parseInt(formData.score) },
+          ], // Rename 'address' to 'userAddress' or similar
         },
         [], // Additional options if any
       );
@@ -164,11 +167,18 @@ export default function Home() {
     }
   };
 
+<<<<<<< HEAD
 
 const fetchAttestations = async () => {
   const GRAPHQL_URL = 'https://api.thegraph.com/subgraphs/name/Consensys/linea-attestation-registry';
 
   const query = `
+=======
+  const fetchAttestations = async () => {
+    const GRAPHQL_URL = "https://api.thegraph.com/subgraphs/name/Consensys/linea-attestation-registry";
+
+    const query = `
+>>>>>>> 40962fd (add attest and deploy on testnet)
     {
       attestations(
         where: {
@@ -184,6 +194,7 @@ const fetchAttestations = async () => {
       }
     }`;
 
+<<<<<<< HEAD
   try {
     const response = await fetch(GRAPHQL_URL, {
       method: 'POST',
@@ -283,6 +294,49 @@ return (
           <TextInput name="projectID" label="Project ID" type="text" {...attestationFormMethods.register("projectID")} placeholder="Project ID" />
           <TextInput name="impactType" label="Impact Type" type="text" {...attestationFormMethods.register("impactType")} placeholder="Impact Type" />
           <TextInput name="score" label="Score" type="number" {...attestationFormMethods.register("score")} placeholder="Score value" />
+=======
+    try {
+      const response = await fetch(GRAPHQL_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const responseData = await response.json();
+      setAttestations(responseData.data.attestations);
+    } catch (error) {
+      console.error("Error querying The Graph:", error);
+      setErrorMessage("Error fetching attestations.");
+    }
+  };
+
+  useEffect(() => {
+    fetchAttestations();
+  }, []);
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Schema Creation Form */}
+      <FormProvider {...schemaFormMethods}>
+        <h2 className="text-lg font-semibold mb-4">Create Schema</h2>
+        <form
+          onSubmit={schemaFormMethods.handleSubmit(onSubmitSchema)}
+          className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+          style={{ backgroundColor: "#212638", color: "white" }}
+        >
+          <TextInput name="name" label="Schema Name" type="text" />
+          <TextInput name="description" label="Description" type="text" />
+          <TextInput name="context" label="Context URL" type="text" />
+          <TextInput
+            name="schemaString"
+            label="Schema String"
+            type="text"
+            placeholder="(string username, string teamname, uint16 points, bool active)"
+          />
+          {confirmationMessage && <div className="text-green-500 mb-4">{confirmationMessage}</div>}
+>>>>>>> 40962fd (add attest and deploy on testnet)
           <div className="flex justify-center">
             <button
               className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
@@ -298,6 +352,7 @@ return (
     {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
 
 
+<<<<<<< HEAD
     <div className="attestations">
   <h2 className="text-lg font-semibold mb-4">Attestations</h2>
   {attestations.length > 0 ? (
@@ -318,3 +373,83 @@ return (
   </div>
 );
 }
+=======
+      {/* Attestation Issuance Form */}
+      <FormProvider {...attestationFormMethods}>
+        <h2 className="text-lg font-semibold mb-4">Issue Attestation</h2>
+        <form
+          onSubmit={attestationFormMethods.handleSubmit(handleIssueAttestation)}
+          className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+          style={{ backgroundColor: "#212638", color: "white" }}
+        >
+          <TextInput
+            name="attestationAddress"
+            label="User Address"
+            type="text"
+            {...attestationFormMethods.register("attestationAddress")}
+            placeholder="User's Ethereum address"
+          />
+          <TextInput
+            name="projectID"
+            label="Project ID"
+            type="text"
+            {...attestationFormMethods.register("projectID")}
+            placeholder="Project ID"
+          />
+          <TextInput
+            name="impactType"
+            label="Impact Type"
+            type="text"
+            {...attestationFormMethods.register("impactType")}
+            placeholder="Impact Type"
+          />
+          <TextInput
+            name="score"
+            label="Score"
+            type="number"
+            {...attestationFormMethods.register("score")}
+            placeholder="Score value"
+          />
+          <div className="flex justify-center">
+            <button
+              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
+              type="submit"
+              disabled={isIssuing}
+            >
+              {isIssuing ? "Issuing..." : "Issue Attestation"}
+            </button>
+          </div>
+        </form>
+      </FormProvider>
+      {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
+      {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+
+      <div className="attestations">
+        <h2 className="text-lg font-semibold mb-4">Attestations</h2>
+        {attestations.length > 0 ? (
+          <div className="attestation-list">
+            {attestations.map((attestation, index) => (
+              <div key={index} className="attestation-item mb-4 p-4 shadow-md rounded-lg bg-white">
+                <div>
+                  <strong>ID:</strong> {attestation.id}
+                </div>
+                <div>
+                  <strong>Data:</strong> {attestation.attestationData}
+                </div>
+                <div>
+                  <strong>Decoded Data:</strong> {attestation.decodedData}
+                </div>
+                <div>
+                  <strong>Schema String:</strong> {attestation.schemaString}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>No attestations found.</div>
+        )}
+      </div>
+    </div>
+  );
+}
+>>>>>>> 40962fd (add attest and deploy on testnet)
