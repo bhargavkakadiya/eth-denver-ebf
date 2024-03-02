@@ -85,6 +85,9 @@ export default function Bubble() {
           };
         });
 
+
+        console.log("newAttestations----------------->>>>>>>>>", newAttestations);
+
         function groupByProperty(array: any, property: any) {
           return array.reduce((accumulator: any, item: any) => {
             const key = item[property];
@@ -98,6 +101,8 @@ export default function Bubble() {
 
         const groupedData = groupByProperty(newAttestations, "tokenID");
 
+
+        console.log("groupedData----------------->>>>>>>>>", groupedData);
         setAttestations(groupedData);
       }
 

@@ -115,6 +115,7 @@ export default function BasicModal({
       const attestationID = receipt.logs[0].topics[1];
       const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0xString`);
 
+      console.log("Attestation issued:", attestation);
       // Continue with your existing logic...
     } catch (error) {
       console.error("Error issuing attestation:", error);
@@ -235,8 +236,11 @@ export default function BasicModal({
               }
 
               const average = attestations
-              .filter((attestation: any) => attestation.impacxtType === child.tags[index])
+              .filter((attestation: any) => attestation.impactType === child.tags[index])
               .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
+
+
+              console.log("average",child.tags[index],average,attestations)
               return (
                 <div
                   key={index}

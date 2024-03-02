@@ -45,7 +45,7 @@ const ChildComponent = ({
         if (isModalOpen) {
           setIsModalOpen(false);
         }
-        setModelDetails({...child, attestations});
+        setModelDetails({ ...child, attestations });
         setIsModalOpen(true);
 
         // const rect = event.target.getBoundingClientRect();
@@ -70,7 +70,10 @@ const ChildComponent = ({
           className="rounded-full w-24 h-24  flex items-center justify-center"
           style={{ backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover" }}
         >
-          <p className="text-white text-xl font-bold z-10 text-center" style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)" }}>
+          <p
+            className="text-white text-xl font-bold z-10 text-center"
+            style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)" }}
+          >
             {name}
           </p>
         </div>
@@ -88,9 +91,11 @@ const ChildComponent = ({
           }
 
           const average = attestations
-            .filter((attestation: any) => attestation.impacxtType === child.tags[index])
+            .filter((attestation: any) => attestation.impactType === child.tags[index])
             .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
 
+
+           
           return (
             <div
               key={index}
@@ -103,13 +108,11 @@ const ChildComponent = ({
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                opacity: `${(average == 0 ? 2 : average) / 10})`,
-                // // backgroundColor: icon[0].color,
-                // color:"white"
+                backgroundColor: "black",
+
+                opacity: `${(average == 0 ? 2 : average )/ 10}`,
               }}
-              
             >
-                 
               {icon[0].icon}
             </div>
           );
@@ -135,10 +138,9 @@ const ChildComponent = ({
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                // backgroundColor: "rgba(255, 255, 255, 0.1)",
+                opacity: 0.1,
               }}
             >
-         
               {remainingTags[index - lastLength]?.icon}
             </div>
           );
