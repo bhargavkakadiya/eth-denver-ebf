@@ -66,10 +66,7 @@ export default function BasicModal({
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
-  const closeModal=()=>{
-    setOpen(false);
-    
-  }
+  
   const sdkConf =
     (chain?.id ?? 0) === 59144 ? VeraxSdk.DEFAULT_LINEA_MAINNET_FRONTEND : VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
   const veraxSdk = new VeraxSdk(sdkConf, address);
