@@ -7,8 +7,14 @@ import { VeraxSdk } from "@verax-attestation-registry/verax-sdk";
 import { getAccount, getEnsName, getPublicClient } from "@wagmi/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { waitForTransactionReceipt } from "viem/actions";
+<<<<<<< HEAD
 import { useAccount } from "wagmi";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+=======
+import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
+import {  useEffect } from "react";
+
+>>>>>>> 0da90e9d3316882082c5ed49422a0a39f19ffe9f
 
 export default function Home() {
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -18,6 +24,12 @@ export default function Home() {
   const [isPortalCreating, setIsPortalCreating] = useState(false);
   const [isIssuing, setIsIssuing] = useState(false);
 
+<<<<<<< HEAD
+=======
+  //to query attestations
+  const [attestations, setAttestations] = useState([]);
+  
+>>>>>>> 0da90e9d3316882082c5ed49422a0a39f19ffe9f
   const schemaFormMethods = useForm();
   const attestationFormMethods = useForm();
   const router = useRouter();
