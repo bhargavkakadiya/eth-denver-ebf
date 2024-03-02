@@ -49,3 +49,10 @@ We welcome contributions from those passionate about building a sustainable futu
 - **Deployed Contract**: [View on Lineascan](https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code)
 
 Let's build a sustainable future together! 🌟
+
+## 🐾 Team Members
+
+- @bhargavkakadiya
+- @Dharmik79
+- @DarrenZal
+- @LinuxIsCool
