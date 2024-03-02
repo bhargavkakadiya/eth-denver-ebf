@@ -167,7 +167,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
         {myProjects &&
           myProjects.map((project: any, index: number) => {
             return (
-              <div className="flex flex-row" key={index}>
+              <div className="flex flex-col" key={index}>
                 <ReviewCard
                   name={project.projectName}
                   desc={project.projectDescription}
@@ -175,7 +175,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
                   project={project}
                 />
 
-                {loading ? "Loading..." : "Airdrop Attestors"}
+                {loading &&  "Loading..." }
                 {errorMessage && <div>{errorMessage}</div>}
               </div>
             );
