@@ -75,7 +75,7 @@ export const useScaffoldEventHistory = <
         const logs = await publicClient.getLogs({
           address: deployedContractData?.address,
           event,
-          args: filters as any, // TODO: check if it works and fix type
+          args: filters as any, 
           fromBlock: fromBlock || fromBlockUpdated,
           toBlock: blockNumber,
         });
