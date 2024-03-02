@@ -98,7 +98,8 @@ export default function BasicModal({
     try {
       console.log(formData.attestationAddress);
       console.log(formData.score);
-
+console.log(formData.impactType);
+console.log(formData.projectID);
       const txHash = await veraxSdk.portal.attest(
         "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
         {
@@ -130,14 +131,17 @@ export default function BasicModal({
     }
     const projectID = parseInt(child?.id); // 0n .. convert it to number
     const formData = {
-      attestationAddress: address,
+      attestationAddress: "0xb68093bb89f26a807626f5757db7246D6d2c6d59", // TODO update the contract address
       projectID: projectID,
       impactType: selectedIndexValue,
       score: value,
     };
+
     if (!user || user < 20) {
-      alert("You need to have a score of 20 to issue an attestation");
-    } else handleIssueAttestation(formData);
+      alert("You need to have a Gitcoin Passport score of 20 to issue an attestation");
+    } else 
+    
+    handleIssueAttestation(formData);
   };
 
   const closeModal = () => {
@@ -238,7 +242,7 @@ export default function BasicModal({
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center rounded-xl"
+                  className="flex justify-between items-center rounded-xl px-4 py-2"
                   style={{
                     borderColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
                     borderWidth: selectedIndexValue === icon[0]?.name ? "2px" : "0px", // Ensure units are included
