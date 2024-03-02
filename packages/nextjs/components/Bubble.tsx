@@ -31,8 +31,6 @@ export default function Bubble() {
   const [attestations, setAttestations] = useState([] as any);
   function decodeAttestationData(encodedData: any) {
     try {
-   
-
       const decodedData = veraxSdk.utils.decode("(uint256 tokenID, string impactType, uint256 score)", encodedData);
       return decodedData;
     } catch (error) {
@@ -79,7 +77,6 @@ export default function Bubble() {
           }[]; // Add type assertion here
           if (!decodedData) return attestation;
 
-
           return {
             ...attestation,
             tokenID: decodedData[0].tokenID,
@@ -87,8 +84,6 @@ export default function Bubble() {
             score: decodedData[0].score,
           };
         });
-
-       
 
         function groupByProperty(array: any, property: any) {
           return array.reduce((accumulator: any, item: any) => {
@@ -102,7 +97,7 @@ export default function Bubble() {
         }
 
         const groupedData = groupByProperty(newAttestations, "tokenID");
-      
+
         setAttestations(groupedData);
       }
 
@@ -129,10 +124,8 @@ export default function Bubble() {
 
   useEffect(() => {
     if (userData) {
-   
-
       fetchAttestations(
-        "0xb68093bb89f26a807626f5757db7246D6d2c6d59", // TODO update the contract address
+        "0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1", // TODO update the contract address
         "0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3",
       );
     }
@@ -141,13 +134,18 @@ export default function Bubble() {
   return (
     <div ref={circleRef}>
       <BubbleUI options={options} className="myBubbleUI">
-        {childElements?.map((child: {
-          id: any; projectName: string; tags: string[] 
-}, index) => {
-       const childAttestations= attestations[child.id] || [];
-   
-          return (
-            
+        {childElements?.map(
+          (
+            child: {
+              id: any;
+              projectName: string;
+              tags: string[];
+            },
+            index,
+          ) => {
+            const childAttestations = attestations[child.id] || [];
+
+            return (
               <ChildComponent
                 key={index}
                 name={child.projectName}
@@ -158,9 +156,9 @@ export default function Bubble() {
                 child={child}
                 attestations={childAttestations}
               />
-            
-          );
-        })}
+            );
+          },
+        )}
       </BubbleUI>
 
       <div style={{ backdropFilter: "blur(5px)" }}>
