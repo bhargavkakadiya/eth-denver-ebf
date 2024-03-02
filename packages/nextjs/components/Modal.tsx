@@ -73,7 +73,7 @@ export default function BasicModal({
   }, [userData]);
 
   useEffect(() => {
-    setSelectedValue(3);
+    setSelectedValue(0);
   }, [selectedIndexValue, showSlider]);
 
   useEffect(() => {
