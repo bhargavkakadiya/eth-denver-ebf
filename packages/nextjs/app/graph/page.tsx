@@ -123,6 +123,11 @@ const fetchDataAndCreateGraphData = async (veraxSdk : any) => {
 
 
   const TestGraph = () => {
+    useEffect(() => {
+        if (typeof window =='undefined') {
+          return;
+        }
+      }, []);
     const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
     const { address, isConnected } = useAccount();
         const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;

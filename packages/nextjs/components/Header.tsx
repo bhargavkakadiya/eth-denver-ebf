@@ -4,11 +4,16 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Attest from "../app/certify/page";
+
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import Graph from "../app/graph/page";
+import dynamic from 'next/dynamic';
+
+const Attest = dynamic(() => import('../app/certify/page'), {ssr: false})
+const Graph = dynamic(() => import('../app/graph/page'), {ssr: false})
+
+
 type HeaderMenuLink = {
   label: string;
   href: string;
@@ -36,10 +41,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Schemas",
     href: "/schemas",
   }, */
-  {
-    label: "Attest",
-    href: "/certify",
-  },
+  
   {
     label: "Graph",
     href: "/graph",
@@ -73,6 +75,13 @@ export const HeaderMenuLinks = () => {
           </li>
         );
       })}
+
+      <button>
+        <Link href={"/certify"} passHref>
+          <span>Atleast</span>
+        </Link>
+      </button>
+
      
     </>
   );
