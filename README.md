@@ -22,13 +22,14 @@ A discoverable network of trust for registering impact projects and verifying th
 
 The ecological benefits framework offers a standardized way of quantifying and communicating ecological benefits for projects. However, discovering these projects and verifying their benefits remains a challenge.
 
-EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits. This makes projects discoverable and their benefits verifiable through an intuitive dashboard, aiding in the evaluation of impact essential for grants programs and funding mechanisms.
+EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits. This makes projects discoverable and their benefits verifiable through an intuitive dashboard, aiding in the evaluation of impact essential for grants programs and funding mechanisms. Each project is registered as an 1155 NFT. Project owners can reward attesters with airdrops. The system maintains a network of trust between attesters and projects. Sybil defence is implemented using gitcoin passport. 
 
 ## 💡 Key Features
 
-- **Discoverable Network of Trust**: Easily find and connect with ecological projects.
-- **Verifiable Ecological Benefits**: Utilize an intuitive dashboard to verify project impacts.
-- **Standardized Evaluation**: Facilitate the allocation of capital based on verifiable ecological impact.
+- **Discoverable Network of Trust**: Easily find and connect with ecological projects and trusted contributors.
+- **Verifiable Impact**: Ecological benefits framework offers standardized impact classifications.
+- **Airdrop Rewards to Attesters**: Phosphor allows one click airdrops to attester network.
+- **Sybil Resistant**: Using Gitcoin Passport
 
 ## 🌎 User Flow
 ![Drawing 2024-03-02 04 34 29 excalidraw](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/98f9b1d9-6554-41b4-b46c-519d1ad6fd9d)
