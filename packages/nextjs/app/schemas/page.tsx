@@ -138,6 +138,7 @@ const handleIssueAttestation = async (formData) => {
   try {
     console.log(formData.attestationAddress)
     console.log(formData.score)
+    console.log(formData.impactType)
 
 
       const txHash = await veraxSdk.portal.attest(
@@ -146,7 +147,7 @@ const handleIssueAttestation = async (formData) => {
               schemaId: '0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3', // Correctly place schemaId here
               expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
               subject: formData.attestationAddress,
-              attestationData: [{tokenID: parseInt(formData.projectID), score: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
+              attestationData: [{tokenID: parseInt(formData.projectID), impactType: formData.impactType, score: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
           },
           [], // Additional options if any
       );
@@ -200,6 +201,7 @@ return (
       <form onSubmit={attestationFormMethods.handleSubmit(handleIssueAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
           <TextInput name="attestationAddress" label="User Address" type="text" {...attestationFormMethods.register("attestationAddress")} placeholder="User's Ethereum address" />
           <TextInput name="projectID" label="Project ID" type="text" {...attestationFormMethods.register("projectID")} placeholder="Project ID" />
+          <TextInput name="impactType" label="Impact Type" type="text" {...attestationFormMethods.register("impactType")} placeholder="Impact Type" />
           <TextInput name="score" label="Score" type="number" {...attestationFormMethods.register("score")} placeholder="Score value" />
           <div className="flex justify-center">
               <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isIssuing}>
