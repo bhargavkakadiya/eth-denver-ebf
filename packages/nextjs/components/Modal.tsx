@@ -42,6 +42,7 @@ export default function BasicModal({
 
   data,
   id,
+  attestations,
 }: {
   isOpen: boolean;
   onClose: any;
@@ -49,6 +50,7 @@ export default function BasicModal({
 
   data: any;
   id: any;
+  attestations: any;
 }) {
   const [showSlider, setShowSlider] = useState(false);
   const [selectedIndexValue, setSelectedIndexValue] = useState(null);
@@ -231,6 +233,10 @@ export default function BasicModal({
               if (icon.length == 0) {
                 return;
               }
+
+              const average = attestations
+              .filter((attestation: any) => attestation.impacxtType === child.tags[index])
+              .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
               return (
                 <div
                   key={index}
@@ -254,7 +260,7 @@ export default function BasicModal({
                   >
                     {icon[0].icon}
                   </span>
-                  <p>{icon[0].name}</p>
+                  <p>{icon[0].name}({average})</p>
                   <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1">
                     +
                   </button>
@@ -273,7 +279,7 @@ export default function BasicModal({
                 <button
                   className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center items-center"
                   onClick={onAttest}
-                  // TODO: Add the submit function call here
+                 
                 >
                   {isIssuing ? "Issuing..." : "Issue Attestation"}
                 </button>
