@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "./Structs.sol";
 import "./Storage.sol";
 
-contract EBF is ERC1155, OdysseyStorage {
+contract EBF is ERC1155, Storage {
 	uint256 private projectCounter = 0;
 
 	constructor() ERC1155("EBF") {
@@ -91,6 +91,14 @@ contract EBF is ERC1155, OdysseyStorage {
 		}
 
 		return allProjects;
+	}
+
+	// Function to get a project by its ID, including all its tags
+	function getProjectById(
+		uint256 projectId
+	) public view returns (Structs.Project memory, string[] memory) {
+		Structs.Project memory project = projects[projectId];
+		return (project, project.tags);
 	}
 
 	function isVerified(
