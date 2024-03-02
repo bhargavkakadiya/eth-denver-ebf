@@ -66,14 +66,14 @@ const ChildComponent = ({
         className="relative accent-content rounded-full w-80 h-80 flex items-center justify-center transition-all duration-300 ease-in-out z-0 border-2 border-accent-content"
         onClick={openModal}
       >
-        <div
-          className="rounded-full w-24 h-24 overflow-hidden flex items-center justify-center"
-          style={{ backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover" }}
-        >
-          <p className="text-white text-xl font-bold z-10" style={{ backgroundColor: "rgba(0, 0, 0, 0.0)" }}>
-            {name}
-          </p>
-        </div>
+         <div
+    className="rounded-full w-24 h-24 overflow-hidden flex items-center justify-center"
+    style={{ backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover" }}
+  >
+    <p className="text-white text-xl font-bold z-10" style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)" }}>
+      {name}
+    </p>
+  </div>
 
         {child?.tags?.map((_: any, index: number) => {
           const angle = (Math.PI / 3) * index; // Distributing circles evenly 360/6 degrees apart
