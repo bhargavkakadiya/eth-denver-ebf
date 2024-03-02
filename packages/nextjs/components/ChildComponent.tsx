@@ -11,6 +11,7 @@ const ChildComponent = ({
   setIsModalOpen,
   setModelDetails,
   child,
+  attestations,
 }: {
   name: any;
   circleRef: any;
@@ -18,6 +19,7 @@ const ChildComponent = ({
   setIsModalOpen: any;
   setModelDetails: any;
   child: any;
+  attestations: any;
 }) => {
   const smallerCircleSize = 80; // Size of the smaller circles
   const mainCircleDiameter = 320; // Diameter of the main circle
@@ -84,6 +86,11 @@ const ChildComponent = ({
           if (icon.length == 0) {
             return;
           }
+
+          const average = attestations
+            .filter((attestation: any) => attestation.impactType === child.tags[index])
+            .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
+
           return (
             <div
               key={index}
@@ -96,7 +103,7 @@ const ChildComponent = ({
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                backgroundColor: "rgba(255, 255, 255, 1)",
+                backgroundColor: `rgba(255, 255, 255, ${(average == 0 ? 1 : average) / 10})`,
               }}
             >
               {icon[0].icon}
