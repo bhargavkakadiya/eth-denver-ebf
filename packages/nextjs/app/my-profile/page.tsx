@@ -1,21 +1,20 @@
 "use client";
 
 // Assuming you have this component
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { verifyMessage } from "ethers";
 import { useAccount } from "wagmi";
 import { useSignMessage } from "wagmi";
+import UserContext from "~~/components/Contexts/UserContext";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const Home = () => {
+  const { user, setUser } = useContext<any>(UserContext);
   const { address, isConnected } = useAccount({});
-
-  console.log("iisisisisiiii---------------------------", address, isConnected);
 
   const [checkScore, setCheckScore] = useState(true);
   const [nonce, setNonce] = useState("");
   const [passportScore, setPassportScore] = useState(0);
-  console.log("address", checkScore);
 
   const { data: userData } = useScaffoldContractRead({
     contractName: "EBF",
@@ -53,6 +52,7 @@ const Home = () => {
 
       // Store the user's passport score for later use.
       setPassportScore(scoreResponse.score || 0);
+      setUser(scoreResponse.score || 0);
       setCheckScore(false);
     },
   });
@@ -68,12 +68,22 @@ const Home = () => {
       const scorerMessageResponse = await scorerMessageResponseCall.json();
       setNonce(scorerMessageResponse.nonce);
       signMessage({ message: scorerMessageResponse.message });
+   
     } catch (error) {
       console.error("Failed to fetch passport score:", error);
       // Handle the error appropriately in your application context
     }
   };
-
+console.log("user", user);
+  useEffect(() => {
+    if (user) {
+      setPassportScore(user)
+      setCheckScore(false);
+      return;
+    } else {
+      fetchPassportScore();
+    }
+  }, []);
   return (
     <>
       {address ? (
@@ -85,7 +95,7 @@ const Home = () => {
                 fetchPassportScore();
               }}
             >
-              Check my Score
+              Check my Gitcoin Passport Score
             </button>
           ) : (
             <div className="container mx-auto py-8 my-auto" style={{ backgroundColor: "#212638", color: "white" }}>

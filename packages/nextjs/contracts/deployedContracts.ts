@@ -243,6 +243,11 @@ const deployedContracts = {
             {
               components: [
                 {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
                   internalType: "address",
                   name: "registeredBy",
                   type: "address",
@@ -293,6 +298,62 @@ const deployedContracts = {
             },
           ],
           stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "projectId",
+              type: "uint256",
+            },
+          ],
+          name: "getProjectById",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "registeredBy",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "projectName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "projectDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "ipfsURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Structs.Project",
+              name: "",
+              type: "tuple",
+            },
+            {
+              internalType: "string[]",
+              name: "",
+              type: "string[]",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -372,6 +433,11 @@ const deployedContracts = {
           ],
           name: "projects",
           outputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
             {
               internalType: "address",
               name: "registeredBy",
@@ -658,12 +724,16 @@ const deployedContracts = {
         setApprovalForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         supportsInterface: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         uri: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        isRegistered: "contracts/Storage.sol",
+        projects: "contracts/Storage.sol",
+        tokenURIs: "contracts/Storage.sol",
+        users: "contracts/Storage.sol",
       },
     },
   },
   59140: {
     EBF: {
-      address: "0x54Bfc7a958da74Ff582dF6d8827663854B7A69C6",
+      address: "0xb68093bb89f26a807626f5757db7246D6d2c6d59",
       abi: [
         {
           inputs: [],
@@ -791,6 +861,34 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "_projectId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "_tag",
+              type: "string",
+            },
+            {
+              internalType: "bytes32",
+              name: "_msgHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_signature",
+              type: "bytes",
+            },
+          ],
+          name: "addTagstoProject",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "account",
               type: "address",
@@ -845,8 +943,13 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "_projectType",
+              name: "_projectDescription",
               type: "string",
+            },
+            {
+              internalType: "string[]",
+              name: "_tags",
+              type: "string[]",
             },
             {
               internalType: "string",
@@ -866,6 +969,11 @@ const deployedContracts = {
             {
               components: [
                 {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
                   internalType: "address",
                   name: "registeredBy",
                   type: "address",
@@ -877,8 +985,13 @@ const deployedContracts = {
                 },
                 {
                   internalType: "string",
-                  name: "projectType",
+                  name: "projectDescription",
                   type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
                 },
                 {
                   internalType: "string",
@@ -911,6 +1024,62 @@ const deployedContracts = {
             },
           ],
           stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "projectId",
+              type: "uint256",
+            },
+          ],
+          name: "getProjectById",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "registeredBy",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "projectName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "projectDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "ipfsURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Structs.Project",
+              name: "",
+              type: "tuple",
+            },
+            {
+              internalType: "string[]",
+              name: "",
+              type: "string[]",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -991,6 +1160,11 @@ const deployedContracts = {
           name: "projects",
           outputs: [
             {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
               internalType: "address",
               name: "registeredBy",
               type: "address",
@@ -1002,7 +1176,7 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "projectType",
+              name: "projectDescription",
               type: "string",
             },
             {
@@ -1276,6 +1450,10 @@ const deployedContracts = {
         setApprovalForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         supportsInterface: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         uri: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        isRegistered: "contracts/Storage.sol",
+        projects: "contracts/Storage.sol",
+        tokenURIs: "contracts/Storage.sol",
+        users: "contracts/Storage.sol",
       },
     },
   },

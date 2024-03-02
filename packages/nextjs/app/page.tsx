@@ -1,7 +1,7 @@
-"use client";
-
 import React from "react";
-import Bubble from "../components/Bubble";
+import dynamic from "next/dynamic";
+
+const Bubble = dynamic(() => import("../components/Bubble"), { ssr: false });
 
 const Home = () => {
   return (

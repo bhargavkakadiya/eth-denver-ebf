@@ -9,6 +9,7 @@ library Structs {
 	}
 
 	struct Project {
+		uint256 id;
 		address registeredBy;
 		string projectName;
 		string projectDescription;

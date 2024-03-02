@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import IconSelection from "./IconSelect";
 import TextInput from "./scaffold-eth/Input/TextInput";
 import BasicTooltip from "./tooltip/CloseIcon";
 import Slider from "./tooltip/Slider";
@@ -15,23 +16,36 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
-  height: 400,
+  width: 600,
+  height: 300,
   bgcolor: "background.paper",
   border: "2px solid #000",
-  boxShadow: 24,
   p: 4,
   borderRadius: 2,
   color: "white",
   backgroundColor: "#212638",
 };
 
-export default function NestedModal({ open, setOpen }: { open: boolean; setOpen: any }) {
-  const [value, setSelectedValue] = useState(0);
+export default function NestedModal({
+  open,
+  setOpen,
+  tags,
+  name,
+  closeModal,
+  id
+}: {
+  open: boolean;
+  setOpen: any;
+  tags: any;
+  name: string;
+  closeModal: any;
+  id: any;
+}) {
   const methods = useForm();
   const onClose = () => {
     setOpen(false);
   };
+  const [selectedIcons, setSelectedIcons] = useState("");
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "EBF",
@@ -39,13 +53,11 @@ export default function NestedModal({ open, setOpen }: { open: boolean; setOpen:
     args: [BigInt(0), "abc", "0x", "0x"],
     value: BigInt(0),
     onBlockConfirmation: () => {
-      setOpen(false);
+      closeModal();
     },
   });
 
   const onSubmit = async (data: any) => {
-    console.log("Form data submitted", methods.getValues());
-
     const msg = `Register`;
     const msgHash = hashMessage(msg);
 
@@ -62,7 +74,7 @@ export default function NestedModal({ open, setOpen }: { open: boolean; setOpen:
 
     if (msgHash && signature) {
       writeAsync({
-        args: [BigInt(0), methods.getValues("name"), msgHash as `0x${string}`, signature as `0x${string}`],
+        args: [BigInt(id), selectedIcons, msgHash as `0x${string}`, signature as `0x${string}`],
       });
     }
   };
@@ -71,22 +83,21 @@ export default function NestedModal({ open, setOpen }: { open: boolean; setOpen:
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}></div>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>{name}</div>
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider />
+
         <FormProvider {...methods}>
           <form
-            className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+            className="max-w-lg mx-auto rounded-lg px-8 pt-6 pb-8 mb-4"
             style={{ backgroundColor: "#212638", color: "white" }}
           >
-            <TextInput name="name" label="Name" type="text" />
-            <Divider />
-
-            <div className="justify-center align-middle items-center self-center ">
-              {<Slider value={value} setSelectedValue={setSelectedValue} />}
-            </div>
-
+            <IconSelection
+              selectedIcons={selectedIcons}
+              setSelectedIcons={setSelectedIcons}
+              iconsList={tags}
+              select={true}
+            />
             <div
               className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
               onClick={onSubmit}

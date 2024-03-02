@@ -3,17 +3,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import iconsList from "../../components/iconsList";
+import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { NFTStorage } from "nft.storage";
 import { FormProvider, useForm } from "react-hook-form";
 import IconSelection from "~~/components/IconSelect";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
+const client = new NFTStorage({
+  token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY || "",
+});
+
 export default function Home() {
   const methods = useForm();
   const router = useRouter();
-
+  const [selectedIcons, setSelectedIcons] = useState([]);
   const [selectedImage, setSelectedImage] = useState<{
     imageFile: File | null;
     previewURL: string | null;
@@ -35,11 +39,12 @@ export default function Home() {
     args: ["", "", [""], ""],
     value: BigInt(0),
     onBlockConfirmation: () => {
-      router.push("/"); // forward to correct page
+   
+      methods.reset();
+      setSelectedIcons([]);
+      setSelectedImage(null);
     },
   });
-
-  const [selectedIcons, setSelectedIcons] = useState([]);
 
   const onSubmit = (formData: any) => {
     const handleSubmission = ({ ipfsCID, ipfsCIDmust }: { ipfsCID: string; ipfsCIDmust: boolean }) => {
@@ -49,20 +54,16 @@ export default function Home() {
           return;
         } else {
           writeAsync({
-            args: [formData.name, formData.place, [], ipfsCID],
+            args: [formData.name, formData.description, selectedIcons, ipfsCID],
           });
         }
       }
     };
 
     if (selectedImage && selectedImage.imageFile) {
-      const client = new NFTStorage({
-        token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY || "",
-      });
       client
         .storeBlob((selectedImage as any).imageFile)
         .then(cid => {
-          console.log("IPFS CID", cid);
           handleSubmission({
             ipfsCID: cid,
             ipfsCIDmust: true,
@@ -91,7 +92,12 @@ export default function Home() {
             <TextInput name="name" label="Name" type="text" />
             <TextInput name="description" label="Description" type="text/area" />
 
-            <IconSelection selectedIcons={selectedIcons} setSelectedIcons={setSelectedIcons} iconsList={iconsList} />
+            <IconSelection
+              selectedIcons={selectedIcons}
+              setSelectedIcons={setSelectedIcons}
+              iconsList={iconsList}
+              select={false}
+            />
             <br />
             <div className="mb-4">
               <label className="block white text-sm font-bold mb-2">PlaceImage</label>
@@ -112,13 +118,7 @@ export default function Home() {
             {selectedImage && selectedImage.previewURL && (
               <div className="mb-4">
                 <p className="block white text-sm font-bold mb-2">Preview</p>
-                <Image
-                  src={selectedImage.previewURL}
-                  alt="Preview"
-                  className="max-w-xs max-h-64"
-                  width={200}
-                  height={200}
-                />
+                <Image src={selectedImage.previewURL} alt="Preview" width={200} height={200} />
               </div>
             )}
           </div>
