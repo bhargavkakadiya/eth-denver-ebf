@@ -1,35 +1,47 @@
-# 🏗 EBF Network of Trust
+# 🌍 EBF Network of Trust 🌱
 
-<h4 align="center">
-  <a href="https://ethden24-ebf.vercel.app/">TestnetDemo</a>
-</h4>
+<p align="center">
+  <a href="https://ethden24-ebf.vercel.app/"><strong>🚀 Testnet Demo</strong></a>
+</p>
 
-🧪 A discoverable network of trust for registering impact projects and verifying their ecological benefits, built using verax attestations and the ecological benefits framework.
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+<div align="center">
 
-- ✅ **Live on Linea Testnet**:
--
+🧪 **Project Overview** 🧪
 
-## Documentation
+A discoverable network of trust for registering impact projects and verifying their ecological benefits, built using Verax attestations and the Ecological Benefits Framework.
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+⚙️ **Technology Stack** ⚙️
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+📈 Linea 🔍 Verax 💡 Phosphor 🧩 ERC1155 🌐 IPFS 🖼️ NFT.Storage ⚛️ NextJS 🛠️ Hardhat 🌈 RainbowKit 🏗️ ScaffoldETH2 ✊ Wagmi 🛂 Gitcoin Passport
 
-## The problem it solves
+✅ **Current Status**: Live on Linea Testnet
 
-The ecological benefits framework offers a standard way of quantifying and communicating ecological benefits for projects, but as of now there is no simple and standard way of discoverying projects and verifying their benefits.
+</div>
 
-EBFNT offers a standard way to connect attestation networks of trust to projects that claim ecological benefits, making projects discoverable, and benefits verifiable in an intuitive dashboard.
+## 🌐 The Problem We Solve
 
-Evaluation of impact is essential for grants programs and other funding mechanisms to be able to effectively allocate capital according to verifiable impact. EBFNT allows builders, investors, and stakeholders to make informed decisions around project contributions and support.
+The ecological benefits framework offers a standardized way of quantifying and communicating ecological benefits for projects. However, discovering these projects and verifying their benefits remains a challenge.
 
-## How to Contribute
+EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits. This makes projects discoverable and their benefits verifiable through an intuitive dashboard, aiding in the evaluation of impact essential for grants programs and funding mechanisms.
 
-We welcome contributions to our Project. Please get in touch
+## 💡 Key Features
 
-## Resources
+- **Discoverable Network of Trust**: Easily find and connect with ecological projects.
+- **Verifiable Ecological Benefits**: Utilize an intuitive dashboard to verify project impacts.
+- **Standardized Evaluation**: Facilitate the allocation of capital based on verifiable ecological impact.
 
-https://docs.phosphor.xyz/introduction
+## 🚧 Challenges Overcome
 
-deployed contract: https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code
+- Fixed an issue with the initial Verax subgraph not working on Goerli Linea by obtaining a working subgraph URL from the Linea team.
+- Resolved challenges in decoding the attestation payload from the GraphQL API with mentorship and detailed examination of encode and decode examples.
+
+## 🤝 How to Contribute
+
+We welcome contributions from those passionate about building a sustainable future. If you're interested in contributing, please feel free to get in touch or submit a pull request.
+
+## 🔗 Resources
+
+- **Documentation**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
+- **Deployed Contract**: [View on Lineascan](https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code)
+
+Let's build a sustainable future together! 🌟
