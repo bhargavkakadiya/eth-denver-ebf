@@ -82,7 +82,7 @@ const Home = () => {
                 fetchPassportScore();
               }}
             >
-              Check my Score
+              Check my Gitcoin Passport Score
             </button>
           ) : (
             <div className="container mx-auto py-8 my-auto" style={{ backgroundColor: "#212638", color: "white" }}>
