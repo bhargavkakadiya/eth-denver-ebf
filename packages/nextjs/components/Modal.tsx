@@ -29,6 +29,8 @@ const style = {
   borderRadius: 2,
   color: "white",
   backgroundColor: "#212638",
+  maxHeight: '90vh', 
+  overflowY: 'auto',
 };
 
 export default function BasicModal({
@@ -59,14 +61,12 @@ export default function BasicModal({
   }, [selectedIndexValue, showSlider]);
 
   useEffect(() => {
-      setShowSlider(false);
-      setSelectedIndexValue(null);
-    
+    setShowSlider(false);
+    setSelectedIndexValue(null);
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
-  
   const sdkConf =
     (chain?.id ?? 0) === 59144 ? VeraxSdk.DEFAULT_LINEA_MAINNET_FRONTEND : VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
   const veraxSdk = new VeraxSdk(sdkConf, address);
@@ -123,10 +123,9 @@ export default function BasicModal({
     handleIssueAttestation(formData);
   };
 
-  const closeModal=()=>{
+  const closeModal = () => {
     setOpen(false);
-    
-  }
+  };
   return (
     <Modal
       open={isOpen}
@@ -136,7 +135,7 @@ export default function BasicModal({
     >
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px" }}>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px",marginBottom:"10px" }}>
             {child?.ipfsURI && (
               <div
                 style={{
@@ -164,24 +163,38 @@ export default function BasicModal({
 
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider color={"bg-secondary"} />
+        <Divider color={"bg-secondary"}/>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignContent: "center",
-            alignItems: "center",
+            alignItems: "center", // Adjust alignment to ensure items start from the top
             maxHeight: "400px",
           }}
         >
-          <Typography id="modal-modal-description" sx={{ m: 2 }}>
-            {child?.projectDescription}
-          </Typography>
+          <div
+            style={{
+              maxHeight: "100px", // Set the maximum height for the description
+              overflowY: "auto", // Enable vertical scrolling
+              marginRight: "8px", // Add some space between the description and the benefits button
+              padding: "8px", // Optional: Adds some padding inside the scrollable area
+            }}
+          >
+            <Typography id="modal-modal-description" sx={{ m: 2 }}>
+              {child?.projectDescription}
+            </Typography>
+          </div>
 
           {remainingTags?.length > 0 && (
             <div
               className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
               onClick={() => setOpen(true)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center", // This ensures the button is centered vertically if needed
+              }}
             >
               Add new benefits
             </div>
@@ -211,7 +224,15 @@ export default function BasicModal({
                     }
                   }}
                 >
-                  <span className="p-1">{icon[0].icon}</span>
+                  <span
+                    className=" rounded-xl"
+                    style={{
+                      backgroundColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
+                    }}
+                  >
+                    {icon[0].icon}
+                  </span>
+                  <p>{icon[0].name}</p>
                   <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1">
                     +
                   </button>
@@ -239,7 +260,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal}/>
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} />
       </Box>
     </Modal>
   );
