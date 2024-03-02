@@ -96,10 +96,7 @@ export default function BasicModal({
     setIsIssuing(true);
 
     try {
-      console.log(formData.attestationAddress);
-      console.log(formData.score);
-console.log(formData.impactType);
-console.log(formData.projectID);
+
       const txHash = await veraxSdk.portal.attest(
         "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
         {
@@ -116,7 +113,7 @@ console.log(formData.projectID);
       const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash as `0xString` });
       const attestationID = receipt.logs[0].topics[1];
       const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0xString`);
-      console.log(attestation);
+  
       // Continue with your existing logic...
     } catch (error) {
       console.error("Error issuing attestation:", error);

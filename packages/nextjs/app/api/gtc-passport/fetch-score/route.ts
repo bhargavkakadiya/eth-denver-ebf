@@ -6,7 +6,6 @@ export async function GET(req: Request) {
 
   // Fetch the score using the extracted parameters
   const data = await fetchScore(address as `0x${string}`);
-  console.log(data);
   // Return the response as JSON
   return Response.json(data);
 }

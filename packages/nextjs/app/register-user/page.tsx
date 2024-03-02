@@ -19,7 +19,6 @@ export default function Home() {
     functionName: "registerUser",
     args: ["", "", "0x", "0x"],
     onBlockConfirmation: txnReceipt => {
-      console.log("txnReceipt", txnReceipt);
       router.push("/"); // forward to correct page
     },
   });

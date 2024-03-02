@@ -31,7 +31,7 @@ export default function Bubble() {
   const [attestations, setAttestations] = useState([] as any);
   function decodeAttestationData(encodedData: any) {
     try {
-      console.log("encodedData", encodedData);
+   
 
       const decodedData = veraxSdk.utils.decode("(uint256 tokenID, string impactType, uint256 score)", encodedData);
       return decodedData;
@@ -79,7 +79,7 @@ export default function Bubble() {
           }[]; // Add type assertion here
           if (!decodedData) return attestation;
 
-          console.log("decodedData", decodedData);
+
           return {
             ...attestation,
             tokenID: decodedData[0].tokenID,
@@ -88,7 +88,7 @@ export default function Bubble() {
           };
         });
 
-        console.log("newAttestations", newAttestations);
+       
 
         function groupByProperty(array: any, property: any) {
           return array.reduce((accumulator: any, item: any) => {
@@ -102,7 +102,7 @@ export default function Bubble() {
         }
 
         const groupedData = groupByProperty(newAttestations, "tokenID");
-        console.log("groupedData", groupedData);
+      
         setAttestations(groupedData);
       }
 
@@ -129,7 +129,7 @@ export default function Bubble() {
 
   useEffect(() => {
     if (userData) {
-      console.log(userData);
+   
 
       fetchAttestations(
         "0xb68093bb89f26a807626f5757db7246D6d2c6d59", // TODO update the contract address
@@ -145,7 +145,7 @@ export default function Bubble() {
           id: any; projectName: string; tags: string[] 
 }, index) => {
        const childAttestations= attestations[child.id] || [];
-       console.log("childAttestations", childAttestations);
+   
           return (
             
               <ChildComponent
