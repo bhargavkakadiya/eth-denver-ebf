@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/scaffold-eth/Input/TextInput";
 import { VeraxSdk } from "@verax-attestation-registry/verax-sdk";
-import { getAccount, getEnsName, getPublicClient } from "@wagmi/core";
+import {getPublicClient } from "@wagmi/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { waitForTransactionReceipt } from "viem/actions";
 import { useAccount } from "wagmi";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import UserContext from "~~/components/Contexts/UserContext";
 
 export default function Home() {
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -18,7 +19,7 @@ export default function Home() {
   const [issueConfirmationMessage, setIssueConfirmationMessage] = useState("");
   const [isPortalCreating, setIsPortalCreating] = useState(false);
   const [isIssuing, setIsIssuing] = useState(false);
-
+  const { user, setUser } = useContext<any>(UserContext);
   //to query attestations
   const [attestations, setAttestations] = useState([]);
 
@@ -130,6 +131,12 @@ export default function Home() {
   const handleIssueAttestation = async formData => {
     if (!isConnected || !address) {
       setErrorMessage("Please connect your wallet to issue an attestation.");
+      return;
+    }
+
+    if(user && user<=20)
+    {
+      setErrorMessage("Your score is too low to add a attestation");
       return;
     }
 

@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
+import UserContext from "./Contexts/UserContext";
 import NestedModal from "./NestedModal";
 import iconsList from "./iconsList";
 import BasicTooltip from "./tooltip/CloseIcon";
@@ -57,22 +58,19 @@ export default function BasicModal({
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const [child, setChild] = useState<any>(null);
+  const { user, setUser } = useContext<any>(UserContext);
 
- 
-
-    const { data: userData } = useScaffoldContractRead({
-      contractName: "EBF",
-      functionName: "getProjectById",
-      args: [ id && BigInt(id)], // Convert id to a bigint
-    });
+  const { data: userData } = useScaffoldContractRead({
+    contractName: "EBF",
+    functionName: "getProjectById",
+    args: [id && BigInt(id)], // Convert id to a bigint
+  });
 
   useEffect(() => {
     if (userData && userData?.length > 0) {
       setChild(userData[0]);
     }
   }, [userData]);
-
-
 
   useEffect(() => {
     setSelectedValue(3);
@@ -81,7 +79,6 @@ export default function BasicModal({
   useEffect(() => {
     setShowSlider(false);
     setSelectedIndexValue(null);
- 
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
@@ -138,13 +135,14 @@ export default function BasicModal({
       impactType: selectedIndexValue,
       score: value,
     };
-    console.log(formData);
-    handleIssueAttestation(formData);
+    if (!user || user < 20) {
+      alert("You need to have a score of 20 to issue an attestation");
+    } else handleIssueAttestation(formData);
   };
 
   const closeModal = () => {
     setOpen(false);
-    setChild({...child, tags: [...child.tags, selectedIndexValue]});
+    setChild({ ...child, tags: [...child.tags, selectedIndexValue] });
   };
   return (
     <Modal
