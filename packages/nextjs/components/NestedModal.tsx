@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-
 import IconSelection from "./IconSelect";
 import TextInput from "./scaffold-eth/Input/TextInput";
 import BasicTooltip from "./tooltip/CloseIcon";
@@ -27,12 +26,24 @@ const style = {
   backgroundColor: "#212638",
 };
 
-export default function NestedModal({ open, setOpen ,tags}: { open: boolean; setOpen: any;tags:any }) {
+export default function NestedModal({
+  open,
+  setOpen,
+  tags,
+  name,
+  closeModal,
+}: {
+  open: boolean;
+  setOpen: any;
+  tags: any;
+  name: string;
+  closeModal: any;
+}) {
   const methods = useForm();
   const onClose = () => {
     setOpen(false);
   };
-  const [selectedIcons, setSelectedIcons] = useState([]);
+  const [selectedIcons, setSelectedIcons] = useState("");
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "EBF",
@@ -40,7 +51,7 @@ export default function NestedModal({ open, setOpen ,tags}: { open: boolean; set
     args: [BigInt(0), "abc", "0x", "0x"],
     value: BigInt(0),
     onBlockConfirmation: () => {
-      setOpen(false);
+      closeModal();
     },
   });
 
@@ -61,7 +72,7 @@ export default function NestedModal({ open, setOpen ,tags}: { open: boolean; set
 
     if (msgHash && signature) {
       writeAsync({
-        args: [BigInt(0), methods.getValues("name"), msgHash as `0x${string}`, signature as `0x${string}`],
+        args: [BigInt(0), selectedIcons, msgHash as `0x${string}`, signature as `0x${string}`],
       });
     }
   };
@@ -70,7 +81,7 @@ export default function NestedModal({ open, setOpen ,tags}: { open: boolean; set
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>fsdfds</div>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>{name}</div>
           <BasicTooltip onClose={onClose} />
         </div>
 
@@ -79,7 +90,12 @@ export default function NestedModal({ open, setOpen ,tags}: { open: boolean; set
             className="max-w-lg mx-auto rounded-lg px-8 pt-6 pb-8 mb-4"
             style={{ backgroundColor: "#212638", color: "white" }}
           >
-            <IconSelection selectedIcons={selectedIcons} setSelectedIcons={setSelectedIcons} iconsList={tags} />
+            <IconSelection
+              selectedIcons={selectedIcons}
+              setSelectedIcons={setSelectedIcons}
+              iconsList={tags}
+              select={true}
+            />
             <div
               className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
               onClick={onSubmit}
