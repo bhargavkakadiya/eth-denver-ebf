@@ -211,7 +211,11 @@ export default function BasicModal({
                     }
                   }}
                 >
-                  <span className="p-1">{icon[0].icon}</span>
+                  <span className=" rounded-xl"   style={{
+                    backgroundColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
+                   
+                  }}>{icon[0].icon}</span>
+                  <p>{icon[0].name}</p>
                   <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1">
                     +
                   </button>
