@@ -135,7 +135,7 @@ export default function BasicModal({
     >
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px" }}>
+          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px",marginBottom:"10px" }}>
             {child?.ipfsURI && (
               <div
                 style={{
@@ -163,7 +163,7 @@ export default function BasicModal({
 
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider color={"bg-secondary"} />
+        <Divider color={"bg-secondary"}/>
         <div
           style={{
             display: "flex",
