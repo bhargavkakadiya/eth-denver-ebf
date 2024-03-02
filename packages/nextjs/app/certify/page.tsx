@@ -302,103 +302,25 @@ setErrorMessage('Error fetching attestations.');
 
 return (
   <div className="container mx-auto px-4 py-8">
-    {/* Schema Creation Form */}
-    <FormProvider {...schemaFormMethods}>
-      <h2 className="text-lg font-semibold mb-4">Create Schema</h2>
-      <form onSubmit={schemaFormMethods.handleSubmit(onSubmitSchema)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
-        <TextInput name="name" label="Schema Name" type="text" />
-        <TextInput name="description" label="Description" type="text" />
-        <TextInput name="context" label="Context URL" type="text" />
-        <TextInput name="schemaString" label="Schema String" type="text" placeholder="(string username, string teamname, uint16 points, bool active)" />
-        {confirmationMessage && <div className="text-green-500 mb-4">{confirmationMessage}</div>}
-        <div className="flex justify-center">
-          <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isLoading}>
-            {isLoading ? <span className="loading loading-spinner loading-sm"></span> : 'Create Schema'}
-          </button>
-        </div>
-      </form>
-    </FormProvider>
-    
-    {/* Portal Creation Button */}
-    <h2 className="text-lg font-semibold mb-4">Add Portal</h2>
-    <div className="flex justify-center space-x-4 mb-8">
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-full m-1" onClick={handleCreatePortal} disabled={isPortalCreating}>
-          {isPortalCreating ? 'Creating Portal...' : 'Add Portal'}
-      </button>
-    </div>
-    {portalConfirmationMessage && <div className="text-green-500 mb-4">{portalConfirmationMessage}</div>}
-
-    {/* Attestation Issuance Form */}
-    <FormProvider {...attestationFormMethods}>
-      <h2 className="text-lg font-semibold mb-4">Issue Project Attestation</h2>
-      <form onSubmit={attestationFormMethods.handleSubmit(handleIssueAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
-          <TextInput name="attestationAddress" label="EBF Contract Address" type="text" {...attestationFormMethods.register("attestationAddress")} placeholder="Smart Contract address" />
-          <TextInput name="projectID" label="Project ID" type="text" {...attestationFormMethods.register("projectID")} placeholder="Project ID" />
-          <TextInput name="impactType" label="Impact Type" type="text" {...attestationFormMethods.register("impactType")} placeholder="Impact Type" />
-          <TextInput name="score" label="Score" type="number" {...attestationFormMethods.register("score")} placeholder="Score value" />
-          <div className="flex justify-center">
-              <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isIssuing}>
-                  {isIssuing ? 'Issuing...' : 'Issue Attestation'}
-              </button>
-          </div>
-      </form>
-    </FormProvider>
-    {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
-
 
     <FormProvider {...attesterAttestationFormMethods}>
-  <h2 className="text-lg font-semibold mb-4">Issue Attester Attestation</h2>
   <form onSubmit={attesterAttestationFormMethods.handleSubmit(handleIssueAttesterAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
       <TextInput name="attestationAddress" label="User Address" type="text" {...attesterAttestationFormMethods.register("attestationAddress")} placeholder="User's Ethereum address" />
       <TextInput name="score" label="Score" type="number" {...attesterAttestationFormMethods.register("score")} placeholder="Score value" />
       <div className="flex justify-center">
           <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isIssuing}>
-              {isIssuing ? 'Issuing...' : 'Issue Attestation'}
+              {isIssuing ? 'Issuing...' : 'Attest to Attestor'}
           </button>
       </div>
   </form>
 </FormProvider>
+
+
     {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
     {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
 
-    <FormProvider {...queryAttestationFormMethods}>
-  <h2 className="text-lg font-semibold mb-4">Query Attestations</h2>
-  <form className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}
-        onSubmit={queryAttestationFormMethods.handleSubmit((data) => {
-          fetchAttestations(data.subject, data.schemaId);
-        })}>
-    <TextInput name="subject" label="Subject Address" {...queryAttestationFormMethods.register("subject")} placeholder="User's Ethereum address" />
-    <TextInput name="schemaId" label="Schema ID" {...queryAttestationFormMethods.register("schemaId")} placeholder="Schema ID" />
-    <div className="flex justify-center">
-        <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit">
-            Query Attestations
-        </button>
-    </div>
-  </form>
-</FormProvider>
 
 
-<div>
-  <h2 className="text-lg font-semibold mb-4">Decoded Attestations</h2>
-  {attestations.length > 0 ? (
-    <div>
-      {attestations.map((attestation, index) => (
-        <div key={index} className="mb-4 p-4 rounded-lg shadow-md">
-          <h3 className="font-semibold">Attestation {index + 1}</h3>
-          {attestation.decodedData?.map((data, dataIndex) => (
-            <div key={dataIndex}>
-              {Object.entries(data).map(([key, value]) => (
-                <p key={key}><strong>{key.replace(/([A-Z])/g, ' $1').trim()}:</strong> {value.toString()}</p>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  ) : (
-    <div>No attestations found.</div>
-  )}
-</div>
 
   </div>
 );
