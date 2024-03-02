@@ -10,12 +10,9 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 const Home = () => {
   const { address, isConnected } = useAccount({});
 
-  console.log("iisisisisiiii---------------------------", address, isConnected);
-
   const [checkScore, setCheckScore] = useState(true);
   const [nonce, setNonce] = useState("");
   const [passportScore, setPassportScore] = useState(0);
-  console.log("address", checkScore);
 
   const { data: userData } = useScaffoldContractRead({
     contractName: "EBF",
