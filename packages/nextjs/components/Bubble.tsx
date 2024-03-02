@@ -168,6 +168,7 @@ export default function Bubble() {
           title={modelDetails.projectName}
           data={Array.from({ length: 6 })}
           id={modelDetails.id}
+          attestations={modelDetails.attestations}
         />
       </div>
     </div>

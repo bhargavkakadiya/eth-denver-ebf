@@ -45,7 +45,7 @@ const ChildComponent = ({
         if (isModalOpen) {
           setIsModalOpen(false);
         }
-        setModelDetails(child);
+        setModelDetails({...child, attestations});
         setIsModalOpen(true);
 
         // const rect = event.target.getBoundingClientRect();
@@ -88,7 +88,7 @@ const ChildComponent = ({
           }
 
           const average = attestations
-            .filter((attestation: any) => attestation.impactType === child.tags[index])
+            .filter((attestation: any) => attestation.impacxtType === child.tags[index])
             .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
 
           return (
@@ -106,7 +106,9 @@ const ChildComponent = ({
                 opacity: `${(average == 0 ? 1 : average) / 10})`,
                 backgroundColor: icon[0].color,
               }}
+              
             >
+                 
               {icon[0].icon}
             </div>
           );
@@ -135,6 +137,7 @@ const ChildComponent = ({
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
               }}
             >
+         
               {remainingTags[index - lastLength]?.icon}
             </div>
           );
