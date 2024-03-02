@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  31337: {
+  59140: {
     EBF: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0x24794146E99978Fa6e75955a0C7D2F950196b383",
       abi: [
         {
           inputs: [],
@@ -652,8 +652,7 @@ const deployedContracts = {
         balanceOf: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         balanceOfBatch: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         isApprovedForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        safeBatchTransferFrom:
-          "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        safeBatchTransferFrom: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         safeTransferFrom: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         setApprovalForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         supportsInterface: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
@@ -663,7 +662,7 @@ const deployedContracts = {
   },
   59140: {
     EBF: {
-      address: "0xAdb7D7A44c5d57153eF8805355562E15ABA602Ce",
+      address: "0x24794146E99978Fa6e75955a0C7D2F950196b383",
       abi: [
         {
           inputs: [],
@@ -899,6 +898,11 @@ const deployedContracts = {
             {
               components: [
                 {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
                   internalType: "address",
                   name: "registeredBy",
                   type: "address",
@@ -1028,6 +1032,11 @@ const deployedContracts = {
           ],
           name: "projects",
           outputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
             {
               internalType: "address",
               name: "registeredBy",
@@ -1308,8 +1317,7 @@ const deployedContracts = {
         balanceOf: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         balanceOfBatch: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         isApprovedForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        safeBatchTransferFrom:
-          "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        safeBatchTransferFrom: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         safeTransferFrom: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         setApprovalForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         supportsInterface: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",

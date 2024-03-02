@@ -48,6 +48,7 @@ contract EBF is ERC1155, OdysseyStorage {
 
 		// Proceed with creating the project
 		projects[projectCounter] = Structs.Project({
+			id: projectCounter,
 			registeredBy: msg.sender,
 			projectName: _projectName,
 			projectDescription: _projectDescription,

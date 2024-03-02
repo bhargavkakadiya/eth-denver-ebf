@@ -110,13 +110,14 @@ export default function BasicModal({
     if (selectedIndexValue === null) {
       return;
     }
-    setShowSlider(false);
+    const projectID = parseInt(child?.id); // 0n .. convert it to number
     const formData = {
       attestationAddress: address,
-      projectID: child?.id,
+      projectID: projectID,
       impactType: selectedIndexValue,
       score: value,
     };
+    console.log(formData);
     handleIssueAttestation(formData);
   };
 
