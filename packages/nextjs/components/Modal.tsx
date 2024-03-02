@@ -111,12 +111,12 @@ export default function BasicModal({
             {child?.projectDescription}
           </Typography>
 
-          <div
+          {remainingTags?.length >0 &&<div
             className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
             onClick={() => setOpen(true)}
           >
             Add new benefits
-          </div>
+          </div>}
         </div>
 
         <Divider color={"bg-secondary"} />
@@ -135,16 +135,17 @@ export default function BasicModal({
                     borderColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
                     borderWidth: selectedIndexValue === icon[0]?.name ? "2px" : "0px", // Ensure units are included
                   }}
+                  onClick={() => {
+                    setShowSlider(true);
+                    if (child?.tags && child.tags[index] !== undefined) {
+                      setSelectedIndexValue(child.tags[index]);
+                    }
+                  }}
                 >
                   <span className="p-1">{icon[0].icon}</span>
                   <button
                     className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
-                    onClick={() => {
-                      setShowSlider(true);
-                      if (child?.tags && child.tags[index] !== undefined) {
-                        setSelectedIndexValue(child.tags[index]);
-                      }
-                    }}
+                    
                   >
                     +
                   </button>
