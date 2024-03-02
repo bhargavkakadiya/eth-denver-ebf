@@ -96,7 +96,6 @@ export default function BasicModal({
     setIsIssuing(true);
 
     try {
-
       const txHash = await veraxSdk.portal.attest(
         "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
         {
@@ -113,7 +112,7 @@ export default function BasicModal({
       const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash as `0xString` });
       const attestationID = receipt.logs[0].topics[1];
       const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0xString`);
-  
+
       // Continue with your existing logic...
     } catch (error) {
       console.error("Error issuing attestation:", error);
@@ -134,10 +133,6 @@ export default function BasicModal({
       score: value,
     };
 
-    if (!user || user < 20) {
-      alert("You need to have a Gitcoin Passport score of 20 to issue an attestation");
-    } else 
-    
     handleIssueAttestation(formData);
   };
 
