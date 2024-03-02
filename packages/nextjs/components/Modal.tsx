@@ -136,7 +136,7 @@ export default function BasicModal({
       score: value,
     };
     if (!user || user < 20) {
-      alert("You need to have a score of 20 to issue an attestation");
+      alert("You need to have a Gitcoin Passport score of 20 to issue an attestation");
     } else handleIssueAttestation(formData);
   };
 
