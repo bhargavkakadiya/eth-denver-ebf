@@ -238,7 +238,7 @@ export default function BasicModal({
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center rounded-xl"
+                  className="flex justify-between items-center rounded-xl px-4 py-2"
                   style={{
                     borderColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
                     borderWidth: selectedIndexValue === icon[0]?.name ? "2px" : "0px", // Ensure units are included
