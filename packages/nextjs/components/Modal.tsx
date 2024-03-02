@@ -62,22 +62,22 @@ export default function BasicModal({
 
   const [idData, setIdData] = useState<any>(id);
 
-  const { data: userData } = useScaffoldContractRead({
-    contractName: "EBF",
-    functionName: "getProjectById",
-    args: [Number(idData)], // Convert id to a bigint
-  });
-console.log(idData,id);
+    const { data: userData } = useScaffoldContractRead({
+      contractName: "EBF",
+      functionName: "getProjectById",
+      args: [Number(idData)], // Convert id to a bigint
+    });
+
   useEffect(() => {
-    if (userData?.length > 0) {
+    if (userData && userData?.length > 0) {
       setChild(userData[0]);
     }
-  
   }, [userData]);
 
   useEffect(() => {
     setIdData(id);
-  },[id])
+  }, [id]);
+
   useEffect(() => {
     setSelectedValue(3);
   }, [selectedIndexValue, showSlider]);
