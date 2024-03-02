@@ -255,7 +255,7 @@ export default function BasicModal({
                   <span
                     className=" rounded-xl"
                     style={{
-                      backgroundColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
+                      backgroundColor: selectedIndexValue === icon[0]?.name ? "black" : "transparent", // Use "transparent" to avoid collapsing borders
                     }}
                   >
                     {icon[0].icon}
