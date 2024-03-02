@@ -784,7 +784,7 @@ const deployedContracts = {
   },
   59140: {
     EBF: {
-      address: "0xb68093bb89f26a807626f5757db7246D6d2c6d59",
+      address: "0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1",
       abi: [
         {
           inputs: [],
@@ -1128,6 +1128,57 @@ const deployedContracts = {
               internalType: "string[]",
               name: "",
               type: "string[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "getProjectsByUser",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "registeredBy",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "projectName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "projectDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "ipfsURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Structs.Project[]",
+              name: "",
+              type: "tuple[]",
             },
           ],
           stateMutability: "view",
