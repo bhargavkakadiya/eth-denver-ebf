@@ -12,7 +12,7 @@ A discoverable network of trust for registering impact projects and verifying th
 
 ⚙️ **Technology Stack** ⚙️
 
-Linea, Verax, Phosphor, ERC1155, IPFS, NFT.Storage, NextJS, Hardhat, RainbowKit, ScaffoldETH2, Wagmi, Gitcoin Passport
+📈 Linea, 🔍 Verax, 💡 Phosphor, 🧩 ERC1155, 🌐 IPFS, 🖼️ NFT.Storage, ⚛️ NextJS, 🛠️ Hardhat, 🌈 RainbowKit, 🏗️ ScaffoldETH2, ✊ Wagmi, 🛂 Gitcoin Passport
 
 ✅ **Current Status**: Live on Linea Testnet
 
