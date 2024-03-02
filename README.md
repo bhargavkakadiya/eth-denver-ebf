@@ -30,6 +30,10 @@ EBFNT introduces a standard way to connect attestation networks of trust to proj
 - **Verifiable Ecological Benefits**: Utilize an intuitive dashboard to verify project impacts.
 - **Standardized Evaluation**: Facilitate the allocation of capital based on verifiable ecological impact.
 
+## 🌎 User Flow
+![Drawing 2024-03-02 04 34 29 excalidraw](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/98f9b1d9-6554-41b4-b46c-519d1ad6fd9d)
+
+
 ## 🚧 Challenges Overcome
 
 - Fixed an issue with the initial Verax subgraph not working on Goerli Linea by obtaining a working subgraph URL from the Linea team.
