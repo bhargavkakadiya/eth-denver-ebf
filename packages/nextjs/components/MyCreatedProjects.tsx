@@ -163,18 +163,23 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
     <>
       <div>MyCreatedProjects</div>
 
-      <div className="mt-10">
+      <div className="mt-10 flex flex-col-3">
         {myProjects &&
           myProjects.map((project: any, index: number) => {
             return (
-              <ReviewCard
-                key={index}
-                name={project.projectName}
-                desc={project.projectDescription}
-                onSubmit={onAirdropAll}
-                project={project}
-              />
-            )
+              <>
+                <ReviewCard
+                  key={index}
+                  name={project.projectName}
+                  desc={project.projectDescription}
+                  onSubmit={onAirdropAll}
+                  project={project}
+                />
+
+                {loading ? "Loading..." : "Airdrop Attestors"}
+                {errorMessage && <div>{errorMessage}</div>}
+              </>
+            );
           })}
       </div>
     </>
