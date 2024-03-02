@@ -13,6 +13,7 @@ import { VeraxSdk } from "@verax-attestation-registry/verax-sdk";
 import { getPublicClient } from "@wagmi/core";
 import { waitForTransactionReceipt } from "viem/actions";
 import { useAccount, useNetwork } from "wagmi";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const baseUrl = "https://ipfs.io/ipfs/";
 
@@ -29,8 +30,8 @@ const style = {
   borderRadius: 2,
   color: "white",
   backgroundColor: "#212638",
-  maxHeight: '90vh', 
-  overflowY: 'auto',
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
 export default function BasicModal({
@@ -39,14 +40,14 @@ export default function BasicModal({
   title,
 
   data,
-  child,
+  id,
 }: {
   isOpen: boolean;
   onClose: any;
   title: string;
 
   data: any;
-  child: any;
+  id: any;
 }) {
   const [showSlider, setShowSlider] = useState(false);
   const [selectedIndexValue, setSelectedIndexValue] = useState(null);
@@ -55,7 +56,21 @@ export default function BasicModal({
   const [isIssuing, setIsIssuing] = useState(false);
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
+  const [child, setChild] = useState<any>(null);
+  const { data: userData } = useScaffoldContractRead({
+    contractName: "EBF",
+    functionName: "getProjectById",
+    args: [Number(id)], // Convert id to a bigint
+  });
 
+  useEffect(() => {
+    if (userData?.length > 0) {
+      setChild(userData[0]);
+    }
+    return () => {
+      setChild(null);
+    }
+  }, [userData,isOpen,id]);
   useEffect(() => {
     setSelectedValue(3);
   }, [selectedIndexValue, showSlider]);
@@ -135,7 +150,15 @@ export default function BasicModal({
     >
       <Box sx={style}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", alignContent: "center", margin: "5px",marginBottom:"10px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              alignContent: "center",
+              margin: "5px",
+              marginBottom: "10px",
+            }}
+          >
             {child?.ipfsURI && (
               <div
                 style={{
@@ -163,7 +186,7 @@ export default function BasicModal({
 
           <BasicTooltip onClose={onClose} />
         </div>
-        <Divider color={"bg-secondary"}/>
+        <Divider color={"bg-secondary"} />
         <div
           style={{
             display: "flex",
@@ -179,7 +202,7 @@ export default function BasicModal({
               overflowY: "auto", // Enable vertical scrolling
               marginRight: "8px", // Add some space between the description and the benefits button
               padding: "8px", // Optional: Adds some padding inside the scrollable area
-              maxWidth:"450px",
+              maxWidth: "450px",
             }}
           >
             <Typography id="modal-modal-description" sx={{ m: 2 }}>
@@ -192,7 +215,6 @@ export default function BasicModal({
               className={`bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1`}
               onClick={() => setOpen(true)}
               style={{
-               
                 flexDirection: "column",
                 justifyContent: "center", // This ensures the button is centered vertically if needed
               }}
@@ -261,7 +283,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} />
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id}/>
       </Box>
     </Modal>
   );

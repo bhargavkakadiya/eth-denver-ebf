@@ -32,12 +32,14 @@ export default function NestedModal({
   tags,
   name,
   closeModal,
+  id
 }: {
   open: boolean;
   setOpen: any;
   tags: any;
   name: string;
   closeModal: any;
+  id: any;
 }) {
   const methods = useForm();
   const onClose = () => {
@@ -72,7 +74,7 @@ export default function NestedModal({
 
     if (msgHash && signature) {
       writeAsync({
-        args: [BigInt(0), selectedIcons, msgHash as `0x${string}`, signature as `0x${string}`],
+        args: [BigInt(id), selectedIcons, msgHash as `0x${string}`, signature as `0x${string}`],
       });
     }
   };
