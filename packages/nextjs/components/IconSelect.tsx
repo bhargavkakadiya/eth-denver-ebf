@@ -39,7 +39,7 @@ const IconSelection = ({
           onClick={() => toggleSelection(name)}
           style={{ cursor: "pointer", margin: "10px", display: "inline-block" }}
         >
-          <div className={`${selectedIcons.includes(name) ? "rounded-md bg-white" : ""}`}>{icon}</div>
+          <div className={`${selectedIcons.includes(name) ? "rounded-md bg-black" : ""}`}>{icon}</div>
 
           <p>{name}</p>
         </div>

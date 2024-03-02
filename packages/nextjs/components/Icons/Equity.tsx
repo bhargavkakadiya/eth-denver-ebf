@@ -7,7 +7,7 @@ const Equity = ({ width, height }: { width: number; height: number }) => {
       <Image
         width={width}
         height={height}
-        src="https://img.icons8.com/external-icongeek26-outline-icongeek26/64/external-equity-crowdfunding-icongeek26-outline-icongeek26.png"
+        src="https://img.icons8.com/external-icongeek26-outline-icongeek26/64/ffffff/external-equity-crowdfunding-icongeek26-outline-icongeek26.png"
         alt="external-equity-crowdfunding-icongeek26-outline-icongeek26"
       />
     </div>

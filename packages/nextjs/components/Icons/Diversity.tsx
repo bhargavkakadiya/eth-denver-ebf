@@ -6,7 +6,7 @@ const Diversity = ({width,height}:{width:number,height:number}) => {
     <div>
       <Image
         width={width} height={height}
-        src="https://img.icons8.com/external-outline-geotatah/64/external-biodiversity-ecological-interaction-outline-geotatah.png"
+        src="https://img.icons8.com/external-outline-geotatah/64/ffffff/external-biodiversity-ecological-interaction-outline-geotatah.png"
         alt="external-biodiversity-ecological-interaction-outline-geotatah"
       />
     </div>

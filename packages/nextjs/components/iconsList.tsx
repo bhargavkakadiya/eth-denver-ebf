@@ -8,7 +8,7 @@ import Water from "../components/Icons/Water";
 const list = [
   {
     name: "Air",
-    icon: Air({ width: 50, height: 50 }),
+    icon: Air({ width: 50, height: 50,color:"white" }),
     color:"#AED6F1"
   },
   {
