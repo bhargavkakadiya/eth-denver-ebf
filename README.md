@@ -45,8 +45,9 @@ We welcome contributions from those passionate about building a sustainable futu
 
 ## 🔗 Resources
 
-- **Documentation**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
+- **Phosphor Documentation for Airdrops**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
 - **Deployed Contract**: [View on Lineascan](https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code)
+- **Ecological Benefits Framework**: https://www.canyouchangethefuture.org/
 
 Let's build a sustainable future together! 🌟
 
