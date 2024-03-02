@@ -50,6 +50,13 @@ export default function BasicModal({
     setSelectedValue(3);
   }, [selectedIndexValue, showSlider]);
 
+  useEffect(() => {
+
+      setShowSlider(false);
+      setSelectedIndexValue(null);
+    
+  }, [isOpen]);
+
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
   const lastLength = child?.tags?.length;
