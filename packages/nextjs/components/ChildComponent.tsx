@@ -67,10 +67,10 @@ const ChildComponent = ({
         onClick={openModal}
       >
         <div
-          className="rounded-full w-24 h-24 overflow-hidden flex items-center justify-center"
+          className="rounded-full w-24 h-24  flex items-center justify-center"
           style={{ backgroundImage: `url(${baseUrl}${child.ipfsURI})`, backgroundSize: "cover" }}
         >
-          <p className="text-white text-xl font-bold z-10" style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)" }}>
+          <p className="text-white text-xl font-bold z-10 text-center" style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)" }}>
             {name}
           </p>
         </div>
