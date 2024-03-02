@@ -733,7 +733,7 @@ const deployedContracts = {
   },
   59140: {
     EBF: {
-      address: "0x24794146E99978Fa6e75955a0C7D2F950196b383",
+      address: "0xb68093bb89f26a807626f5757db7246D6d2c6d59",
       abi: [
         {
           inputs: [],
@@ -1024,6 +1024,62 @@ const deployedContracts = {
             },
           ],
           stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "projectId",
+              type: "uint256",
+            },
+          ],
+          name: "getProjectById",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "registeredBy",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "projectName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "projectDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "ipfsURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Structs.Project",
+              name: "",
+              type: "tuple",
+            },
+            {
+              internalType: "string[]",
+              name: "",
+              type: "string[]",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -1394,6 +1450,10 @@ const deployedContracts = {
         setApprovalForAll: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         supportsInterface: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         uri: "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
+        isRegistered: "contracts/Storage.sol",
+        projects: "contracts/Storage.sol",
+        tokenURIs: "contracts/Storage.sol",
+        users: "contracts/Storage.sol",
       },
     },
   },
