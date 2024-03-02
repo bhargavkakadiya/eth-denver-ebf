@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import "./Structs.sol";
 
-contract OdysseyStorage {
+contract Storage {
 	address deployer;
 
 	mapping(uint256 => string) public tokenURIs;
