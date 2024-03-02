@@ -18,7 +18,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
-  height: 700,
+  height: 750,
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -137,8 +137,22 @@ export default function BasicModal({
             })}
           </div>
         </Typography>
-        <div className="justify-center align-middle items-center self-center ">
-          {showSlider && <Slider value={value} setSelectedValue={setSelectedValue} />}
+        <div className="flex justify-center items-center">
+          {showSlider && (
+            <div className="flex flex-col items-center">
+              <div>
+                <Slider value={value} setSelectedValue={setSelectedValue} />
+              </div>
+              <div >
+                <button
+                  className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center items-center"
+                  // TODO: Add the submit function call here
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         <NestedModal open={open} setOpen={setOpen} />
