@@ -17,7 +17,7 @@ A discoverable network of trust for registering impact projects and verifying th
 ✅ **Current Status**: Live on Linea Testnet
 
 ![image](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/8708af1a-31a2-4a1d-bab2-d5b4536d93b3)
-
+![image](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/2d9bca0a-9d63-4c8c-b1ef-8d5464b2ae27)
 
 </div>
 
@@ -36,6 +36,7 @@ EBFNT introduces a standard way to connect attestation networks of trust to proj
 
 ## 🌎 User Flow
 ![Drawing 2024-03-02 04 34 29 excalidraw](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/98f9b1d9-6554-41b4-b46c-519d1ad6fd9d)
+
 
 
 ## 🚧 Challenges Overcome
