@@ -73,7 +73,7 @@ export const useBurnerWallet = (): BurnerAccount => {
 
   const generateNewBurner = useCallback(() => {
     if (publicClient && !isCreatingNewBurnerRef.current) {
-      console.log("🔑 Create new burner wallet...");
+    
       isCreatingNewBurnerRef.current = true;
 
       const randomPrivateKey = generatePrivateKey();

@@ -1,80 +1,63 @@
-# 🏗 Scaffold-ETH 2
+# 🌍 EBF Network of Trust 🌱
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+<p align="center">
+  <a href="https://ethden24-ebf.vercel.app/"><strong>🚀 Testnet Demo</strong></a>
+</p>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+<div align="center">
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+🧪 **Project Overview** 🧪
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+A discoverable network of trust for registering impact projects and verifying their ecological benefits, built using Verax attestations and the Ecological Benefits Framework.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+⚙️ **Technology Stack** ⚙️
 
-## Requirements
+📈 Linea 🔍 Verax 💡 Phosphor 🧩 ERC1155 🌐 IPFS 🖼️ NFT.Storage ⚛️ NextJS 🛠️ Hardhat 🌈 RainbowKit 🏗️ ScaffoldETH2 ✊ Wagmi 🛂 Gitcoin Passport
 
-Before you begin, you need to install the following tools:
+✅ **Current Status**: Live on Linea Testnet
 
-- [Node (>= v18.17)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+![image](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/8708af1a-31a2-4a1d-bab2-d5b4536d93b3)
 
-## Quickstart
 
-To get started with Scaffold-ETH 2, follow the steps below:
+</div>
 
-1. Clone this repo & install dependencies
+## 🌐 The Problem We Solve
 
-```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
-yarn install
-```
+The ecological benefits framework offers a standardized way of quantifying and communicating ecological benefits for projects. However, discovering these projects and verifying their benefits remains a challenge.
 
-2. Run a local network in the first terminal:
+EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits. This makes projects discoverable and their benefits verifiable through an intuitive dashboard, aiding in the evaluation of impact essential for grants programs and funding mechanisms. Each project is registered as an 1155 NFT. Project owners can reward attesters with airdrops. The system maintains a network of trust between attesters and projects. Sybil defence is implemented using gitcoin passport. 
 
-```
-yarn chain
-```
+## 💡 Key Features
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+- **Discoverable Network of Trust**: Easily find and connect with ecological projects and trusted contributors.
+- **Verifiable Impact**: Ecological benefits framework offers standardized impact classifications.
+- **Airdrop Rewards to Attesters**: Phosphor allows one click airdrops to attester network.
+- **Sybil Resistant**: Using Gitcoin Passport
 
-3. On a second terminal, deploy the test contract:
+## 🌎 User Flow
+![Drawing 2024-03-02 04 34 29 excalidraw](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/98f9b1d9-6554-41b4-b46c-519d1ad6fd9d)
 
-```
-yarn deploy
-```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+## 🚧 Challenges Overcome
 
-4. On a third terminal, start your NextJS app:
+- Fixed an issue with the initial Verax subgraph not working on Goerli Linea by obtaining a working subgraph URL from the Linea team.
+- Resolved challenges in decoding the attestation payload from the GraphQL API with mentorship and detailed examination of encode and decode examples.
 
-```
-yarn start
-```
+## 🤝 How to Contribute
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+We welcome contributions from those passionate about building a sustainable future. If you're interested in contributing, please feel free to get in touch or submit a pull request.
 
-Run smart contract test with `yarn hardhat:test`
+## 🔗 Resources
 
-- Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-- Edit your frontend in `packages/nextjs/pages`
-- Edit your deployment scripts in `packages/hardhat/deploy`
+- **Phosphor Documentation for Airdrops**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
+- **Deployed Contract**: [View on Lineascan](https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code)
+- **Ecological Benefits Framework**: https://www.canyouchangethefuture.org/
 
-## Documentation
+Let's build a sustainable future together! 🌟
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+## 🐾 Team Members
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
-
-## Contributing to Scaffold-ETH 2
-
-We welcome contributions to Scaffold-ETH 2!
-
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+- @bhargavkakadiya
+- @Dharmik79
+- @DarrenZal
+- @LinuxIsCool

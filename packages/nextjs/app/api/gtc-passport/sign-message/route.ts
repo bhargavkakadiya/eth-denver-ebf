@@ -16,6 +16,6 @@ async function fetchMessageAndNonce() {
   };
 
   const { data } = await axios.get("https://api.scorer.gitcoin.co/registry/signing-message", axiosSigningMessageConfig);
-  console.log("logging data", data);
+ 
   return data;
 }

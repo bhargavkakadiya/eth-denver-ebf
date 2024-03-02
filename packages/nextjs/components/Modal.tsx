@@ -42,6 +42,7 @@ export default function BasicModal({
 
   data,
   id,
+  attestations,
 }: {
   isOpen: boolean;
   onClose: any;
@@ -49,6 +50,7 @@ export default function BasicModal({
 
   data: any;
   id: any;
+  attestations: any;
 }) {
   const [showSlider, setShowSlider] = useState(false);
   const [selectedIndexValue, setSelectedIndexValue] = useState(null);
@@ -73,7 +75,7 @@ export default function BasicModal({
   }, [userData]);
 
   useEffect(() => {
-    setSelectedValue(3);
+    setSelectedValue(0);
   }, [selectedIndexValue, showSlider]);
 
   useEffect(() => {
@@ -96,9 +98,6 @@ export default function BasicModal({
     setIsIssuing(true);
 
     try {
-      console.log(formData.attestationAddress);
-      console.log(formData.score);
-
       const txHash = await veraxSdk.portal.attest(
         "0xF11ef82AC622114370B89e119f932D7ff6BFF78A", // This should be your portalId
         {
@@ -115,7 +114,8 @@ export default function BasicModal({
       const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash as `0xString` });
       const attestationID = receipt.logs[0].topics[1];
       const attestation = await veraxSdk.attestation.getAttestation(attestationID as `0xString`);
-      console.log(attestation);
+
+      console.log("Attestation issued:", attestation);
       // Continue with your existing logic...
     } catch (error) {
       console.error("Error issuing attestation:", error);
@@ -130,14 +130,13 @@ export default function BasicModal({
     }
     const projectID = parseInt(child?.id); // 0n .. convert it to number
     const formData = {
-      attestationAddress: address,
+      attestationAddress: "0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1", // TODO update the contract address
       projectID: projectID,
       impactType: selectedIndexValue,
       score: value,
     };
-    if (!user || user < 20) {
-      alert("You need to have a score of 20 to issue an attestation");
-    } else handleIssueAttestation(formData);
+
+    handleIssueAttestation(formData);
   };
 
   const closeModal = () => {
@@ -235,10 +234,17 @@ export default function BasicModal({
               if (icon.length == 0) {
                 return;
               }
+
+              const average = attestations
+              .filter((attestation: any) => attestation.impactType === child.tags[index])
+              .reduce((acc: any, curr: any, _: any, arr: any) => acc + Number(curr.score) / arr.length, 0);
+
+
+              console.log("average",child.tags[index],average,attestations)
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center rounded-xl"
+                  className="flex justify-between items-center rounded-xl px-4 py-2"
                   style={{
                     borderColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
                     borderWidth: selectedIndexValue === icon[0]?.name ? "2px" : "0px", // Ensure units are included
@@ -253,12 +259,12 @@ export default function BasicModal({
                   <span
                     className=" rounded-xl"
                     style={{
-                      backgroundColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
+                      backgroundColor: selectedIndexValue === icon[0]?.name ? "black" : "transparent", // Use "transparent" to avoid collapsing borders
                     }}
                   >
                     {icon[0].icon}
                   </span>
-                  <p>{icon[0].name}</p>
+                  <p>{icon[0].name}({average})</p>
                   <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1">
                     +
                   </button>
@@ -277,7 +283,7 @@ export default function BasicModal({
                 <button
                   className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center items-center"
                   onClick={onAttest}
-                  // TODO: Add the submit function call here
+                 
                 >
                   {isIssuing ? "Issuing..." : "Issue Attestation"}
                 </button>
