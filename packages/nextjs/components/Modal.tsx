@@ -60,12 +60,12 @@ export default function BasicModal({
  
 
 
-    const [idData, setIdData] = useState<bigint>(BigInt(id));
+  const [idData, setIdData] = useState<any>(id);
 
     const { data: userData } = useScaffoldContractRead({
       contractName: "EBF",
       functionName: "getProjectById",
-      args: [idData], // Convert id to a bigint
+      args: [Number(idData)], // Convert id to a bigint
     });
 
   useEffect(() => {
