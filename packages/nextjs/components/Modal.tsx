@@ -137,10 +137,9 @@ console.log(formData.projectID);
       score: value,
     };
 
-    //TODO : Add the condition to check if the user has a Gitcoin Passport score of 20
-    // if (!user || user < 20) {
-    //   alert("You need to have a Gitcoin Passport score of 20 to issue an attestation");
-    // } else 
+    if (!user || user < 20) {
+      alert("You need to have a Gitcoin Passport score of 20 to issue an attestation");
+    } else 
     
     handleIssueAttestation(formData);
   };
