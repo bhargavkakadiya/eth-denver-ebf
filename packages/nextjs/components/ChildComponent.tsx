@@ -103,8 +103,9 @@ const ChildComponent = ({
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                opacity: `${(average == 0 ? 1 : average) / 10})`,
-                backgroundColor: icon[0].color,
+                opacity: `${(average == 0 ? 2 : average) / 10})`,
+                // // backgroundColor: icon[0].color,
+                // color:"white"
               }}
               
             >
@@ -134,7 +135,7 @@ const ChildComponent = ({
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                // backgroundColor: "rgba(255, 255, 255, 0.1)",
               }}
             >
          
