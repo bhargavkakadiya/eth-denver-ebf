@@ -172,7 +172,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags}/>
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title}/>
       </Box>
     </Modal>
   );

@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from "react";
 
-
-interface IconsList{
-    name: string;
-    icon: JSX.Element;
+interface IconsList {
+  name: string;
+  icon: JSX.Element;
 }
 
-const IconSelection = ({ selectedIcons, setSelectedIcons,iconsList }: { selectedIcons: string[]; setSelectedIcons: any; iconsList:IconsList[] }) => {
+const IconSelection = ({
+  selectedIcons,
+  setSelectedIcons,
+  iconsList,
+  select,
+}: {
+  selectedIcons: string[];
+  setSelectedIcons: any;
+  iconsList: IconsList[];
+  select: boolean;
+}) => {
   const toggleSelection = (iconName: string) => {
-    console.log("toggleSelection", iconName);
-    setSelectedIcons((prevSelection: string[]) => {
-      if (prevSelection.includes(iconName)) {
-        return prevSelection.filter(name => name !== iconName);
-      } else {
-        return [...prevSelection, iconName];
-      }
-    });
+    if (select) {
+      setSelectedIcons(iconName);
+    } else {
+      setSelectedIcons((prevSelection: string[]) => {
+        if (prevSelection.includes(iconName)) {
+          return prevSelection.filter(name => name !== iconName);
+        } else {
+          return [...prevSelection, iconName];
+        }
+      });
+    }
   };
 
   return (
