@@ -57,8 +57,6 @@ export default function BasicModal({
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const [child, setChild] = useState<any>(null);
- 
-
 
  
 
@@ -290,7 +288,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id}/>
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id} />
       </Box>
     </Modal>
   );
