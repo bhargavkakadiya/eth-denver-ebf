@@ -85,7 +85,7 @@ export default function BasicModal({
   useEffect(() => {
     setShowSlider(false);
     setSelectedIndexValue(null);
-   
+ 
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
@@ -148,6 +148,7 @@ export default function BasicModal({
 
   const closeModal = () => {
     setOpen(false);
+    setChild({...child, tags: [...child.tags, selectedIndexValue]});
   };
   return (
     <Modal
