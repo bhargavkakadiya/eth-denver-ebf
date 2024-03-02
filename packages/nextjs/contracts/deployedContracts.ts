@@ -663,7 +663,7 @@ const deployedContracts = {
   },
   59140: {
     EBF: {
-      address: "0x54Bfc7a958da74Ff582dF6d8827663854B7A69C6",
+      address: "0xAdb7D7A44c5d57153eF8805355562E15ABA602Ce",
       abi: [
         {
           inputs: [],
@@ -791,6 +791,34 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "_projectId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "_tag",
+              type: "string",
+            },
+            {
+              internalType: "bytes32",
+              name: "_msgHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_signature",
+              type: "bytes",
+            },
+          ],
+          name: "addTagstoProject",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "account",
               type: "address",
@@ -845,8 +873,13 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "_projectType",
+              name: "_projectDescription",
               type: "string",
+            },
+            {
+              internalType: "string[]",
+              name: "_tags",
+              type: "string[]",
             },
             {
               internalType: "string",
@@ -877,8 +910,13 @@ const deployedContracts = {
                 },
                 {
                   internalType: "string",
-                  name: "projectType",
+                  name: "projectDescription",
                   type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
                 },
                 {
                   internalType: "string",
@@ -1002,7 +1040,7 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "projectType",
+              name: "projectDescription",
               type: "string",
             },
             {
