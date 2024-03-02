@@ -360,6 +360,57 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "getProjectsByUser",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "registeredBy",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "projectName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "projectDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "string[]",
+                  name: "tags",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "ipfsURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Structs.Project[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "account",
               type: "address",
             },

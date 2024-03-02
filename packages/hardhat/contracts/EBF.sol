@@ -116,6 +116,31 @@ contract EBF is ERC1155, Storage {
 		return true;
 	}
 
+	// Function to get all projects by a user
+	function getProjectsByUser(
+		address user
+	) public view returns (Structs.Project[] memory) {
+		uint256 projectCount = 0;
+		for (uint256 i = 0; i < projectCounter; i++) {
+			if (projects[i].registeredBy == user) {
+				projectCount++;
+			}
+		}
+
+		Structs.Project[] memory userProjects = new Structs.Project[](
+			projectCount
+		);
+		uint256 index = 0;
+		for (uint256 i = 0; i < projectCounter; i++) {
+			if (projects[i].registeredBy == user) {
+				userProjects[index] = projects[i];
+				index++;
+			}
+		}
+
+		return userProjects;
+	}
+
 	function getEthSignedMessageHash(
 		bytes32 _messageHash
 	) public pure returns (bytes32) {

@@ -6,6 +6,7 @@ import { verifyMessage } from "ethers";
 import { useAccount } from "wagmi";
 import { useSignMessage } from "wagmi";
 import UserContext from "~~/components/Contexts/UserContext";
+import { MyCreatedProjects } from "~~/components/MyCreatedProjects";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 const Home = () => {
@@ -68,16 +69,15 @@ const Home = () => {
       const scorerMessageResponse = await scorerMessageResponseCall.json();
       setNonce(scorerMessageResponse.nonce);
       signMessage({ message: scorerMessageResponse.message });
-   
     } catch (error) {
       console.error("Failed to fetch passport score:", error);
       // Handle the error appropriately in your application context
     }
   };
-console.log("user", user);
+  console.log("user", user);
   useEffect(() => {
     if (user) {
-      setPassportScore(user)
+      setPassportScore(user);
       setCheckScore(false);
       return;
     } else {
@@ -87,7 +87,7 @@ console.log("user", user);
   return (
     <>
       {address ? (
-        <>
+        <div>
           {checkScore ? (
             <button
               className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center align-middle self-center m-20"
@@ -127,7 +127,8 @@ console.log("user", user);
               )}
             </div>
           )}
-        </>
+          <MyCreatedProjects address={address} />
+        </div>
       ) : (
         <div>Connect your wallet to see your profile</div>
       )}
