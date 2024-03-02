@@ -10,6 +10,9 @@ import { useAccount } from "wagmi";
 import { waitForTransactionReceipt } from "viem/actions";
 import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
 import {  useEffect } from "react";
+import { ethers } from 'ethers';
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
+
 
 
 export default function Home() {
@@ -19,12 +22,17 @@ export default function Home() {
   const [issueConfirmationMessage, setIssueConfirmationMessage] = useState('');
   const [isPortalCreating, setIsPortalCreating] = useState(false);
   const [isIssuing, setIsIssuing] = useState(false);
+  const [subject, setSubject] = useState('');
+const [schemaId, setSchemaId] = useState('');
+const queryAttestationFormMethods = useForm();
+
 
   //to query attestations
   const [attestations, setAttestations] = useState([]);
   
   const schemaFormMethods = useForm();
   const attestationFormMethods = useForm();
+  const attesterAttestationFormMethods = useForm();
   const router = useRouter();
 
   const { address, isConnected } = useAccount();
@@ -39,9 +47,12 @@ export default function Home() {
     },
   });
 
+  function hexToNumber(hexString) {
+    return parseInt(hexString, 16);
+  }
+  
   const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
   const veraxSdk = new VeraxSdk(sdkConf, address);
-
   const onSubmitSchema = async (formData) => {
     if (!isConnected || !address) {
         setErrorMessage('Please connect your wallet.');
@@ -169,47 +180,122 @@ const handleIssueAttestation = async (formData) => {
   }
 };
 
+const handleIssueAttesterAttestation = async (formData) => {
+  if (!isConnected || !address) {
+      setErrorMessage('Please connect your wallet to issue an attestation.');
+      return;
+  }
 
-const fetchAttestations = async () => {
-  const GRAPHQL_URL = 'https://api.thegraph.com/subgraphs/name/Consensys/linea-attestation-registry';
-
-  const query = `
-    {
-      attestations(
-        where: {
-          subject: "0x6B93CC473ceC4A394413a8a97B31f9F8ea535708",
-          schemaId: "0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3",
-          revoked: false
-        }
-      ) {
-        id
-        attestationData
-        decodedData
-        schemaString
-      }
-    }`;
+  setIsIssuing(true);
+  setErrorMessage(''); // Clear previous errors
 
   try {
-    const response = await fetch(GRAPHQL_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    });
+    console.log(formData.attestationAddress)
+    console.log(formData.score)
 
-    const responseData = await response.json();
-    setAttestations(responseData.data.attestations);
+
+      const txHash = await veraxSdk.portal.attest(
+          '0xF11ef82AC622114370B89e119f932D7ff6BFF78A', // This should be your portalId
+          {
+              schemaId: '0x5214e29f9b3422dcb0e835acf629e90157b5ed54986de0ded15cbdce3a1cad3d', // Correctly place schemaId here
+              expirationDate: Math.floor(Date.now() / 1000) + 2592000, // 30 days from now
+              subject: formData.attestationAddress,
+              attestationData: [{EBFAttesterScore: parseInt(formData.score) }], // Rename 'address' to 'userAddress' or similar
+          },
+          [], // Additional options if any
+      );
+      const transactionHash = txHash.transactionHash;
+      const receipt = await waitForTransactionReceipt(getPublicClient(), { hash: transactionHash });
+     const attestationID = receipt.logs[0].topics[1];
+     const attestation = await veraxSdk.attestation.getAttestation(attestationID);
+     console.log(attestation)
+      // Continue with your existing logic...
   } catch (error) {
-    console.error('Error querying The Graph:', error);
-    setErrorMessage('Error fetching attestations.');
+      console.error("Error issuing attestation:", error);
+      setErrorMessage(error.message || 'An unknown error occurred while issuing the attestation.');
+  } finally {
+      setIsIssuing(false);
   }
 };
 
 
-useEffect(() => {
-  fetchAttestations();
-}, []);
+const fetchAttestations = async (subject, schemaId) => {
+const GRAPHQL_URL = 'https://api.goldsky.com/api/public/project_clqghnrbp9nx201wtgylv8748/subgraphs/verax/subgraph-testnet/gn';
+console.log(subject)
+console.log(schemaId)
+const query = `
+{
+  attestations(
+    where: {
+      subject: "${subject}",
+      schemaId: "${schemaId}",
+      revoked: false
+    }
+  ) {
+    id
+    attestationData
+    schemaString
+  }
+}`;
+
+try {
+const response = await fetch(GRAPHQL_URL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ query }),
+});
+
+const responseData = await response.json();
+
+// Check if there are errors
+if (responseData.errors) {
+  console.error('GraphQL Errors:', responseData.errors);
+  // Check if there is also data despite the errors
+  if (responseData.data && responseData.data.attestations.length > 0) {
+    console.log(responseData.data.attestations)
+    const newAttestations = responseData.data.attestations.map(attestation => {
+      const decodedData = veraxSdk.utils.decode("(uint256 tokenID, string impactType, uint256 score)", attestation.attestationData);
+      return {
+        ...attestation,
+        decodedData, // Add the decoded data into each attestation object
+      };
+    });
+    console.log('newAttestations', newAttestations)
+    setAttestations(newAttestations);
+    setErrorMessage('Partial data fetched with some GraphQL errors.');
+  } else {
+    console.log('GraphQL errors occurred with no data returned.');
+  }
+} else if (responseData.data && responseData.data.attestations.length > 0) {
+  // If there's data and no errors
+  console.log(responseData.data.attestations)
+  const newAttestations = responseData.data.attestations.map(attestation => {
+    const decodedData = veraxSdk.utils.decode("(uint256 tokenID, string impactType, uint256 score)", attestation.attestationData);
+    return {
+      ...attestation,
+      decodedData, // Add the decoded data into each attestation object
+    };
+  });
+  console.log(newAttestations)
+  newAttestations.forEach((attestation, index) => {
+    if (attestation.decodedData && attestation.decodedData.length > 0) {
+        attestation.decodedData.forEach((decoded) => {
+            console.log(`Attestation ${index + 1} Token ID:`, decoded.tokenID.toString());
+        });
+    }
+});
+  setAttestations(newAttestations);
+} else {
+  // If there's no data and no errors
+  setErrorMessage('No attestations found.');
+}
+} catch (error) {
+console.error('Error querying The Graph:', error);
+setErrorMessage('Error fetching attestations.');
+}
+};
 
 
 return (
@@ -242,9 +328,9 @@ return (
 
     {/* Attestation Issuance Form */}
     <FormProvider {...attestationFormMethods}>
-      <h2 className="text-lg font-semibold mb-4">Issue Attestation</h2>
+      <h2 className="text-lg font-semibold mb-4">Issue Project Attestation</h2>
       <form onSubmit={attestationFormMethods.handleSubmit(handleIssueAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
-          <TextInput name="attestationAddress" label="User Address" type="text" {...attestationFormMethods.register("attestationAddress")} placeholder="User's Ethereum address" />
+          <TextInput name="attestationAddress" label="EBF Contract Address" type="text" {...attestationFormMethods.register("attestationAddress")} placeholder="Smart Contract address" />
           <TextInput name="projectID" label="Project ID" type="text" {...attestationFormMethods.register("projectID")} placeholder="Project ID" />
           <TextInput name="impactType" label="Impact Type" type="text" {...attestationFormMethods.register("impactType")} placeholder="Impact Type" />
           <TextInput name="score" label="Score" type="number" {...attestationFormMethods.register("score")} placeholder="Score value" />
@@ -256,26 +342,60 @@ return (
       </form>
     </FormProvider>
     {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
+
+
+    <FormProvider {...attesterAttestationFormMethods}>
+  <h2 className="text-lg font-semibold mb-4">Issue Attester Attestation</h2>
+  <form onSubmit={attesterAttestationFormMethods.handleSubmit(handleIssueAttesterAttestation)} className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}>
+      <TextInput name="attestationAddress" label="User Address" type="text" {...attesterAttestationFormMethods.register("attestationAddress")} placeholder="User's Ethereum address" />
+      <TextInput name="score" label="Score" type="number" {...attesterAttestationFormMethods.register("score")} placeholder="Score value" />
+      <div className="flex justify-center">
+          <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit" disabled={isIssuing}>
+              {isIssuing ? 'Issuing...' : 'Issue Attestation'}
+          </button>
+      </div>
+  </form>
+</FormProvider>
+    {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
     {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
 
-
-    <div className="attestations">
-  <h2 className="text-lg font-semibold mb-4">Attestations</h2>
-  {attestations.length > 0 ? (
-    <div className="attestation-list">
-      {attestations.map((attestation, index) => (
-        <div key={index} className="attestation-item mb-4 p-4 shadow-md rounded-lg bg-white">
-          <div><strong>ID:</strong> {attestation.id}</div>
-          <div><strong>Data:</strong> {attestation.attestationData}</div>
-          <div><strong>Decoded Data:</strong> {attestation.decodedData}</div>
-          <div><strong>Schema String:</strong> {attestation.schemaString}</div>
-        </div>
-      ))}
+    <FormProvider {...queryAttestationFormMethods}>
+  <h2 className="text-lg font-semibold mb-4">Query Attestations</h2>
+  <form className="max-w-lg mx-auto shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" style={{ backgroundColor: "#212638", color: "white" }}
+        onSubmit={queryAttestationFormMethods.handleSubmit((data) => {
+          fetchAttestations(data.subject, data.schemaId);
+        })}>
+    <TextInput name="subject" label="Subject Address" {...queryAttestationFormMethods.register("subject")} placeholder="User's Ethereum address" />
+    <TextInput name="schemaId" label="Schema ID" {...queryAttestationFormMethods.register("schemaId")} placeholder="Schema ID" />
+    <div className="flex justify-center">
+        <button className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1" type="submit">
+            Query Attestations
+        </button>
     </div>
-  ) : (
-    <div>No attestations found.</div>
-  )}
-</div>
+  </form>
+</FormProvider>
+
+<div>
+      <h2 className="text-lg font-semibold mb-4">Decoded Attestations</h2>
+      {attestations.length > 0 ? (
+        <div>
+          {attestations.map((attestation, index) => (
+            <div key={index} className="mb-4 p-4 rounded-lg shadow-md">
+              <h3 className="font-semibold">Attestation {index + 1}</h3>
+              {attestation.decodedData?.map((data, dataIndex) => (
+                <div key={dataIndex}>
+                  <p><strong>Token ID:</strong> {data.tokenID.toString()}</p>
+                  <p><strong>Impact Type:</strong> {data.impactType}</p>
+                  <p><strong>Score:</strong> {data.score.toString()}</p>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>No attestations found.</div>
+      )}
+    </div>
   </div>
 );
 }
