@@ -64,9 +64,10 @@ export default function Bubble() {
           onClose={() => setIsModalOpen(false)}
           title={modelDetails.projectName}
           data={Array.from({ length: 6 })}
-          child={modelDetails}
+          id={modelDetails.id}
         />
       </div>
     </div>
   );
 }
+
