@@ -54,7 +54,7 @@ const AttestationsGraph: React.FC<AttestationsGraphProps> = ({ nodes, edges }) =
                             'text-margin-y': 10, // Adjust based on your preference
                             'text-background-opacity': 1, // Add a background to the text for better visibility
                             'text-background-shape': 'roundrectangle', // This can be 'rectangle', 'roundrectangle' etc.
-                            'text-background-padding': 2, // Adjust padding to ensure the background covers enough space around the text
+                           // Adjust padding to ensure the background covers enough space around the text
                             'width': '80px',
                             'height': '80px',
                         }
@@ -73,7 +73,7 @@ const AttestationsGraph: React.FC<AttestationsGraphProps> = ({ nodes, edges }) =
                             'text-margin-y': 10, // Adjust based on your preference
                             'text-background-opacity': 1, // Add a background to the text for better visibility
                             'text-background-shape': 'roundrectangle', // This can be 'rectangle', 'roundrectangle' etc.
-                            'text-background-padding': 2, // Adjust padding to ensure the background covers enough space around the text
+                            // Adjust padding to ensure the background covers enough space around the text
                             'width': '60px',
                             'height': '60px',
                         }
@@ -92,7 +92,7 @@ const AttestationsGraph: React.FC<AttestationsGraphProps> = ({ nodes, edges }) =
                             'text-margin-y': 10, // Adjust based on your preference
                             'text-background-opacity': 1, // Add a background to the text for better visibility
                             'text-background-shape': 'roundrectangle', // This can be 'rectangle', 'roundrectangle' etc.
-                            'text-background-padding': 2, // Adjust padding to ensure the background covers enough space around the text
+                         // Adjust padding to ensure the background covers enough space around the text
                             'width': '60px',
                             'height': '60px',
                         }
@@ -130,7 +130,7 @@ const AttestationsGraph: React.FC<AttestationsGraphProps> = ({ nodes, edges }) =
                     nodeRepulsion: 400000,
                     edgeElasticity: 100,
                     nestingFactor: 5,
-                },
+                } as cytoscape.LayoutOptions,
             });
 
             return () => { cy.destroy(); };

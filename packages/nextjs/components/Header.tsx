@@ -4,10 +4,11 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Attest from "../app/certify/page";
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-
+import Graph from "../app/graph/page";
 type HeaderMenuLink = {
   label: string;
   href: string;
@@ -31,7 +32,7 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Create Project",
     href: "/create-project",
   },
-/*   {
+  /*   {
     label: "Schemas",
     href: "/schemas",
   }, */
@@ -72,6 +73,7 @@ export const HeaderMenuLinks = () => {
           </li>
         );
       })}
+     
     </>
   );
 };
