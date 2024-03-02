@@ -9,6 +9,7 @@ import { VeraxSdk } from '@verax-attestation-registry/verax-sdk';
 import { useAccount } from "wagmi";
 import { waitForTransactionReceipt } from "viem/actions";
 import { getAccount, getEnsName, getPublicClient } from '@wagmi/core'
+import {  useEffect } from "react";
 
 
 export default function Home() {
@@ -18,6 +19,9 @@ export default function Home() {
   const [issueConfirmationMessage, setIssueConfirmationMessage] = useState('');
   const [isPortalCreating, setIsPortalCreating] = useState(false);
   const [isIssuing, setIsIssuing] = useState(false);
+
+  //to query attestations
+  const [attestations, setAttestations] = useState([]);
   
   const schemaFormMethods = useForm();
   const attestationFormMethods = useForm();
@@ -166,6 +170,47 @@ const handleIssueAttestation = async (formData) => {
 };
 
 
+const fetchAttestations = async () => {
+  const GRAPHQL_URL = 'https://api.thegraph.com/subgraphs/name/Consensys/linea-attestation-registry';
+
+  const query = `
+    {
+      attestations(
+        where: {
+          subject: "0x6B93CC473ceC4A394413a8a97B31f9F8ea535708",
+          schemaId: "0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3",
+          revoked: false
+        }
+      ) {
+        id
+        attestationData
+        decodedData
+        schemaString
+      }
+    }`;
+
+  try {
+    const response = await fetch(GRAPHQL_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    const responseData = await response.json();
+    setAttestations(responseData.data.attestations);
+  } catch (error) {
+    console.error('Error querying The Graph:', error);
+    setErrorMessage('Error fetching attestations.');
+  }
+};
+
+
+useEffect(() => {
+  fetchAttestations();
+}, []);
+
 
 return (
   <div className="container mx-auto px-4 py-8">
@@ -212,6 +257,25 @@ return (
     </FormProvider>
     {issueConfirmationMessage && <div className="text-green-500 mb-4">{issueConfirmationMessage}</div>}
     {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+
+
+    <div className="attestations">
+  <h2 className="text-lg font-semibold mb-4">Attestations</h2>
+  {attestations.length > 0 ? (
+    <div className="attestation-list">
+      {attestations.map((attestation, index) => (
+        <div key={index} className="attestation-item mb-4 p-4 shadow-md rounded-lg bg-white">
+          <div><strong>ID:</strong> {attestation.id}</div>
+          <div><strong>Data:</strong> {attestation.attestationData}</div>
+          <div><strong>Decoded Data:</strong> {attestation.decodedData}</div>
+          <div><strong>Schema String:</strong> {attestation.schemaString}</div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div>No attestations found.</div>
+  )}
+</div>
   </div>
 );
 }
