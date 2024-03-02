@@ -58,13 +58,13 @@ export default function BasicModal({
   const { chain } = useNetwork();
   const [child, setChild] = useState<any>(null);
 
-  const [idData, setIdData] = useState<any>(id);
+ 
 
-  const { data: userData } = useScaffoldContractRead({
-    contractName: "EBF",
-    functionName: "getProjectById",
-    args: [BigInt(idData)], // Convert id to a bigint
-  });
+    const { data: userData } = useScaffoldContractRead({
+      contractName: "EBF",
+      functionName: "getProjectById",
+      args: [ id && BigInt(id)], // Convert id to a bigint
+    });
 
   useEffect(() => {
     if (userData && userData?.length > 0) {
@@ -72,9 +72,7 @@ export default function BasicModal({
     }
   }, [userData]);
 
-  useEffect(() => {
-    setIdData(id);
-  }, [id]);
+
 
   useEffect(() => {
     setSelectedValue(3);
@@ -83,6 +81,7 @@ export default function BasicModal({
   useEffect(() => {
     setShowSlider(false);
     setSelectedIndexValue(null);
+ 
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
@@ -145,6 +144,7 @@ export default function BasicModal({
 
   const closeModal = () => {
     setOpen(false);
+    setChild({...child, tags: [...child.tags, selectedIndexValue]});
   };
   return (
     <Modal
