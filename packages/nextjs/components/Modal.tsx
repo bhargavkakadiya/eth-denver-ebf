@@ -43,12 +43,12 @@ export default function BasicModal({
   child: any;
 }) {
   const [showSlider, setShowSlider] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndexValue, setSelectedIndexValue] = useState(null);
   const [value, setSelectedValue] = useState(0);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setSelectedValue(3);
-  }, [selectedIndex, showSlider]);
+  }, [selectedIndexValue, showSlider]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
@@ -121,13 +121,22 @@ export default function BasicModal({
                 return;
               }
               return (
-                <div key={index} className="flex justify-between items-center">
-                  <span>{icon[0].icon}</span>
+                <div
+                  key={index}
+                  className="flex justify-between items-center rounded-xl"
+                  style={{
+                    borderColor: selectedIndexValue === icon[0]?.name ? "white" : "transparent", // Use "transparent" to avoid collapsing borders
+                    borderWidth: selectedIndexValue === icon[0]?.name ? "2px" : "0px", // Ensure units are included
+                  }}
+                >
+                  <span className="p-1">{icon[0].icon}</span>
                   <button
                     className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col justify-center m-1"
                     onClick={() => {
                       setShowSlider(true);
-                      setSelectedIndex((index as any) + 1);
+                      if (child?.tags && child.tags[index] !== undefined) {
+                        setSelectedIndexValue(child.tags[index]);
+                      }
                     }}
                   >
                     +
@@ -143,7 +152,7 @@ export default function BasicModal({
               <div>
                 <Slider value={value} setSelectedValue={setSelectedValue} />
               </div>
-              <div >
+              <div>
                 <button
                   className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center items-center"
                   // TODO: Add the submit function call here
