@@ -202,6 +202,46 @@ const fetchAttestations = async () => {
 };
 
 
+<<<<<<< HEAD
+=======
+const fetchAttestations = async () => {
+  const GRAPHQL_URL = 'https://api.thegraph.com/subgraphs/name/Consensys/linea-attestation-registry';
+
+  const query = `
+    {
+      attestations(
+        where: {
+          subject: "0x6B93CC473ceC4A394413a8a97B31f9F8ea535708",
+          schemaId: "0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3",
+          revoked: false
+        }
+      ) {
+        id
+        attestationData
+        decodedData
+        schemaString
+      }
+    }`;
+
+  try {
+    const response = await fetch(GRAPHQL_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    const responseData = await response.json();
+    setAttestations(responseData.data.attestations);
+  } catch (error) {
+    console.error('Error querying The Graph:', error);
+    setErrorMessage('Error fetching attestations.');
+  }
+};
+
+
+>>>>>>> 85de0a0 (add attestations)
 useEffect(() => {
   fetchAttestations();
 }, []);
