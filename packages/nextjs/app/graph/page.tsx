@@ -123,16 +123,20 @@ const fetchDataAndCreateGraphData = async (veraxSdk : any) => {
 
 
   const TestGraph = () => {
-    useEffect(() => {
-        if (typeof window =='undefined') {
-          return;
-        }
-      }, []);
+   
     const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
     const { address, isConnected } = useAccount();
-        const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
-        const veraxSdk = new VeraxSdk(sdkConf, address);
+        
+        const [veraxSdk, setVeraxSdk] = useState<VeraxSdk | null>(null);
 
+
+        useEffect(() => {
+            if (typeof window !== "undefined" && address) {
+              const sdkConf = VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
+              const VeraxSdkInstance = new VeraxSdk(sdkConf, address);
+              setVeraxSdk(VeraxSdkInstance);
+            }
+          }, [address]);
     useEffect(() => {
         const subject = '0xb68093bb89f26a807626f5757db7246d6d2c6d59';
         const schemaId = '0x569544812f876efa5b99dcc531c9e6af8ce9aae2731a4f28b3e04fa5771a22c3';
