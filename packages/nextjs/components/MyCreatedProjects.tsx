@@ -167,9 +167,8 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
         {myProjects &&
           myProjects.map((project: any, index: number) => {
             return (
-              <>
+              <div className="flex flex-row" key={index}>
                 <ReviewCard
-                  key={index}
                   name={project.projectName}
                   desc={project.projectDescription}
                   onSubmit={onAirdropAll}
@@ -178,7 +177,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
 
                 {loading ? "Loading..." : "Airdrop Attestors"}
                 {errorMessage && <div>{errorMessage}</div>}
-              </>
+              </div>
             );
           })}
       </div>
