@@ -11,7 +11,7 @@ const IconSelection = ({
   iconsList,
   select,
 }: {
-  selectedIcons: string[];
+  selectedIcons: string[] | string;
   setSelectedIcons: any;
   iconsList: IconsList[];
   select: boolean;

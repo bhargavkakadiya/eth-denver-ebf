@@ -51,7 +51,6 @@ export default function BasicModal({
   }, [selectedIndexValue, showSlider]);
 
   useEffect(() => {
-
       setShowSlider(false);
       setSelectedIndexValue(null);
     
@@ -59,7 +58,10 @@ export default function BasicModal({
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
-  const lastLength = child?.tags?.length;
+  const closeModal=()=>{
+    setOpen(false);
+    
+  }
   return (
     <Modal
       open={isOpen}
@@ -172,7 +174,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title}/>
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal}/>
       </Box>
     </Modal>
   );
