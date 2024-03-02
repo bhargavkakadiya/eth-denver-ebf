@@ -125,6 +125,10 @@ export default function BasicModal({
     handleIssueAttestation(formData);
   };
 
+  const closeModal=()=>{
+    setOpen(false);
+    
+  }
   return (
     <Modal
       open={isOpen}
