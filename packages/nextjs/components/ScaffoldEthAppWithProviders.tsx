@@ -13,6 +13,7 @@ import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { appChains } from "~~/services/web3/wagmiConnectors";
+import { UserProvider } from "./Contexts/UserContext";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   const price = useNativeCurrencyPrice();
@@ -28,7 +29,9 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
     <>
       <div className="flex flex-col min-h-screen">
         <Header />
+
         <main className="relative flex flex-col flex-1">{children}</main>
+
         <Footer />
       </div>
       <Toaster />
@@ -46,6 +49,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
   }, []);
 
   return (
+    <UserProvider>
     <WagmiConfig config={wagmiConfig}>
       <ProgressBar />
       <RainbowKitProvider
@@ -56,5 +60,6 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
         <ScaffoldEthApp>{children}</ScaffoldEthApp>
       </RainbowKitProvider>
     </WagmiConfig>
+    </UserProvider>
   );
 };
