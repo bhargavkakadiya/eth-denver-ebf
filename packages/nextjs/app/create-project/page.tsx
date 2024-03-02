@@ -39,7 +39,10 @@ export default function Home() {
     args: ["", "", [""], ""],
     value: BigInt(0),
     onBlockConfirmation: () => {
-      // router.push("/"); // forward to correct page
+   
+      methods.reset();
+      setSelectedIcons([]);
+      setSelectedImage(null);
     },
   });
 
@@ -51,7 +54,7 @@ export default function Home() {
           return;
         } else {
           writeAsync({
-            args: [formData.name, formData.place, selectedIcons, ipfsCID],
+            args: [formData.name, formData.description, selectedIcons, ipfsCID],
           });
         }
       }
@@ -89,7 +92,12 @@ export default function Home() {
             <TextInput name="name" label="Name" type="text" />
             <TextInput name="description" label="Description" type="text/area" />
 
-            <IconSelection selectedIcons={selectedIcons} setSelectedIcons={setSelectedIcons} iconsList={iconsList} select={false}/>
+            <IconSelection
+              selectedIcons={selectedIcons}
+              setSelectedIcons={setSelectedIcons}
+              iconsList={iconsList}
+              select={false}
+            />
             <br />
             <div className="mb-4">
               <label className="block white text-sm font-bold mb-2">PlaceImage</label>
