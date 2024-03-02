@@ -60,7 +60,7 @@ const Home = () => {
 
   const fetchPassportScore = async () => {
     try {
-      console.log("fetching passport score");
+
       const scorerMessageResponseCall = await fetch(`/api/gtc-passport/sign-message`);
 
       if (!scorerMessageResponseCall.ok) {
@@ -74,7 +74,7 @@ const Home = () => {
       // Handle the error appropriately in your application context
     }
   };
-  console.log("user", user);
+
   useEffect(() => {
     if (user) {
       setPassportScore(user);

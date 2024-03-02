@@ -11,11 +11,11 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
     args: [address],
   });
 
-  console.log("myProjects", myProjects);
+
 
   const handlePhosphorAirdrop = async (project: any) => {
     setLoading(true);
-    console.log("handlePhosphorAirdrop", project);
+  
 
     // create collection
     const url = "https://admin-api.phosphor.xyz/v1/collections";
@@ -50,7 +50,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
       setErrorMessage("Failed to create collection, airdrop seems to be already done");
     }
     const collection = await response.json();
-    console.log("collection", collection);
+  
     const collectionId = collection.id;
 
     //check collection deployment status
@@ -66,7 +66,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
         },
       });
       status = await responseStatus.json();
-      console.log("status", status);
+
       if (status.status !== "SUCCESS") {
         // Wait for a while before checking the status again
         await new Promise(resolve => setTimeout(resolve, 3000)); // wait for 3 seconds
@@ -103,7 +103,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
       body: JSON.stringify(bodyItems),
     });
     const itemsResponse = await responseItems.json();
-    console.log("itemsResponse", itemsResponse);
+
 
     await new Promise(resolve => setTimeout(resolve, 3000)); // wait for 3 seconds
 
@@ -122,7 +122,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
       body: JSON.stringify(bodyLock),
     });
     const lockResponse = await responseLock.json();
-    console.log("lockResponse", lockResponse);
+    
 
     // airdrop all items
     // {{Admin_Api_Base_Url}}/v1/mint-requests
@@ -147,14 +147,14 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
       });
 
       const airdropResponse = await responseAirdrop.json();
-      console.log("airdropResponse", airdropResponse);
+  
     });
 
     await Promise.all(requests);
   };
 
   const onAirdropAll = async (project: any) => {
-    console.log("onAirdropAll", project);
+
     handlePhosphorAirdrop(project);
     setLoading(false);
   };
@@ -167,9 +167,8 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
         {myProjects &&
           myProjects.map((project: any, index: number) => {
             return (
-              <>
+              <div className="flex flex-row" key={index}>
                 <ReviewCard
-                  key={index}
                   name={project.projectName}
                   desc={project.projectDescription}
                   onSubmit={onAirdropAll}
@@ -178,7 +177,7 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
 
                 {loading ? "Loading..." : "Airdrop Attestors"}
                 {errorMessage && <div>{errorMessage}</div>}
-              </>
+              </div>
             );
           })}
       </div>
