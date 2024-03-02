@@ -1,4 +1,5 @@
 import React from "react";
+import ReviewCard from "./Card";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 export const MyCreatedProjects = ({ address }: { address: string }) => {
@@ -161,25 +162,19 @@ export const MyCreatedProjects = ({ address }: { address: string }) => {
   return (
     <>
       <div>MyCreatedProjects</div>
-      <div>
+
+      <div className="mt-10">
         {myProjects &&
           myProjects.map((project: any, index: number) => {
             return (
-              <div key={index}>
-                <div>
-                  {index + 1} Name: {project.projectName} Description: {project.projectDescription}
-                </div>
-                <button
-                  className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center align-middle self-center m-20"
-                  onClick={event => {
-                    onAirdropAll(project);
-                  }}
-                >
-                  {loading ? "Loading..." : "Airdrop Attestors"}
-                  {errorMessage && <div>{errorMessage}</div>}
-                </button>
-              </div>
-            );
+              <ReviewCard
+                key={index}
+                name={project.projectName}
+                desc={project.projectDescription}
+                onSubmit={onAirdropAll}
+                project={project}
+              />
+            )
           })}
       </div>
     </>

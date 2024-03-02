@@ -127,7 +127,10 @@ const Home = () => {
               )}
             </div>
           )}
+          <div className="m-20">
+          
           <MyCreatedProjects address={address} />
+          </div>
         </div>
       ) : (
         <div>Connect your wallet to see your profile</div>
