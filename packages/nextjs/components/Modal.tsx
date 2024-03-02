@@ -57,20 +57,27 @@ export default function BasicModal({
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const [child, setChild] = useState<any>(null);
+ 
+
+
+  const [idData, setIdData] = useState<any>(id);
+
   const { data: userData } = useScaffoldContractRead({
     contractName: "EBF",
     functionName: "getProjectById",
-    args: [Number(id)], // Convert id to a bigint
+    args: [Number(idData)], // Convert id to a bigint
   });
-
+console.log(idData,id);
   useEffect(() => {
     if (userData?.length > 0) {
       setChild(userData[0]);
     }
-    return () => {
-      setChild(null);
-    }
-  }, [userData,isOpen,id]);
+  
+  }, [userData]);
+
+  useEffect(() => {
+    setIdData(id);
+  },[id])
   useEffect(() => {
     setSelectedValue(3);
   }, [selectedIndexValue, showSlider]);
@@ -78,6 +85,7 @@ export default function BasicModal({
   useEffect(() => {
     setShowSlider(false);
     setSelectedIndexValue(null);
+   
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
