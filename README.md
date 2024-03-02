@@ -6,21 +6,23 @@
 
 <div align="center">
 
-  🧪 **Project Overview** 🧪
+🧪 **Project Overview** 🧪
 
-  A discoverable network of trust for registering impact projects and verifying their ecological benefits, built using Verax attestations and the Ecological Benefits Framework.
+A discoverable network of trust for registering impact projects and verifying their ecological benefits, built using Verax attestations and the Ecological Benefits Framework.
 
-  ⚙️ **Technology Stack** ⚙️
+⚙️ **Technology Stack** ⚙️
 
-  Linea, Verax, Phosphor, ERC1155, IPFS, NFT.Storage, NextJS, Hardhat, RainbowKit, ScaffoldETH2, Wagmi, Gitcoin Passport
+Linea, Verax, Phosphor, ERC1155, IPFS, NFT.Storage, NextJS, Hardhat, RainbowKit, ScaffoldETH2, Wagmi, Gitcoin Passport
 
-  ✅ **Current Status**: Live on Linea Testnet
+✅ **Current Status**: Live on Linea Testnet
 
 </div>
 
 ## 🌐 The Problem We Solve
 
-The Ecological Benefits Framework offers a standardized way of quantifying and communicating ecological benefits for projects. However, discovering these projects and verifying their benefits remain a challenge. EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits, making projects discoverable and their benefits verifiable through an intuitive dashboard. This aids in the evaluation of impact, which is essential for grants programs and funding mechanisms to effectively allocate capital according to verifiable impact.
+The ecological benefits framework offers a standardized way of quantifying and communicating ecological benefits for projects. However, discovering these projects and verifying their benefits remains a challenge.
+
+EBFNT introduces a standard way to connect attestation networks of trust to projects that claim ecological benefits. This makes projects discoverable and their benefits verifiable through an intuitive dashboard, aiding in the evaluation of impact essential for grants programs and funding mechanisms.
 
 ## 💡 Key Features
 
