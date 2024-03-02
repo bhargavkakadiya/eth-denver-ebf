@@ -59,12 +59,14 @@ export default function BasicModal({
   }, [selectedIndexValue, showSlider]);
 
   useEffect(() => {
-    setShowSlider(false);
-    setSelectedIndexValue(null);
+      setShowSlider(false);
+      setSelectedIndexValue(null);
+    
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
 
+  
   const sdkConf =
     (chain?.id ?? 0) === 59144 ? VeraxSdk.DEFAULT_LINEA_MAINNET_FRONTEND : VeraxSdk.DEFAULT_LINEA_TESTNET_FRONTEND;
   const veraxSdk = new VeraxSdk(sdkConf, address);
@@ -120,6 +122,10 @@ export default function BasicModal({
     handleIssueAttestation(formData);
   };
 
+  const closeModal=()=>{
+    setOpen(false);
+    
+  }
   return (
     <Modal
       open={isOpen}
@@ -232,7 +238,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} />
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal}/>
       </Box>
     </Modal>
   );
