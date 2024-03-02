@@ -30,6 +30,10 @@ EBFNT introduces a standard way to connect attestation networks of trust to proj
 - **Verifiable Ecological Benefits**: Utilize an intuitive dashboard to verify project impacts.
 - **Standardized Evaluation**: Facilitate the allocation of capital based on verifiable ecological impact.
 
+## 🌎 User Flow
+![Drawing 2024-03-02 04 34 29 excalidraw](https://github.com/bhargavkakadiya/eth-denver-ebf/assets/31582215/98f9b1d9-6554-41b4-b46c-519d1ad6fd9d)
+
+
 ## 🚧 Challenges Overcome
 
 - Fixed an issue with the initial Verax subgraph not working on Goerli Linea by obtaining a working subgraph URL from the Linea team.
@@ -41,7 +45,15 @@ We welcome contributions from those passionate about building a sustainable futu
 
 ## 🔗 Resources
 
-- **Documentation**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
+- **Phosphor Documentation for Airdrops**: [https://docs.phosphor.xyz/introduction](https://docs.phosphor.xyz/introduction)
 - **Deployed Contract**: [View on Lineascan](https://goerli.lineascan.build/address/0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1#code)
+- **Ecological Benefits Framework**: https://www.canyouchangethefuture.org/
 
 Let's build a sustainable future together! 🌟
+
+## 🐾 Team Members
+
+- @bhargavkakadiya
+- @Dharmik79
+- @DarrenZal
+- @LinuxIsCool

@@ -129,7 +129,7 @@ export default function BasicModal({
     }
     const projectID = parseInt(child?.id); // 0n .. convert it to number
     const formData = {
-      attestationAddress: "0xb68093bb89f26a807626f5757db7246D6d2c6d59", // TODO update the contract address
+      attestationAddress: "0xaCC29f908Dd44C9df734c8a8125DbDcc1b375CA1", // TODO update the contract address
       projectID: projectID,
       impactType: selectedIndexValue,
       score: value,
