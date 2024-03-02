@@ -4659,6 +4659,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@uniswap/sdk-core": ^4.0.1
     "@uniswap/v2-sdk": ^3.0.1
+    "@verax-attestation-registry/verax-sdk": ^1.1.1
     autoprefixer: ^10.4.12
     axios: ^1.6.7
     blo: ^1.0.1
@@ -17507,7 +17508,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
-    "@verax-attestation-registry/verax-sdk": ^1.1.1
     husky: ^8.0.1
     lint-staged: ^13.0.3
   languageName: unknown

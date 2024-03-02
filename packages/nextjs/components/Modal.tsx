@@ -57,16 +57,14 @@ export default function BasicModal({
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const [child, setChild] = useState<any>(null);
- 
-
 
   const [idData, setIdData] = useState<any>(id);
 
-    const { data: userData } = useScaffoldContractRead({
-      contractName: "EBF",
-      functionName: "getProjectById",
-      args: [Number(idData)], // Convert id to a bigint
-    });
+  const { data: userData } = useScaffoldContractRead({
+    contractName: "EBF",
+    functionName: "getProjectById",
+    args: [BigInt(idData)], // Convert id to a bigint
+  });
 
   useEffect(() => {
     if (userData && userData?.length > 0) {
@@ -85,7 +83,6 @@ export default function BasicModal({
   useEffect(() => {
     setShowSlider(false);
     setSelectedIndexValue(null);
-   
   }, [isOpen]);
 
   const remainingTags = iconsList.filter(icon => !child?.tags?.includes(icon.name));
@@ -291,7 +288,7 @@ export default function BasicModal({
           )}
         </div>
 
-        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id}/>
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id} />
       </Box>
     </Modal>
   );
