@@ -23,113 +23,101 @@ const Home = () => {
     args: [address],
   });
 
-  const { signMessage } = useSignMessage({
-    async onSuccess(data, variables) {
-      // Verify signature when sign message succeeds
-      const address = verifyMessage(variables.message, data);
+  // const { signMessage } = useSignMessage({
+  //   async onSuccess(data, variables) {
+  //     // Verify signature when sign message succeeds
+  //     const address = verifyMessage(variables.message, data);
 
-      const submitResponse = await fetch(`/api/gtc-passport/submit-passport`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          address: address, // Required: The user's address you'd like to score.
-          community: process.env.NEXT_PUBLIC_SCORER_ID, // Required: get this from one of your scorers in the Scorer API dashboard https://scorer.gitcoin.co/
-          signature: data, // Optional: The signature of the message returned in step #1
-          nonce: nonce, // Optional: The nonce returned in Step #1
-        }),
-      });
-      const submitResponseData = await submitResponse.json();
+  //     const submitResponse = await fetch(`/api/gtc-passport/submit-passport`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         address: address, // Required: The user's address you'd like to score.
+  //         community: process.env.NEXT_PUBLIC_SCORER_ID, // Required: get this from one of your scorers in the Scorer API dashboard https://scorer.gitcoin.co/
+  //         signature: data, // Optional: The signature of the message returned in step #1
+  //         nonce: nonce, // Optional: The nonce returned in Step #1
+  //       }),
+  //     });
+  //     const submitResponseData = await submitResponse.json();
 
-      const scoreResponseCall = await fetch(`/api/gtc-passport/fetch-score?address=${address}`);
-      const scoreResponse = await scoreResponseCall.json();
-      // Make sure to check the status
-      if (scoreResponse.status === "ERROR" || scoreResponse.error !== null) {
-        setPassportScore(0);
-        alert(scoreResponse.error);
-        return;
-      }
+  //     const scoreResponseCall = await fetch(`/api/gtc-passport/fetch-score?address=${address}`);
+  //     const scoreResponse = await scoreResponseCall.json();
+  //     // Make sure to check the status
+  //     if (scoreResponse.status === "ERROR" || scoreResponse.error !== null) {
+  //       setPassportScore(0);
+  //       alert(scoreResponse.error);
+  //       return;
+  //     }
 
-      // Store the user's passport score for later use.
-      setPassportScore(scoreResponse.score || 0);
-      setUser(scoreResponse.score || 0);
-      setCheckScore(false);
-    },
-  });
+  //     // Store the user's passport score for later use.
+  //     // setPassportScore(scoreResponse.score || 0);
+  //     // setUser(scoreResponse.score || 0);
+  //     // setCheckScore(false);
+  //   },
+  // });
 
-  const fetchPassportScore = async () => {
-    try {
+  // const fetchPassportScore = async () => {
+  //   try {
 
-      const scorerMessageResponseCall = await fetch(`/api/gtc-passport/sign-message`);
+  //     const scorerMessageResponseCall = await fetch(`/api/gtc-passport/sign-message`);
 
-      if (!scorerMessageResponseCall.ok) {
-        throw new Error("Failed to fetch scorer message");
-      }
-      const scorerMessageResponse = await scorerMessageResponseCall.json();
-      setNonce(scorerMessageResponse.nonce);
-      signMessage({ message: scorerMessageResponse.message });
-    } catch (error) {
-      console.error("Failed to fetch passport score:", error);
-      // Handle the error appropriately in your application context
-    }
-  };
+  //     if (!scorerMessageResponseCall.ok) {
+  //       throw new Error("Failed to fetch scorer message");
+  //     }
+  //     const scorerMessageResponse = await scorerMessageResponseCall.json();
+  //     setNonce(scorerMessageResponse.nonce);
+  //     signMessage({ message: scorerMessageResponse.message });
+  //   } catch (error) {
+  //     console.error("Failed to fetch passport score:", error);
+  //     // Handle the error appropriately in your application context
+  //   }
+  // };
 
-  useEffect(() => {
-    if (user) {
-      setPassportScore(user);
-      setCheckScore(false);
-      return;
-    } else {
-      fetchPassportScore();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     setPassportScore(user);
+  //     setCheckScore(false);
+  //     return;
+  //   } else {
+  //     fetchPassportScore();
+  //   }
+  // }, []);
   return (
     <>
       {address ? (
         <div>
-          {checkScore ? (
-            <button
-              className="bg-primary hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full justify-center align-middle self-center m-20"
-              onClick={() => {
-                fetchPassportScore();
-              }}
-            >
-              Check my Gitcoin Passport Score
-            </button>
-          ) : (
-            <div className="container mx-auto py-8 my-auto" style={{ backgroundColor: "#212638", color: "white" }}>
-              {isConnected && userData && (
-                <div className=" max-w-lg mx-auto px-20 pt-6 pb-8 mb-4 relative flex-col items-center   p-10 justify-center align-middle">
-                  <h1 className="text-2xl font-bold">Player Info </h1>
-                  <div className="flex space-x-4">
+          <div className="container mx-auto py-8 my-auto" style={{ backgroundColor: "#212638", color: "white" }}>
+            {isConnected && userData && (
+              <div className=" max-w-lg mx-auto px-20 pt-6 pb-8 mb-4 relative flex-col items-center   p-10 justify-center align-middle">
+                <h1 className="text-2xl font-bold">Player Info </h1>
+                <div className="flex space-x-4">
+                  <div className="mb-1">
                     <div className="mb-1">
-                      <div className="mb-1">
-                        <div className="mb-2">
-                          <h4 className="mb-1">
-                            <strong>Name:</strong> {String(userData[1])}
-                          </h4>
-                        </div>
-                        <div className="mb-2">
-                          <h4 className="mb-1">
-                            <strong>Hometown:</strong> {String(userData[2])}
-                          </h4>
-                        </div>
-                        <div className="mb-2">
-                          <h4 className="mb-1">
-                            <strong>Passport Score:</strong> {passportScore}
-                          </h4>
-                        </div>
+                      <div className="mb-2">
+                        <h4 className="mb-1">
+                          <strong>Name:</strong> {String(userData[1])}
+                        </h4>
+                      </div>
+                      <div className="mb-2">
+                        <h4 className="mb-1">
+                          <strong>Hometown:</strong> {String(userData[2])}
+                        </h4>
+                      </div>
+                      <div className="mb-2">
+                        <h4 className="mb-1">
+                          <strong>Passport Score:</strong> {passportScore}
+                        </h4>
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
           <div className="m-20">
-          
-          <MyCreatedProjects address={address} />
+            <MyCreatedProjects address={address} />
           </div>
         </div>
       ) : (
