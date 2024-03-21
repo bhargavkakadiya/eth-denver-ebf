@@ -1,7 +1,9 @@
 # 🌍 EBF Network of Trust 🌱
 
+
 <p align="center">
-  <a href="https://ethden24-ebf.vercel.app/"><strong>🚀 Testnet Demo</strong></a>
+  First, connect to Linea: https://chainlist.org/?search=linea<br>
+  Then, see the demo: <a href="https://ethden24-ebf.vercel.app/"><strong>🚀 Testnet Demo</strong></a>
 </p>
 
 <div align="center">
