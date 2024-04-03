@@ -29,7 +29,7 @@
     "cytoscape": "^3.28.1",
     "daisyui": "4.5.0",
     "ethers": "^6.11.1",
-    "next": "^14.0.4",
+    "next": "^14.1.4",
     "next-themes": "^0.2.1",
     "nft.storage": "^7.1.1",
     "nprogress": "^0.2.0",
