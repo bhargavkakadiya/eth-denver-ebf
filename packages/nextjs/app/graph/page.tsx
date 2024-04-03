@@ -158,7 +158,7 @@ const TestGraph = () => {
   return (
     <div>
       <h1>Attestations Graph</h1>
-      <AttestationsGraph nodes={graphData.nodes} edges={graphData.edges} />
+      {graphData.nodes.length!=0 && <AttestationsGraph nodes={graphData.nodes} edges={graphData.edges} />}
     </div>
   );
 };
