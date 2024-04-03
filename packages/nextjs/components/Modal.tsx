@@ -292,7 +292,7 @@ export default function BasicModal({
           )}
         </div>
 
-        {open && <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id} />}
+        <NestedModal open={open} setOpen={setOpen} tags={remainingTags} name={title} closeModal={closeModal} id={id} />
       </Box>
     </Modal>
   );

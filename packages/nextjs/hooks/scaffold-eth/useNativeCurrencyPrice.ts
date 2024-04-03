@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useInterval } from "usehooks-ts";
-import scaffoldConfig from "~~/scaffold.config";
-import { fetchPriceFromUniswap } from "~~/utils/scaffold-eth";
+import { useTheme } from "next-themes";
+import { ChainWithAttributes } from "~~/utils/scaffold-eth";
 
-const enablePolling = false;
+export const DEFAULT_NETWORK_COLOR: [string, string] = ["#666666", "#bbbbbb"];
+
+export function getNetworkColor(network: ChainWithAttributes, isDarkMode: boolean) {
+  const colorConfig = network.color ?? DEFAULT_NETWORK_COLOR;
+  return Array.isArray(colorConfig) ? (isDarkMode ? colorConfig[1] : colorConfig[0]) : colorConfig;
+}
 
 /**
- * Get the price of Native Currency based on Native Token/DAI trading pair from Uniswap SDK
+ * Gets the color of the target network
  */
-export const useNativeCurrencyPrice = () => {
+export const useNetworkColor = () => {
+  const { resolvedTheme } = useTheme();
   const { targetNetwork } = useTargetNetwork();
-  const [nativeCurrencyPrice, setNativeCurrencyPrice] = useState(0);
 
-  // Get the price of ETH from Uniswap on mount
-  useEffect(() => {
-    (async () => {
-      const price = await fetchPriceFromUniswap(targetNetwork);
-      setNativeCurrencyPrice(price);
-    })();
-  }, [targetNetwork]);
+  const isDarkMode = resolvedTheme === "dark";
 
-  // Get the price of ETH from Uniswap at a given interval
-  useInterval(
-    async () => {
-      const price = await fetchPriceFromUniswap(targetNetwork);
-      setNativeCurrencyPrice(price);
-    },
-    enablePolling ? scaffoldConfig.pollingInterval : null,
-  );
-
-  return nativeCurrencyPrice;
+  return getNetworkColor(targetNetwork, isDarkMode);
 };
